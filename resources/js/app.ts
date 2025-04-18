@@ -6,19 +6,24 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
+import Button from "primevue/button"
+import 'primeicons/primeicons.css'
+
 
 // Extend ImportMeta interface for Vite...
-declare module 'vite/client' {
-    interface ImportMetaEnv {
-        readonly VITE_APP_NAME: string;
-        [key: string]: string | boolean | undefined;
-    }
+// declare module 'vite/client' {
+//     interface ImportMetaEnv {
+//         readonly VITE_APP_NAME: string;
+//         [key: string]: string | boolean | undefined;
+//     }
 
-    interface ImportMeta {
-        readonly env: ImportMetaEnv;
-        readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
-    }
-}
+//     interface ImportMeta {
+//         readonly env: ImportMetaEnv;
+//         readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
+//     }
+// }
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -27,8 +32,14 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .use(PrimeVue, {
+                theme: {
+                    preset: Aura
+                }
+            })
             .use(plugin)
             .use(ZiggyVue)
+            .component('Button', Button)
             .mount(el);
     },
     progress: {
