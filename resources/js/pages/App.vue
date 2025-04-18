@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import Navbar from './components/Navbar.vue';
 import Home from '@/pages/templates/Home.vue';
 import Features from './templates/Features.vue';
+import Calculations from './templates/Calculations.vue';
 export default {
     components: {
         Head,
@@ -10,6 +11,7 @@ export default {
         Navbar,
         Home,
         Features,
+        Calculations,
     }
 }
 </script>
@@ -20,5 +22,6 @@ export default {
         <Navbar/>
         <Home/>
         <Features/>
+        <Calculations/>
     </div>
 </template>

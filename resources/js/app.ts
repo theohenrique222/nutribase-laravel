@@ -10,6 +10,8 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import Button from "primevue/button"
 import 'primeicons/primeicons.css'
+import Dialog from 'primevue/dialog';
+
 
 
 // Extend ImportMeta interface for Vite...
@@ -40,6 +42,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .component('Button', Button)
+            .component('Dialog', Dialog)
             .mount(el);
     },
     progress: {
