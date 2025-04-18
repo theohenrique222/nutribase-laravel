@@ -1,13 +1,15 @@
 <script lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import Home from '@/pages/templates/Home.vue';
 import Navbar from './components/Navbar.vue';
+import Home from '@/pages/templates/Home.vue';
+import Features from './templates/Features.vue';
 export default {
     components: {
         Head,
         Link,
-        Home,
         Navbar,
+        Home,
+        Features,
     }
 }
 </script>
@@ -17,5 +19,6 @@ export default {
     <div>
         <Navbar/>
         <Home/>
+        <Features/>
     </div>
 </template>
