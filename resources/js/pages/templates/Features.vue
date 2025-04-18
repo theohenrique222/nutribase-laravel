@@ -19,9 +19,11 @@
                 </div>
 
                 <div data-aos="fade-up" data-aos-duration="1000" class="flex justify-center lg:justify-start mb-20 mt-8">
-                    <a href=""
-                        class="bg-lime-400 text-neutral-700 py-4 px-8 rounded-3xl uppercase font-bold text-xs md:text-base">Explore
-                        nossas funcionalidades</a>
+                    <div class="bg-lime-400 py-4 px-8 rounded-3xl ">
+                        <a href=""
+                            class="text-neutral-700 uppercase font-bold text-xs md:text-base">Explore
+                            nossas funcionalidades</a>
+                    </div>
                 </div>
             </div>
             <div class="flex w-full h-0 lg:h-screen"></div>
