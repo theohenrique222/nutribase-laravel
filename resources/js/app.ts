@@ -11,6 +11,7 @@ import Aura from '@primeuix/themes/aura';
 import Button from "primevue/button"
 import 'primeicons/primeicons.css'
 import Dialog from 'primevue/dialog';
+import Calculations from './pages/templates/Calculations.vue';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -41,6 +42,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .component('Button', Button)
             .component('Dialog', Dialog)
+            .component('Calculations', Calculations)
             .mount(el);
     },
     progress: {
