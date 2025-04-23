@@ -10,9 +10,14 @@ import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Painel de controle',
         href: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Dados Pessoais',
+        href: '/',
+        icon: LayoutGrid
     },
 ];
 
@@ -37,7 +42,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
-                            <AppLogo />
+                        <NavUser />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -48,10 +53,6 @@ const footerNavItems: NavItem[] = [
             <NavMain :items="mainNavItems" />
         </SidebarContent>
 
-        <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
-            <NavUser />
-        </SidebarFooter>
     </Sidebar>
     <slot />
 </template>
