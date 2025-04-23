@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('personal_datas', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('age');
+            $table->float('height');
+            $table->float('weight');
+            $table->float('arm_l');
+            $table->float('arm_r');
+            $table->float('chest');
+            $table->float('waist');
+            $table->float('scruff');
+            $table->float('thigh_l');
+            $table->float('thigh_r');
+            $table->float('calf');
             $table->timestamps();
         });
     }
