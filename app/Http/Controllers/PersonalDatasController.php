@@ -13,7 +13,12 @@ class PersonalDatasController extends Controller
      */
     public function index()
     {
-        return Inertia::render('templates/personalDatas/index', ['title' => 'Dados Pessoais']);
+        $personalData = PersonalData::all();
+        
+        return Inertia::render('templates/personalDatas/index', [
+            'title' => 'Dados Pessoais', 
+            'personalData' => $personalData
+        ]);
     }
 
     /**
@@ -21,7 +26,9 @@ class PersonalDatasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('templates/personalDatas/create', ['title' => 'Nova medida']);
+        return Inertia::render('templates/personalDatas/create', [
+            'title' => 'Nova medida'
+        ]);
     }
 
     /**

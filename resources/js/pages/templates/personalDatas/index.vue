@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 defineProps<{
     title: string
-    measurements: Array<{
+    personalData: Array<{
         id: number
         name: string
         age: number
@@ -60,23 +60,23 @@ defineProps<{
                                     <th class="p-3">Coxa D.</th>
                                     <th class="p-3">Panturrilha</th>
                                     <th class="p-3">Pescoço</th>
-                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Atualização</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in measurements" :key="item.id"
-                                    class="border-b hover:bg-blue-50 dark:hover:bg-neutral-800">
+                                <tr v-for="item in personalData" :key="item.id"
+                                    class="border-b hover:bg-blue-50 dark:hover:bg-neutral-800 text-center">
                                     <td class="p-3">{{ item.age }}</td>
                                     <td class="p-3">{{ item.height }} cm</td>
                                     <td class="p-3">{{ item.weight }} kg</td>
-                                    <td class="p-3">{{ item.chest || '-' }}</td>
-                                    <td class="p-3">{{ item.waist || '-' }}</td>
-                                    <td class="p-3">{{ item.arm_l || '-' }}</td>
-                                    <td class="p-3">{{ item.arm_r || '-' }}</td>
-                                    <td class="p-3">{{ item.thigh_l || '-' }}</td>
-                                    <td class="p-3">{{ item.thigh_r || '-' }}</td>
-                                    <td class="p-3">{{ item.calf || '-' }}</td>
-                                    <td class="p-3">{{ item.scruff || '-' }}</td>
+                                    <td class="p-3">{{ item.chest }} cm</td>
+                                    <td class="p-3">{{ item.waist }} cm</td>
+                                    <td class="p-3">{{ item.arm_l }} cm</td>
+                                    <td class="p-3">{{ item.arm_r }} cm</td>
+                                    <td class="p-3">{{ item.thigh_l }} cm</td>
+                                    <td class="p-3">{{ item.thigh_r }} cm</td>
+                                    <td class="p-3">{{ item.calf }} cm</td>
+                                    <td class="p-3">{{ item.scruff }} cm</td>
                                     <td class="p-3 text-xs text-gray-500">{{ new
                                         Date(item.created_at).toLocaleDateString() }}</td>
                                 </tr>
