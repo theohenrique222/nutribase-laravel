@@ -10,13 +10,18 @@ import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
+        title: 'Inicio',
+        href: '/',
+        icon: LayoutGrid,
+    },
+    {
         title: 'Painel de controle',
         href: '/dashboard',
         icon: LayoutGrid,
     },
     {
         title: 'Dados Pessoais',
-        href: '/',
+        href: '/personal-datas',
         icon: LayoutGrid
     },
 ];
