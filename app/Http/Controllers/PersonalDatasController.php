@@ -13,12 +13,15 @@ class PersonalDatasController extends Controller
      */
     public function index()
     {
-        $personalData = PersonalData::all();
+        $personalData           =   PersonalData::all();
 
-        return Inertia::render('templates/personalDatas/index', [
-            'title'         =>  'Dados Pessoais', 
-            'personalData'  =>  $personalData
-        ]);
+        return Inertia::render(
+            'templates/personalDatas/index',
+            [
+                'title'         =>  'Dados Pessoais',
+                'personalData'  =>  $personalData
+            ]
+        );
     }
 
     /**
@@ -26,9 +29,12 @@ class PersonalDatasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('templates/personalDatas/create', [
-            'title'         =>  'Nova medida'
-        ]);
+        return Inertia::render(
+            'templates/personalDatas/create',
+            [
+                'title'         =>  'Nova medida'
+            ]
+        );
     }
 
     /**
@@ -36,19 +42,21 @@ class PersonalDatasController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'age'           =>  'required|integer',
-            'height'        =>  'required|numeric',
-            'weight'        =>  'required|numeric',
-            'arm_l'         =>  'nullable|numeric',
-            'arm_r'         =>  'nullable|numeric',
-            'chest'         =>  'nullable|numeric',
-            'waist'         =>  'nullable|numeric',
-            'scruff'        =>  'nullable|numeric',
-            'thigh_l'       =>  'nullable|numeric',
-            'thigh_r'       =>  'nullable|numeric',
-            'calf'          =>  'nullable|numeric',
-        ]);
+        $validated = $request->validate(
+            [
+                'age'           =>  'required|integer',
+                'height'        =>  'required|numeric',
+                'weight'        =>  'required|numeric',
+                'arm_l'         =>  'nullable|numeric',
+                'arm_r'         =>  'nullable|numeric',
+                'chest'         =>  'nullable|numeric',
+                'waist'         =>  'nullable|numeric',
+                'scruff'        =>  'nullable|numeric',
+                'thigh_l'       =>  'nullable|numeric',
+                'thigh_r'       =>  'nullable|numeric',
+                'calf'          =>  'nullable|numeric',
+            ]
+        );
 
         PersonalData::create($validated);
 
