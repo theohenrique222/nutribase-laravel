@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Home } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Home, Calculator } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,13 +15,18 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Painel de controle',
-        href: '/dashboard',
+        href: 'dashboard',
         icon: LayoutGrid,
     },
     {
         title: 'Dados Pessoais',
-        href: '/personal-datas',
+        href: 'personal-datas',
         icon: Folder
+    },
+    {
+        title: 'Calculadora',
+        href: 'calculation',
+        icon: Calculator
     },
 ];
 
