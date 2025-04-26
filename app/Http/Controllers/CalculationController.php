@@ -15,31 +15,68 @@ class CalculationController extends Controller
 
     protected function calculateTMB($weight, $height, $age, $gender = 'male')
     {
-        if ($gender === 'female') {
-            return round(655 + (9.6 * $weight) + (1.8 * $height) - (4.7 * $age), 2);
-        }
+        $value = $gender === 'female'
+            ? round(655 + (9.6 * $weight) + (1.8 * $height) - (4.7 * $age), 2)
+            : round(66 + (13.7 * $weight) + (5 * $height) - (6.8 * $age), 2);
 
-        return round(66 + (13.7 * $weight) + (5 * $height) - (6.8 * $age), 2);
+        return [
+            'title'        => 'Taxa Metabólica Basal',
+            'subtitle'     => 'Quantidade de calorias que o corpo gasta em repouso',
+            'value'        => $value,
+        ];
     }
 
-    protected function calculateWaterIntake($weight)
+
+    protected function waterIntake($weight)
     {
-        return round($weight * 35);
+        $value = $weight * 35;
+
+        return ['value' => $value,];
+    }
+
+    protected function calculateIMC($weight, $height)
+    {
+        return round(($weight * 100) / ($height * $height), 2);
+    }
+
+    protected function calculateProteins($weight)
+    {
+        $factor = 2.2;
+        return [
+            'title'     => 'Proteínas',
+            'subtitle'  => 'Lorem ipsun Proteinas',
+            'value'     => round($weight * $factor) . ' g'
+        ];
     }
 
     public function index(Request $request)
     {
-        $personalData = PersonalData::all()->map(function ($data) 
-        {
+        $personalData = PersonalData::all()->map(function ($data) {
             $data->tmb          = $this->calculateTMB($data->weight, $data->height, $data->age, $data->gender);
-            $data->waterIntake  = $this->calculateWaterIntake($data->weight);
+
+            $waterIntakeData    = $this->waterIntake($data->weight);
+            $data->waterIntake  =
+                [
+                    'title'     => 'Água Diária',
+                    'subtitle'  => 'Quantidade de água que seu corpo precisa para realizar funções',
+                    'value'     => round(($waterIntakeData['value'] / 1000), 1) . ' litros'
+                ];
+
+            $data->imc          = [
+                'title'         =>  'Massa corporal IMC',
+                'subtitle'      =>  'lorem ipsun IMC',
+                'value'         =>  $this->calculateIMC($data->weight, $data->height)
+            ];
+
+            $data->proteins = $this->calculateProteins($data->weight);
+
             return $data;
         });
 
         return Inertia::render(
             'templates/calculation/index',
             [
-                'title'             =>  'Calculadora',
+                'title'             =>  'Análise Corporal',
                 'personalData'      =>  $personalData
             ]
         );
