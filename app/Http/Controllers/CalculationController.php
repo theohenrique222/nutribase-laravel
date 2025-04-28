@@ -7,6 +7,8 @@ use App\Models\PersonalData;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use function PHPUnit\Framework\returnSelf;
+
 class CalculationController extends Controller
 {
     /**
@@ -43,9 +45,31 @@ class CalculationController extends Controller
     {
         $factor = 2.2;
         return [
-            'title'     => 'Proteínas',
-            'subtitle'  => 'Lorem ipsun Proteinas',
-            'value'     => round($weight * $factor) . ' g'
+            'title'             => 'Proteínas',
+            'subtitle'          => 'Quantidade de proteínas diarias que seu corpo precisa',
+            'value'             => round($weight * $factor) . ' gramas'
+        ];
+    }
+
+    protected function calculateCarbohydrates($weight)
+    {
+        $factor = 6;
+
+        return [
+            'title'             => 'Carboidratos',
+            'subtitle'          => 'Quantidade de carboidratos diarios que seu corpo precisa ingerir',
+            'value'             => round($weight * $factor) . ' gramas'
+        ];
+    }
+
+    protected function calculateFats($weight)
+    {
+        $factor = 1;
+
+        return [
+            'title'            => 'Gordura',
+            'subtitle'         => 'Quantidade de gorduras que seu corpo precisa no dia',
+            'value'            => round($weight * $factor) . ' gramas'
         ];
     }
 
@@ -63,12 +87,15 @@ class CalculationController extends Controller
                 ];
 
             $data->imc          = [
-                'title'         =>  'Massa corporal IMC',
-                'subtitle'      =>  'lorem ipsun IMC',
+                'title'         =>  'IMC',
+                'subtitle'      =>  'Indice de massa corporal',
+                'table'         =>  'Lorem',
                 'value'         =>  $this->calculateIMC($data->weight, $data->height)
             ];
 
             $data->proteins = $this->calculateProteins($data->weight);
+            $data->carbohydrates = $this->calculateCarbohydrates($data->weight);
+            $data->fats = $this->calculateFats($data->weight);
 
             return $data;
         });
@@ -76,8 +103,8 @@ class CalculationController extends Controller
         return Inertia::render(
             'templates/calculation/index',
             [
-                'title'             =>  'Análise Corporal',
-                'personalData'      =>  $personalData
+                'title'         =>  'Análise Corporal',
+                'personalData'  =>  $personalData
             ]
         );
     }

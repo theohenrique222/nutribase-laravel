@@ -81,6 +81,20 @@ defineProps<{
                                 <h3 class="text-2xl font-bold p-2">{{ item.proteins.value }}</h3>
                             </div>
 
+                            <div v-for="item in personalData" :key="item.id"
+                                class="bg-neutral-800 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border text-center p-5">
+                                <h2 class="text-2xl font-extrabold p-2">{{ item.carbohydrates.title }}</h2>
+                                <h3 class="text-sm font-extralight">{{ item.carbohydrates.subtitle }}</h3>
+                                <h3 class="text-2xl font-bold p-2">{{ item.carbohydrates.value }}</h3>
+                            </div>
+
+                            <div v-for="item in personalData" :key="item.id"
+                                class="bg-neutral-800 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border text-center p-5">
+                                <h2 class="text-2xl font-extrabold p-2">{{ item.fats.title }}</h2>
+                                <h3 class="text-sm font-extralight">{{ item.fats.subtitle }}</h3>
+                                <h3 class="text-2xl font-bold p-2">{{ item.fats.value }}</h3>
+                            </div>
+
                             <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                                 <PlaceholderPattern />
                             </div>

@@ -24,7 +24,7 @@ const mainNavItems: NavItem[] = [
         icon: Folder
     },
     {
-        title: 'Calculadora',
+        title: 'Analise Corporal',
         href: 'calculation',
         icon: Calculator
     },
