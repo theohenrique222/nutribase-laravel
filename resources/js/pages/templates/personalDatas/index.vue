@@ -38,9 +38,7 @@ defineProps<{
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl">
             <div
-                class=" relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <PlaceholderPattern />
-
+                class="bg-neutral-900 relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
                 <div class="p-6 max-w-7xl mx-auto">
                     <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
 
