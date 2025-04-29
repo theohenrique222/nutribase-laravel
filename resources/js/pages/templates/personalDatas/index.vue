@@ -14,18 +14,19 @@ defineProps<{
     title: string
     personalData: Array<{
         id: number
-        name: string
         age: number
         height: number
         weight: number
-        arm_l?: number
-        arm_r?: number
+        gender: string
+        scruff?: number
         chest?: number
         waist?: number
-        scruff?: number
+        arm_l?: number
+        arm_r?: number
         thigh_l?: number
         thigh_r?: number
-        calf?: number
+        calf_l?: number
+        calf_r?: number
         created_at: string
     }>
 }>()
@@ -50,14 +51,16 @@ defineProps<{
                                     <th class="p-3">Idade</th>
                                     <th class="p-3">Altura</th>
                                     <th class="p-3">Peso</th>
+                                    <th class="p-3">Genero</th>
+                                    <th class="p-3">Pescoço</th>
                                     <th class="p-3">Peitoral</th>
                                     <th class="p-3">Cintura</th>
                                     <th class="p-3">Braço E.</th>
                                     <th class="p-3">Braço D.</th>
                                     <th class="p-3">Coxa E.</th>
                                     <th class="p-3">Coxa D.</th>
-                                    <th class="p-3">Panturrilha</th>
-                                    <th class="p-3">Pescoço</th>
+                                    <th class="p-3">Panturrilha E.</th>
+                                    <th class="p-3">Panturrilha D.</th>
                                     <th class="p-3">Atualização</th>
                                 </tr>
                             </thead>
@@ -67,14 +70,16 @@ defineProps<{
                                     <td class="p-3">{{ item.age }}</td>
                                     <td class="p-3">{{ item.height }} cm</td>
                                     <td class="p-3">{{ item.weight }} kg</td>
+                                    <td class="p-3">{{ item.gender }}</td>
                                     <td class="p-3">{{ item.chest }} cm</td>
+                                    <td class="p-3">{{ item.scruff }} cm</td>
                                     <td class="p-3">{{ item.waist }} cm</td>
                                     <td class="p-3">{{ item.arm_l }} cm</td>
                                     <td class="p-3">{{ item.arm_r }} cm</td>
                                     <td class="p-3">{{ item.thigh_l }} cm</td>
                                     <td class="p-3">{{ item.thigh_r }} cm</td>
-                                    <td class="p-3">{{ item.calf }} cm</td>
-                                    <td class="p-3">{{ item.scruff }} cm</td>
+                                    <td class="p-3">{{ item.calf_l }} cm</td>
+                                    <td class="p-3">{{ item.calf_r }} cm</td>
                                     <td class="p-3 text-xs text-gray-500">{{ new
                                         Date(item.created_at).toLocaleDateString() }}</td>
                                 </tr>

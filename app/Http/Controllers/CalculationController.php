@@ -31,19 +31,28 @@ class CalculationController extends Controller
 
     protected function waterIntake($weight)
     {
-        $value = $weight * 35;
+        $factor =  35;
 
-        return ['value' => $value,];
+        return [
+            'title'             => 'Água diaria',
+            'subtitle'          => 'Quantidade de água que seu corpo precisa para realizar funções',
+            'value'             => round($weight * $factor / 1000, 3) . ' litros',
+        ];
     }
 
     protected function calculateIMC($weight, $height)
     {
-        return round(($weight * 100) / ($height * $height), 2);
+        return [
+            'title'             => 'IMC',
+            'subtitle'          => 'Indice de Massa corporal',
+            'value'             => round($weight / ($height * $height), 2),
+        ];
     }
 
     protected function calculateProteins($weight)
     {
         $factor = 2.2;
+        
         return [
             'title'             => 'Proteínas',
             'subtitle'          => 'Quantidade de proteínas diarias que seu corpo precisa',
@@ -76,26 +85,12 @@ class CalculationController extends Controller
     public function index(Request $request)
     {
         $personalData = PersonalData::all()->map(function ($data) {
-            $data->tmb          = $this->calculateTMB($data->weight, $data->height, $data->age, $data->gender);
-
-            $waterIntakeData    = $this->waterIntake($data->weight);
-            $data->waterIntake  =
-                [
-                    'title'     => 'Água Diária',
-                    'subtitle'  => 'Quantidade de água que seu corpo precisa para realizar funções',
-                    'value'     => round(($waterIntakeData['value'] / 1000), 1) . ' litros'
-                ];
-
-            $data->imc          = [
-                'title'         =>  'IMC',
-                'subtitle'      =>  'Indice de massa corporal',
-                'table'         =>  'Lorem',
-                'value'         =>  $this->calculateIMC($data->weight, $data->height)
-            ];
-
-            $data->proteins = $this->calculateProteins($data->weight);
-            $data->carbohydrates = $this->calculateCarbohydrates($data->weight);
-            $data->fats = $this->calculateFats($data->weight);
+            $data->tmb              = $this->calculateTMB($data->weight, $data->height, $data->age, $data->gender);
+            $data->waterIntake      = $this->waterIntake($data->weight);
+            $data->imc              = $this->calculateIMC($data->weight, $data->height);
+            $data->proteins         = $this->calculateProteins($data->weight);
+            $data->carbohydrates    = $this->calculateCarbohydrates($data->weight);
+            $data->fats             = $this->calculateFats($data->weight, $data->height);
 
             return $data;
         });
