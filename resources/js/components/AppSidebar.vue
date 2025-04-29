@@ -28,6 +28,11 @@ const mainNavItems: NavItem[] = [
         href: 'calculation',
         icon: Activity,
     },
+    {
+        title: 'Dieta',
+        href: '/diet-plan',
+        icon: Clipboard
+    },
 ];
 
 const footerNavItems: NavItem[] = [

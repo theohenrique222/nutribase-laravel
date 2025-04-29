@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DietPlan;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DietPlanController extends Controller
 {
@@ -12,7 +13,8 @@ class DietPlanController extends Controller
      */
     public function index()
     {
-        //
+        $name = 'Theo';
+        return Inertia::render('templates/diet/Index');
     }
 
     /**
