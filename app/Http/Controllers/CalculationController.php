@@ -42,10 +42,11 @@ class CalculationController extends Controller
 
     protected function calculateIMC($weight, $height)
     {
+        $heightMts = ($height / 100);
         return [
             'title'             => 'IMC',
             'subtitle'          => 'Indice de Massa corporal',
-            'value'             => round($weight / ($height * $height), 2),
+            'value'             => round($weight / ($heightMts * $heightMts)),
         ];
     }
 
@@ -87,7 +88,7 @@ class CalculationController extends Controller
         $personalData = PersonalData::all()->map(function ($data) {
             $data->tmb              = $this->calculateTMB($data->weight, $data->height, $data->age, $data->gender);
             $data->waterIntake      = $this->waterIntake($data->weight);
-            $data->imc              = $this->calculateIMC($data->weight, $data->height);
+            $data->imc              = $this->calculateIMC($data->weight, $data->height, $data->heightMt);
             $data->proteins         = $this->calculateProteins($data->weight);
             $data->carbohydrates    = $this->calculateCarbohydrates($data->weight);
             $data->fats             = $this->calculateFats($data->weight, $data->height);

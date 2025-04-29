@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Home, Calculator } from 'lucide-vue-next';
+import { BookOpen, Folder,  Home, Activity, Clipboard, LayoutDashboardIcon } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -16,17 +16,17 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Painel de controle',
         href: 'dashboard',
-        icon: LayoutGrid,
+        icon: LayoutDashboardIcon,
     },
     {
         title: 'Dados Pessoais',
         href: 'personal-datas',
-        icon: Folder
+        icon: Clipboard
     },
     {
         title: 'Analise Corporal',
         href: 'calculation',
-        icon: Calculator
+        icon: Activity,
     },
 ];
 
@@ -51,7 +51,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
-                        <NavUser />
+                        <NavUser/>
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
