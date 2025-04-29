@@ -44,6 +44,9 @@ defineProps<{
                     <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
 
                     <div class="overflow-x-auto bg-white dark:bg-neutral-900 shadow-lg">
+                        <div v-for="item in personalData" :key="item.id">
+                            <h2 class="pb-5 text-xl">Atualização dia: <span class="text-neutral-300">{{ new Date(item.created_at).toLocaleDateString() }}</span></h2>
+                        </div>
                         <table class="min-w-full table-auto text-sm text-left">
                             <thead
                                 class="dark:bg-neutral-800 bg-neutral-500 text-white border  dark:border-b-neutral-500 border-b-black">
@@ -59,7 +62,6 @@ defineProps<{
                                     <th class="p-3">Coxa D.</th>
                                     <th class="p-3">Panturrilha E.</th>
                                     <th class="p-3">Panturrilha D.</th>
-                                    <th class="p-3">Atualização</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,20 +77,15 @@ defineProps<{
                                     <td class="p-3">{{ item.thigh_l }} cm</td>
                                     <td class="p-3">{{ item.thigh_r }} cm</td>
                                     <td class="p-3">{{ item.calf_l }} cm</td>
-                                    <td class="p-3">{{ item.calf_r }} cm</td>
-                                    <td class="p-3 text-xs text-gray-500">{{ new
-                                        Date(item.created_at).toLocaleDateString() }}</td>
+                                    <td class="p-3">{{ item.calf_r }} cm</td>                       
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div><div class="col-span-1 md:col-span-2 mt-4">
 
-                    
-
-                    <div class="col-span-1 md:col-span-2 mt-4">
-                        
                         <a :href="route('personal-datas.create')">
-                            <div class="bg-lime-200/70 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-5">
+                            <div
+                                class="bg-lime-200/70 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-5">
                                 <p class="text-lg text-white font-extrabold">Nova medida</p>
                             </div>
                         </a>
