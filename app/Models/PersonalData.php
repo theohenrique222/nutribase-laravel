@@ -10,7 +10,7 @@ class PersonalData extends Model
     use HasFactory;
     
     protected $fillable = [
-        'name',
+        'gender',
         'age',
         'height',
         'weight',
@@ -21,6 +21,7 @@ class PersonalData extends Model
         'scruff',
         'thigh_l',
         'thigh_r',
-        'calf',
+        'calf_l',
+        'calf_r',
     ];
 }

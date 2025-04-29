@@ -48,10 +48,8 @@ defineProps<{
                             <thead
                                 class="dark:bg-neutral-800 bg-neutral-500 text-white border  dark:border-b-neutral-500 border-b-black">
                                 <tr>
-                                    <th class="p-3">Idade</th>
                                     <th class="p-3">Altura</th>
                                     <th class="p-3">Peso</th>
-                                    <th class="p-3">Genero</th>
                                     <th class="p-3">Pescoço</th>
                                     <th class="p-3">Peitoral</th>
                                     <th class="p-3">Cintura</th>
@@ -67,10 +65,8 @@ defineProps<{
                             <tbody>
                                 <tr v-for="item in personalData" :key="item.id"
                                     class="border-b hover:bg-blue-50 dark:hover:bg-neutral-800 text-center">
-                                    <td class="p-3">{{ item.age }}</td>
                                     <td class="p-3">{{ item.height }} cm</td>
                                     <td class="p-3">{{ item.weight }} kg</td>
-                                    <td class="p-3">{{ item.gender }}</td>
                                     <td class="p-3">{{ item.chest }} cm</td>
                                     <td class="p-3">{{ item.scruff }} cm</td>
                                     <td class="p-3">{{ item.waist }} cm</td>
@@ -86,10 +82,13 @@ defineProps<{
                             </tbody>
                         </table>
                     </div>
+
+                    
+
                     <div class="col-span-1 md:col-span-2 mt-4">
                         
                         <a :href="route('personal-datas.create')">
-                            <div class="bg-lime-500 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-52">
+                            <div class="bg-lime-200/70 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-5">
                                 <p class="text-lg text-white font-extrabold">Nova medida</p>
                             </div>
                         </a>

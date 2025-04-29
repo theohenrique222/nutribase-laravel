@@ -47,14 +47,16 @@ class PersonalDatasController extends Controller
                 'age'           =>  'required|integer',
                 'height'        =>  'required|numeric',
                 'weight'        =>  'required|numeric',
-                'arm_l'         =>  'nullable|numeric',
-                'arm_r'         =>  'nullable|numeric',
-                'chest'         =>  'nullable|numeric',
-                'waist'         =>  'nullable|numeric',
-                'scruff'        =>  'nullable|numeric',
-                'thigh_l'       =>  'nullable|numeric',
-                'thigh_r'       =>  'nullable|numeric',
-                'calf'          =>  'nullable|numeric',
+                'arm_l'         =>  'required|numeric',
+                'arm_r'         =>  'required|numeric',
+                'chest'         =>  'required|numeric',
+                'waist'         =>  'required|numeric',
+                'scruff'        =>  'required|numeric',
+                'thigh_l'       =>  'required|numeric',
+                'thigh_r'       =>  'required|numeric',
+                'calf_l'        =>  'required|numeric',
+                'calf_r'        =>  'required|numeric',
+                'gender'        =>  'required|'
             ]
         );
 

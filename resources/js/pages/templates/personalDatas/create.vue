@@ -10,21 +10,23 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const formFields = [
+  { label: "Genero", name: "gender", type: "select", options: ["Masculino", "Femininio"], required: true },
   { label: "Idade", name: "age", type: "number", required: true },
   { label: "Altura (cm)", name: "height", type: "number", step: "0.01", required: true },
   { label: "Peso (kg)", name: "weight", type: "number", step: "0.01", required: true },
-  { label: "Braço Esquerdo (cm)", name: "arm_l", type: "number", step: "0.01" },
-  { label: "Braço Direito (cm)", name: "arm_r", type: "number", step: "0.01" },
-  { label: "Peitoral (cm)", name: "chest", type: "number", step: "0.01" },
-  { label: "Cintura (cm)", name: "waist", type: "number", step: "0.01" },
-  { label: "Pescoço (Scruff) (cm)", name: "scruff", type: "number", step: "0.01" },
-  { label: "Coxa Esquerda (cm)", name: "thigh_l", type: "number", step: "0.01" },
-  { label: "Coxa Direita (cm)", name: "thigh_r", type: "number", step: "0.01" },
-  { label: "Panturrilha (cm)", name: "calf", type: "number", step: "0.01" },
+  { label: "Braço Esquerdo (cm)", name: "arm_l", type: "number", step: "0.01", required: true },
+  { label: "Braço Direito (cm)", name: "arm_r", type: "number", step: "0.01", required: true },
+  { label: "Peitoral (cm)", name: "chest", type: "number", step: "0.01", required: true },
+  { label: "Cintura (cm)", name: "waist", type: "number", step: "0.01", required: true },
+  { label: "Pescoço (cm)", name: "scruff", type: "number", step: "0.01", required: true },
+  { label: "Coxa Esquerda (cm)", name: "thigh_l", type: "number", step: "0.01", required: true },
+  { label: "Coxa Direita (cm)", name: "thigh_r", type: "number", step: "0.01", required: true },
+  { label: "Panturrilha Esquerda (cm)", name: "calf_l", type: "number", step: "0.01", required: true },
+  { label: "Panturrilha Direita (cm)", name: "calf_r", type: "number", step: "0.01", required: true },
 ];
 
-// ⬇️ Cria o formulário reativo
 const form = useForm({
+  gender: '',
   age: '',
   height: '',
   weight: '',
@@ -35,16 +37,17 @@ const form = useForm({
   scruff: '',
   thigh_l: '',
   thigh_r: '',
-  calf: ''
+  calf_l: '',
+  calf_r: '',
 });
 
-// ⬇️ Função para enviar
 function submit() {
   form.post(route('personal-datas.store'));
 }
 </script>
 
 <template>
+
   <Head :title="title" />
 
   <AppLayout :breadcrumbs="breadcrumbs">
@@ -62,14 +65,23 @@ function submit() {
                 <label :for="field.name" class="text-sm font-semibold dark:text-gray-50 mb-1 block">
                   {{ field.label }}
                 </label>
-                <input
-                  :type="field.type"
-                  :name="field.name"
-                  :step="field.step"
-                  v-model="form[field.name]"
-                  :required="field.required"
-                  class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+
+                <tempolate v-if="field.type === 'select'">
+                  <select :name="field.name" v-model="form[field.name]" :required="field.required"
+                    class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Selecione seu Genero</option>
+                    <option v-for="option in field.options" :key="option" :value="option">
+                      {{ option }}
+                    </option>
+                  </select>
+                </tempolate>
+
+                <template v-else>
+                  <input :type="field.type" :name="field.name" :step="field.step" v-model="form[field.name]"
+                    :required="field.required"
+                    class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                </template>
               </div>
 
               <div class="col-span-1 md:col-span-2 mt-4">
