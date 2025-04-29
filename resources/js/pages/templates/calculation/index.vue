@@ -30,27 +30,6 @@ defineProps<{
                 <div class="p-6 max-w-7xl mx-auto">
                     <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
                     <div class="overflow-x-auto bg-white dark:bg-neutral-900 shadow-lg">
-                        <!-- <table class="min-w-full table-auto text-sm text-left mb-10">
-                            <thead
-                                class="dark:bg-neutral-800 bg-neutral-500 text-white border  dark:border-b-neutral-500 border-b-black text-center">
-                                <tr>
-                                    <th class="p-3">IMC</th>
-                                    <th class="p-3">Metabolismo basal</th>
-                                    <th class="p-3">Injestão de água</th>
-                                    <th class="p-3">Proteinas</th>
-                                    <th class="p-3">Carboidratos</th>
-                                    <th class="p-3">Gordura</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in personalData" :key="item.id"
-                                    class="border-b hover:bg-blue-50 dark:hover:bg-neutral-800 text-center">
-                                    <td class="p-3">{{ item.tmb }}</td>
-                                    <td class="p-3"></td>
-                                    <td class="p-3">{{ item.waterIntake }}</td>
-                                </tr>
-                            </tbody>
-                        </table> -->
                         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
 
                             <div v-for="item in personalData" :key="item.id"
@@ -94,17 +73,7 @@ defineProps<{
                                 <h3 class="text-sm font-extralight">{{ item.fats.subtitle }}</h3>
                                 <h3 class="text-2xl font-bold p-2">{{ item.fats.value }}</h3>
                             </div>
-
-                            <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                                <PlaceholderPattern />
-                            </div>
-                            <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                                <PlaceholderPattern />
-                            </div> -->
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
