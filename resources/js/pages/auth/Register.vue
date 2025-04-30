@@ -23,7 +23,7 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthBase class="bg-linear-to-r from-cyan-500/10 to-lime-500/10 dark:from-cyan-500/50 dark:to-lime-100/50" title="Crie uma conta" description="Insira seus dados abaixo para criar sua conta">
+    <AuthBase class="bg-linear-to-r from-cyan-500/10 to-lime-500/10 dark:from-neutral-950 dark:to-lime-600" title="Crie uma conta" description="Insira seus dados abaixo para criar sua conta">
         <Head title="Cadastre-se" />
 
         <form @submit.prevent="submit" class="flex flex-col gap-6">
