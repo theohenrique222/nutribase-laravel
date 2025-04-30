@@ -15,9 +15,13 @@ class DietPlanController extends Controller
      */
     public function index()
     {
-        $calculations = auth()->user()->calculations()->latest()->get();
+        $calculations = Calculation::all();
 
-        return Inertia::render('templates/diet/Index', ['calculations' => $calculations]);
+        return Inertia::render('templates/diet/Index', 
+        [
+            'title'         =>  'Dieta',
+            'calculations'  =>  $calculations,
+    ]);
     }
 
     /**

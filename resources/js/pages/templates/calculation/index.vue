@@ -113,7 +113,7 @@ function save() {
                         <div class="w-full text-center p-10">
                             <form @submit.prevent="save">
                                 <button type="submit"
-                                    class="bg-lime-500 hover:opacity-90 text-white px-10 py-2 font-bold rounded">
+                                    class="bg-lime-500 hover:opacity-80 cursor-pointer text-white font-semibold px-8 py-3 rounded-md transition">
                                     Analizar
                                 </button>
                             </form>
