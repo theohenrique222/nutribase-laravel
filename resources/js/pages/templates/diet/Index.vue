@@ -31,6 +31,25 @@ defineProps<{
                                 Selecione os alimentos que deseja incluir na sua dieta
                             </h2>
 
+                            <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-800 p-5 rounded-xl text-center mb-2">
+                                <div class="">
+                                    <h3 class="text-lime-400 text-xl font-bold mb-4">Selecione seu objetivo</h3>
+                                    <select name="" id="" class="bg-neutral-700 p-2 rounded-md w-3/4">
+                                        <option value="">Hipertrofia</option>
+                                        <option value="">Perder gordura</option>
+                                        <option value="">Ganho de massa</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <h3 class="text-lime-400 text-xl font-bold mb-4">Selecione seu nível de atividade</h3>
+                                    <select name="" id="" class="bg-neutral-700 p-2 rounded-md w-3/4">
+                                        <option value="">Ativo</option>
+                                        <option value="">Moderado</option>
+                                        <option value="">Sedentário</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 
                                 <div class="bg-neutral-800 p-5 rounded-xl border border-neutral-700 shadow">
