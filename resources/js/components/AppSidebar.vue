@@ -13,11 +13,11 @@ const mainNavItems: NavItem[] = [
         href: '/',
         icon: Home,
     },
-    {
-        title: 'Painel de controle',
-        href: 'dashboard',
-        icon: LayoutDashboardIcon,
-    },
+    // {
+    //     title: 'Painel de controle',
+    //     href: 'dashboard',
+    //     icon: LayoutDashboardIcon,
+    // },
     {
         title: 'Dados Pessoais',
         href: 'personal-datas',

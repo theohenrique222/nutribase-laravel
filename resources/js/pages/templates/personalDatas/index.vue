@@ -85,8 +85,8 @@ defineProps<{
 
                         <a :href="route('personal-datas.create')">
                             <div
-                                class="bg-lime-200/70 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-5">
-                                <p class="text-lg text-white font-extrabold">Nova medida</p>
+                                class="bg-lime-500 hover:opacity-90 transition duration-200 cursor-pointer rounded-md w-1/4 flex m-auto justify-center py-2 mt-5">
+                                <p class="text-white font-extrabold">Nova medida</p>
                             </div>
                         </a>
                     </div>
