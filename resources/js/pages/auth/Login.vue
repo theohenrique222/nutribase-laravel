@@ -28,7 +28,7 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthBase class="bg-linear-to-r from-cyan-500/10 to-lime-500/10 dark:from-cyan-500/50 dark:to-lime-100/50" title="Entre na sua conta" description="Digite seu e-mail e senha abaixo para fazer login">
+    <AuthBase class="bg-linear-to-r from-cyan-500/10 to-lime-500/10 dark:from-neutral-950 dark:to-lime-600" title="Entre na sua conta" description="Digite seu e-mail e senha abaixo para fazer login">
         <Head title="Entrar" />
 
         <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
