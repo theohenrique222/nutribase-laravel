@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -11,8 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calculation', function (Blueprint $table) {
+        Schema::create('calculations', function (Blueprint $table) {
             $table->id();
+            $table->float('tmb');
+            $table->float('proteins');
+            $table->float('carbohydrates');
+            $table->float('fat');
+            $table->float('water_intake');
+            $table->float('imc');
             $table->timestamps();
         });
     }
@@ -22,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calculation');
+        Schema::dropIfExists('calculations');
     }
 };

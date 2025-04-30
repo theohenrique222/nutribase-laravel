@@ -12,6 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 defineProps<{
     title: string,
+    calculations: Array
 }>()
 </script>
 
@@ -24,7 +25,11 @@ defineProps<{
             <div class="p-6 max-w-7xl mx-auto">
                 <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-900 shadow-lg">
-                    
+                    <div>
+                        <h2>Baseada nos seus cálculos</h2>
+                        <p>Taxa Metabólica Basal: {{ calculation.tmb }} kcal</p>
+                        
+                      </div>
                 </div>
             </div>
         </div>

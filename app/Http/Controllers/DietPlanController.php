@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calculation;
 use App\Models\DietPlan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,8 +15,9 @@ class DietPlanController extends Controller
      */
     public function index()
     {
-        $name = 'Theo';
-        return Inertia::render('templates/diet/Index');
+        $calculations = auth()->user()->calculations()->latest()->get();
+
+        return Inertia::render('templates/diet/Index', ['calculations' => $calculations]);
     }
 
     /**

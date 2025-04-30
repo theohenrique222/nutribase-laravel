@@ -36,7 +36,7 @@ class CalculationController extends Controller
         return [
             'title'             => 'Água diaria',
             'subtitle'          => 'Quantidade de água que seu corpo precisa para realizar funções',
-            'value'             => round($weight * $factor / 1000, 3) . ' litros',
+            'value'             => round($weight * $factor / 1000, 3),
         ];
     }
 
@@ -53,11 +53,11 @@ class CalculationController extends Controller
     protected function calculateProteins($weight)
     {
         $factor = 2.2;
-        
+
         return [
             'title'             => 'Proteínas',
             'subtitle'          => 'Quantidade de proteínas diarias que seu corpo precisa',
-            'value'             => round($weight * $factor) . ' gramas'
+            'value'             => round($weight * $factor)
         ];
     }
 
@@ -68,7 +68,7 @@ class CalculationController extends Controller
         return [
             'title'             => 'Carboidratos',
             'subtitle'          => 'Quantidade de carboidratos diarios que seu corpo precisa ingerir',
-            'value'             => round($weight * $factor) . ' gramas'
+            'value'             => round($weight * $factor)
         ];
     }
 
@@ -79,7 +79,7 @@ class CalculationController extends Controller
         return [
             'title'            => 'Gordura',
             'subtitle'         => 'Quantidade de gorduras que seu corpo precisa no dia',
-            'value'            => round($weight * $factor) . ' gramas'
+            'value'            => round($weight * $factor)
         ];
     }
 
@@ -96,11 +96,14 @@ class CalculationController extends Controller
             return $data;
         });
 
+        $calculations = Calculation::all();
+
         return Inertia::render(
             'templates/calculation/index',
             [
                 'title'         =>  'Análise Corporal',
-                'personalData'  =>  $personalData
+                'personalData'  =>  $personalData,
+                'calculations'  =>  $calculations
             ]
         );
     }
@@ -118,7 +121,30 @@ class CalculationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        
+        $request->validate([
+            'tmb'           =>  'required|numeric',
+            'proteins'      =>  'required|numeric',
+            'carbohydrates' =>  'required|numeric',
+            'fat'           =>  'required|numeric',
+            'water_intake'  =>  'required|numeric',
+            'imc'           =>  'required|numeric',
+        ]);
+        
+        Calculation::create([
+            'tmb'           =>  $request->tmb,
+            'proteins'      =>  $request->proteins,
+            'carbohydrates' =>  $request->carbohydrates,
+            'fat'           =>  $request->fat,
+            'water_intake'  =>  $request->water_intake,
+            'imc'           =>  $request->imc,
+
+        ]);
+        
+        // return redirect()->back()->with('success', 'Cálculo salvo com sucesso!');
+        return to_route('personal-datas.index')->with('success', 'Cálculo salvo com sucesso!');
+
     }
 
     /**
