@@ -8,7 +8,6 @@ import { computed } from 'vue';
 const { calculations } = usePage().props;
 const page = usePage();
 const successMessage = computed(() => page.props.flash?.success);
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Análise Corporal',
@@ -23,7 +22,7 @@ if (calculations.length > 0) {
 
     metrics = [
         {
-            title: 'Taxa Metabólica Basal',
+            title: 'Metabolismo Basal',
             subtitle: 'Energia mínima necessária por dia',
             value: latest.tmb,
         },
@@ -59,12 +58,43 @@ const props = defineProps<{
     title: string,
     personalData: Array<{
         id: number,
-        tmb: { title: string, subtitle: string, value: number },
-        waterIntake: { title: string, subtitle: string, value: number },
-        imc: { title: string, subtitle: string, value: number },
-        proteins: { title: string, subtitle: string, value: number },
-        carbohydrates: { title: string, subtitle: string, value: number },
-        fats: { title: string, subtitle: string, value: number },
+        tmb:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+
+        },
+        waterIntake:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+        },
+        imc:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+        },
+        proteins:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+        },
+        carbohydrates:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+        },
+        fats:
+        {
+            title: string,
+            subtitle: string,
+            value: number
+        },
     }>
 }>()
 
@@ -72,14 +102,15 @@ function save() {
 
     const item = props.personalData[0];
 
-    router.post('/calculation', {
-        tmb: item.tmb.value,
-        proteins: item.proteins.value,
-        carbohydrates: item.carbohydrates.value,
-        fat: item.fats.value,
-        water_intake: item.waterIntake.value,
-        imc: item.imc.value
-    });
+    router.post('/calculation',
+        {
+            tmb: item.tmb.value,
+            proteins: item.proteins.value,
+            carbohydrates: item.carbohydrates.value,
+            fat: item.fats.value,
+            water_intake: item.waterIntake.value,
+            imc: item.imc.value
+        });
 }
 
 </script>
@@ -97,19 +128,19 @@ function save() {
                     <div v-if="successMessage" class="mb-4 p-4 bg-green-100 text-green-800 rounded">
                         {{ successMessage }}
                     </div>
-                    <div class="overflow-x-auto bg-white dark:bg-neutral-900">
-                      
+                    <div class="overflow-x-auto bg-white dark:bg-neutral-700 p-8">
+
                         <div class="grid auto-rows-min gap-4 md:grid-cols-3" v-if="metrics.length">
                             <div v-for="(metric, index) in metrics" :key="index"
                                 class="bg-neutral-800 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border text-center p-5">
-                                <h2 class="text-2xl font-extrabold p-2">{{ metric.title }}</h2>
-                                <h3 class="text-sm font-extralight">{{ metric.subtitle }}</h3>
+                                <h2 class="text-2xl font-extrabold p-1 text-lime-500">{{ metric.title }}</h2>
+                                <h3 class="text-sm font-extralight text-neutral-200">{{ metric.subtitle }}</h3>
                                 <h3 class="text-2xl font-bold p-2">{{ metric.value }}</h3>
                             </div>
                         </div>
-                        
+
                         <p v-else class="text-center text-gray-400 mt-10">Nenhum cálculo disponível ainda.</p>
-                        
+
                         <div class="w-full text-center p-10">
                             <form @submit.prevent="save">
                                 <button type="submit"
@@ -118,7 +149,6 @@ function save() {
                                 </button>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
