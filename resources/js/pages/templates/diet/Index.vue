@@ -1,25 +1,32 @@
 <script setup lang="ts">
 import AppLayout from "@/layouts/AppLayout.vue";
-import { Head, router } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 
-defineProps<{ title: string; calculations: Array }>();
+defineProps<{
+  title: string;
+  diet: string | null;
+}>();
 </script>
+
 <template>
   <Head :title="title" />
   <AppLayout>
     <div class="p-6 max-w-7xl mx-auto">
       <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
-      <div class="flex">
+
+      <div class="bg-neutral-900 p-6 rounded-xl shadow-lg">
         <p
           v-if="diet"
-          class="text-white bg-neutral-800 p-4 rounded-lg mt-6 whitespace-pre-wrap"
+          class="text-white whitespace-pre-wrap bg-neutral-800 p-6 rounded-lg"
         >
           {{ diet }}
         </p>
-        <p class="py-2">Nenhum plano de alimentar cadastrado.</p>
+
+        <p v-else class="text-white text-lg">Nenhum plano alimentar cadastrado.</p>
       </div>
-      <div class="bg-lime-500 w-1/5 text-center py-3 m-auto mt-10">
-        <a href="diet-plan/create" class="text-white text-xl font-bold"> Monte Agora! </a>
+
+      <div class="bg-lime-500 w-fit text-center py-3 px-8 m-auto mt-10 rounded-md hover:opacity-80 transition">
+        <a href="/diet-plan/create" class="text-white text-xl font-bold">Monte Agora!</a>
       </div>
     </div>
   </AppLayout>

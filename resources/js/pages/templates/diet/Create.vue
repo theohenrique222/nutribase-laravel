@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import axios from 'axios';
 
 const breadcrumbs: BreadcrumbItem[] = [
   { title: 'Dieta', href: '/diet-plan' },
@@ -19,13 +20,29 @@ const selectedFoods = ref({
   fats: []
 });
 
-function submit() {
-  router.post('/diet-plan', {
-    goal: goal.value,
-    activity: activity.value,
-    selectedFoods: selectedFoods.value
-  });
+async function submit() {
+  try {
+    const response = await axios.post('/api/generate-diet', {
+      goal: goal.value,
+      activity: activity.value,
+      selectedFoods: selectedFoods.value,
+    });
+
+    console.log('Resposta da IA:', response.data);
+
+    router.post('/diet-plan', {
+      goal: goal.value,
+      activity: activity.value,
+      selectedFoods: selectedFoods.value,
+      ai_result: response.data.choices[0].message.content,
+    });
+
+  } catch (error) {
+    console.error('Erro ao gerar dieta:', error);
+  }
 }
+
+
 </script>
 
 <template>
@@ -40,7 +57,7 @@ function submit() {
           <div
             class="bg-neutral-700 w-full max-w-5xl mx-auto min-h-screen rounded-2xl shadow-lg p-8"
           >
-            <form>
+            <form @submit.prevent="submit">
               <h2 class="text-white text-2xl font-semibold mb-6 text-center">
                 Selecione os alimentos que deseja incluir na sua dieta
               </h2>
@@ -108,6 +125,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="ovo"
                         class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
@@ -116,6 +134,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="queijo"
                         class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
@@ -124,6 +143,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="whey protein"
                         class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
@@ -140,6 +160,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="arroz"
                         class="accent-lime-500"
                         v-model="selectedFoods.carbs"
                       />
@@ -149,6 +170,7 @@ function submit() {
                       <input
                         type="checkbox"
                         class="accent-lime-500"
+                        value="macarrão"
                         v-model="selectedFoods.carbs"
                       />
                       Macarrão
@@ -156,6 +178,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="feijão"
                         class="accent-lime-500"
                         v-model="selectedFoods.carbs"
                       />
@@ -164,6 +187,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="cuscuz"
                         class="accent-lime-500"
                         v-model="selectedFoods.carbs"
                       />
@@ -181,6 +205,7 @@ function submit() {
                       <input
                         type="checkbox"
                         class="accent-lime-500"
+                        value="alface"
                         v-model="selectedFoods.salads"
                       />
                       Alface
@@ -188,6 +213,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="tomate"
                         class="accent-lime-500"
                         v-model="selectedFoods.salads"
                       />
@@ -196,6 +222,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="cenoura"
                         class="accent-lime-500"
                         v-model="selectedFoods.salads"
                       />
@@ -204,6 +231,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="cebola"
                         class="accent-lime-500"
                         v-model="selectedFoods.salads"
                       />
@@ -212,6 +240,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="repolho"
                         class="accent-lime-500"
                         v-model="selectedFoods.salads"
                       />
@@ -220,6 +249,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="couve"
                         class="accent-lime-500"
                         v-model="selectedFoods.salads"
                       />
@@ -236,6 +266,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="azeite"
                         class="accent-lime-500"
                         v-model="selectedFoods.fats"
                       />
@@ -244,6 +275,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="castanha"
                         class="accent-lime-500"
                         v-model="selectedFoods.fats"
                       />
@@ -252,6 +284,7 @@ function submit() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="amendoim"
                         class="accent-lime-500"
                         v-model="selectedFoods.fats"
                       />

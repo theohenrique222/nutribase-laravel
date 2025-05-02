@@ -39,7 +39,7 @@ class DietPlanController extends Controller
     {
         return Inertia::render('templates/diet/Index', [
             'title' => 'Plano Alimentar',
-            'diet' => session('diet') // para mostrar o resultado
+            'diet' => session('diet')
         ]);
     }
 
