@@ -26,7 +26,6 @@ function submit() {
     selectedFoods: selectedFoods.value
   });
 }
-
 </script>
 
 <template>
