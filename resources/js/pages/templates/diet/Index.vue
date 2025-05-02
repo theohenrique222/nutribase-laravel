@@ -22,7 +22,7 @@ defineProps<{
           {{ diet }}
         </p>
 
-        <p v-else class="text-white text-lg">Nenhum plano alimentar cadastrado.</p>
+        <p v-else class="text-white text-lg">Nenhum plano alimentar montado por nossa inteligência artificial.</p>
       </div>
 
       <div class="bg-lime-500 w-fit text-center py-3 px-8 m-auto mt-10 rounded-md hover:opacity-80 transition">

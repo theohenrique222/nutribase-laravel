@@ -21,7 +21,7 @@ Route::resource('diet-plan', DietPlanController::class)->middleware(['auth']);
 
 Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 'generate'])->name('diets.generate');
 
-Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
+// Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
 
 
 

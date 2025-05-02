@@ -29,7 +29,7 @@ const mainNavItems: NavItem[] = [
         icon: Activity,
     },
     {
-        title: 'Dieta',
+        title: 'Dieta IA',
         href: 'diet-plan',
         icon: Clipboard
     },

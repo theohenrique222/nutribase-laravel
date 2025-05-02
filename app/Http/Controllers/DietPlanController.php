@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Calculation;
 use App\Models\DietPlan;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -20,26 +19,26 @@ class DietPlanController extends Controller
         $prompt = $request->input('prompt');
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('OPENROUTER_API_KEY'),
-            'HTTP-Referer' => 'http://localhost', // use seu domínio real em produção
-            'Content-Type' => 'application/json',
+            'Authorization' =>  'Bearer ' . env('OPENROUTER_API_KEY'),
+            'HTTP-Referer'  =>  'http://localhost',
+            'Content-Type'  =>  'application/json',
         ])->post('https://openrouter.ai/api/v1/chat/completions', [
-            'model' => 'openchat/openchat-3.5',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt],
+            'model'         => 'openchat/openchat-3.5',
+            'messages'      => [
+                ['role'     => 'user', 'content' => $prompt],
             ],
         ]);
 
         return response()->json([
-            'message' => $response['choices'][0]['message']['content'] ?? 'Erro ao gerar dieta',
+            'message'       =>  $response['choices'][0]['message']['content'] ?? 'Erro ao gerar dieta',
         ]);
     }
 
     public function index()
     {
         return Inertia::render('templates/diet/Index', [
-            'title' => 'Plano Alimentar',
-            'diet' => session('diet')
+            'title' => 'Plano Alimentar IA',
+            'diet'  => session('diet')
         ]);
     }
 
@@ -65,9 +64,9 @@ class DietPlanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'goal' => 'required|string',
-            'activity' => 'required|string',
-            'selectedFoods' => 'required|array',
+            'goal'          =>  'required|string',
+            'activity'      =>  'required|string',
+            'selectedFoods' =>  'required|array',
         ]);
 
         $prompt = "Crie uma dieta para o objetivo: {$data['goal']}, atividade: {$data['activity']}, com os alimentos: " .
@@ -79,14 +78,14 @@ class DietPlanController extends Controller
             ));
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('OPENROUTER_API_KEY'),
-            'HTTP-Referer' => 'https://seusite.com', // obrigatório para OpenRouter
-            'X-Title' => 'nutribase-dieta',           // nome do seu projeto
+            'Authorization' =>  'Bearer ' . env('OPENROUTER_API_KEY'),
+            'HTTP-Referer'  =>  'https://seusite.com',
+            'X-Title'       =>  'nutribase-dieta',
         ])->post('https://openrouter.ai/api/v1/chat/completions', [
-            'model' => 'openai/gpt-3.5-turbo', // ou outro modelo disponível
-            'messages' => [
-                ['role' => 'system', 'content' => 'Você é um nutricionista que gera dietas personalizadas.'],
-                ['role' => 'user', 'content' => $prompt],
+            'model'         =>  'openai/gpt-3.5-turbo',
+            'messages'      => [
+                ['role'     =>  'system', 'content' => 'Você é um nutricionista que gera dietas personalizadas.'],
+                ['role'     => 'user', 'content' => $prompt],
             ],
         ]);
 
