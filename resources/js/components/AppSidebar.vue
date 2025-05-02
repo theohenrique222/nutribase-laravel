@@ -33,6 +33,11 @@ const mainNavItems: NavItem[] = [
         href: 'diet-plan',
         icon: Clipboard
     },
+    {
+        title: 'Dieta personalizada',
+        href: 'custom-diet',
+        icon: Clipboard
+    },
 ];
 
 const footerNavItems: NavItem[] = [

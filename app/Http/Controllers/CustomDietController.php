@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomDiet;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CustomDietController extends Controller
 {
@@ -12,7 +13,10 @@ class CustomDietController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('templates/customDiet/Index', 
+        [
+            'title' => 'Dieta Personalizada'
+        ]);
     }
 
     /**
