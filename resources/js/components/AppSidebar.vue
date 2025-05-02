@@ -30,7 +30,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Dieta',
-        href: '/diet-plan',
+        href: 'diet-plan',
         icon: Clipboard
     },
 ];

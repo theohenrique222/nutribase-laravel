@@ -18,5 +18,8 @@ Route::resource('personal-datas', PersonalDatasController::class)->middleware(['
 Route::resource('calculation', CalculationController::class)->middleware(['auth']);
 Route::resource('diet-plan', DietPlanController::class)->middleware(['auth']);
 
+Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 'generate'])->name('diets.generate');
+
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
