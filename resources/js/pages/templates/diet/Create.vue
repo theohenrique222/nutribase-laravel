@@ -8,7 +8,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   { title: 'Dieta', href: '/diet-plan' },
 ];
 
-defineProps<{ title: string, calculations: Array }>();
+defineProps<{ title: string }>();
 
 const goal = ref('');
 const activity = ref('');
@@ -265,7 +265,7 @@ function goBack() {
               <div class="mt-8 text-center">
                 <button
                   @click="goBack"
-                  class="bg-lime-500 hover:opacity-80 cursor-pointer text-white font-semibold px-8 py-3 rounded-md transition duration-200"
+                  class="px-5"
                 >Voltar</button>
                 <button
                   type="submit"
