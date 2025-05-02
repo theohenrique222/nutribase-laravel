@@ -27,9 +27,6 @@ function submit() {
   });
 }
 
-function goBack() {
-  window.history.back();
-}
 </script>
 
 <template>
@@ -86,6 +83,7 @@ function goBack() {
                       <input
                         type="checkbox"
                         value="carne"
+                        class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
                       Carne
@@ -93,6 +91,7 @@ function goBack() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="frango"
                         class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
@@ -101,6 +100,7 @@ function goBack() {
                     <label class="flex items-center gap-2">
                       <input
                         type="checkbox"
+                        value="peixe"
                         class="accent-lime-500"
                         v-model="selectedFoods.proteins"
                       />
@@ -261,12 +261,7 @@ function goBack() {
                   </div>
                 </div>
               </div>
-
               <div class="mt-8 text-center">
-                <button
-                  @click="goBack"
-                  class="px-5"
-                >Voltar</button>
                 <button
                   type="submit"
                   class="bg-lime-500 hover:opacity-80 cursor-pointer text-white font-semibold px-8 py-3 rounded-md transition duration-200"
