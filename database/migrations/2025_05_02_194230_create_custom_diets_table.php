@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('custom_diets', function (Blueprint $table) {
             $table->id();
+            $table->float('quantity');
+            $table->string('product');
+            $table->string('observation');
             $table->timestamps();
         });
     }

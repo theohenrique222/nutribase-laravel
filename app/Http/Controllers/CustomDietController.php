@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomDiet;
+use App\Models\DietPlan;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,10 +15,12 @@ class CustomDietController extends Controller
      */
     public function index()
     {
-        return Inertia::render('templates/customDiet/Index', 
-        [
-            'title' => 'Dieta Personalizada'
-        ]);
+        return Inertia::render(
+            'templates/customDiet/Index',
+            [
+                'title' => 'Dieta Personalizada'
+            ]
+        );
     }
 
     /**
@@ -24,7 +28,9 @@ class CustomDietController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('templates/customDiet/Create', [
+            'title' =>  'Criar dieta'
+        ]);
     }
 
     /**
@@ -32,7 +38,15 @@ class CustomDietController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'quantity'      =>  'required',
+            'product'       =>  'required',
+            'observation'   =>  'required',
+        ]);
+
+        DietPlan::create($data);
+
+        return Inertia::render('templates/customDiet/Index');
     }
 
     /**
