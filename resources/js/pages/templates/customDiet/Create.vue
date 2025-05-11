@@ -34,7 +34,6 @@ const removeProduct = (mealIndex: number, productIndex: number) => {
 
 const submitForm = () => {
   router.post('/custom-diet', { meals: meals.value })
-
 }
 </script>
 

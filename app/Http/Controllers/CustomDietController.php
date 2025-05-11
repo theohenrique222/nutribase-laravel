@@ -39,12 +39,22 @@ class CustomDietController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'quantity'      =>  'required',
-            'product'       =>  'required',
-            'observation'   =>  'required',
+            'meals' => 'required|array',
+            'meals.*.products' => 'required|array',
+            'meals.*.products.*.quantity' => 'required|string',
+            'meals.*.products.*.product' => 'required|string',
+            'meals.*.products.*.observation' => 'nullable|string',
         ]);
-
-        DietPlan::create($data);
+    
+        foreach ($data['meals'] as $meal) {
+            foreach ($meal['products'] as $product) {
+                CustomDiet::create([
+                    'quantity'    => $product['quantity'],
+                    'product'     => $product['product'],
+                    'observation' => $product['observation'] ?? null,
+                ]);
+            }
+        }
 
         return Inertia::render('templates/customDiet/Index');
     }
