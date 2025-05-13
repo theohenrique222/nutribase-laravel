@@ -38,7 +38,7 @@ class CustomDietController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'meals' => 'required|array',
             'meals.*.products' => 'required|array',
             'meals.*.products.*.quantity' => 'required|string',
@@ -46,15 +46,12 @@ class CustomDietController extends Controller
             'meals.*.products.*.observation' => 'nullable|string',
         ]);
     
-        foreach ($data['meals'] as $meal) {
-            foreach ($meal['products'] as $product) {
-                CustomDiet::create([
-                    'quantity'    => $product['quantity'],
-                    'product'     => $product['product'],
-                    'observation' => $product['observation'] ?? null,
-                ]);
-            }
-        }
+        dd($request->meals);
+        CustomDiet::create([
+            'meals' => $request->meals,
+        ]);
+        
+        
 
         return Inertia::render('templates/customDiet/Index');
     }
