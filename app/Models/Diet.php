@@ -13,12 +13,12 @@ class Diet extends Model
     ];
 
     public function client() {
-        return $this->belongsTo(Client::class)->withPivot('quantity', 'observation');
+        return $this->belongsTo(Client::class);
     }
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'observation');
+        return $this->belongsToMany(Product::class, 'diet_product')->withPivot('quantity', 'observation');
     }
 
 }

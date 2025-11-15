@@ -57,10 +57,16 @@
                 </div>
                 <div class="flex justify-center">
                     @if ($client->diet)
-                        <a href="{{ route('diet.edit', $client->diet->id) }}"
-                           class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
-                            Ver Dieta
-                        </a>
+                        <div class="space-x-1">
+                            <a href="{{ route('diet.show', $client->diet->id) }}"
+                               class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                                Ver Dieta
+                            </a>
+                            <a href="{{ route('diet.edit', $client->diet->id) }}"
+                               class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                                Editar Dieta
+                            </a>
+                        </div>
                     @else
                         <a href="{{ route('diet.create', ['client_id' => $client->id]) }}"
                            class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
@@ -68,7 +74,7 @@
                         </a>
                     @endif
                 </div>
-                <div class="flex justify-center gap-2">
+                <div class="flex justify-center space-x-1">
                     <a href="{{ route('clients.edit', $client->id) }}"
                         class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                         Editar

@@ -22,12 +22,13 @@ class DietController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $clients = Client::all();
+        $client = Client::findOrFail($request->client_id);
+
         $products = Product::all();
 
-        return view('pages.diet.create', compact('clients', 'products'));
+        return view('pages.diet.create', compact('client', 'products'));
     }
 
     /**
@@ -35,6 +36,7 @@ class DietController extends Controller
      */
     public function store(Request $request)
     {
+
         $diet = Diet::create([
             'client_id' => $request->client_id,
             'name' => $request->name,
@@ -56,9 +58,12 @@ class DietController extends Controller
      */
     public function show($id)
     {
-        $products = Product::findOrFail($id);
+//        $products = Product::findOrFail($id);
+//        $client = Client::findOrFail($id);
+//        $diet = Diet::findOrFail($id);
+            $diet = Diet::with(['client', 'products'])->findOrFail($id);
 
-        return view('pages.diet.show', compact('products'));
+        return view('pages.diet.show', compact('diet'));
     }
 
     /**

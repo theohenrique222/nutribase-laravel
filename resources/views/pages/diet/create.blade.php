@@ -8,26 +8,20 @@
             <p class="text-gray-100">Acompanhe e gerencie suas dietas cadastradas</p>
         </div>
         <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg">
-            @if ($clients->isEmpty())
-                <div class="mb-3 text-center font-light">
-                    <h1>Você não tem alunos cadastrado</h1>
-                    <a href="{{ route('clients.create') }}" class="underline text-blue-500">Clique aqui</a><span> para cadastrar
-                        seus alunos</span>
-                </div>
-            @else
+
+
                 <form action="{{ route('diet.store') }}" method="POST" id="mealsForm">
                     @csrf
                     <div id="mealsContainer" class="space-y-6">
                         <div class="meal border rounded-lg p-4 bg-gray-50">
                             <div class="mb-3">
                                 <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Aluno:</label>
-                                <select name="client_id"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
-                                    <option value="" selected disabled>Selecione o aluno</option>
-                                    @foreach($clients as $client)
-                                    <option value="{{ $client->id  }}">{{ $client->name  }}</option>
-                                    @endforeach
+{{--                                <input type="text" name="client_id" id="" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" value="{{ $client->name }}">--}}
+
+                                <select name="client_id" id="" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                                    <option value="{{ $client->id }}">{{ $client->name  }}</option>
                                 </select>
+
                             <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Objetivo:</label>
                             <input type="text" name="name" placeholder="Ex: Hipertrofia" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
                             </div>
@@ -69,7 +63,7 @@
                         </button>
                     </div>
                 </form>
-            @endif
+
         </div>
     </section>
 
