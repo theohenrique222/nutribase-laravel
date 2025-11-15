@@ -40,6 +40,7 @@ class DietController extends Controller
             'name' => $request->name,
         ]);
 
+
         foreach ($request->products as $item) {
             $diet->products()->attach($item['product_id'], [
                 'quantity' => $item['quantity'],

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('diets', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->foreignId('client_id')->constrained()->ondelete('cascade');
             $table->timestamps();
         });
     }

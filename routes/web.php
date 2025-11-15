@@ -11,7 +11,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('diet', DietController::class);
-Route::resource('clients', ClientsController::class);
-Route::resource('products', ProductsController::class);
-Route::get('dashboard', DashboardController::class);
+Route::resource('diet', DietController::class)->middleware('auth');
+Route::resource('clients', ClientsController::class)->middleware('auth');
+Route::resource('products', ProductsController::class)->middleware('auth');
+Route::get('dashboard', DashboardController::class)->middleware('auth');

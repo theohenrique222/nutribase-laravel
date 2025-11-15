@@ -42,7 +42,7 @@
             </div>
         @empty
             <div class="p-6 text-center">
-                <p class="text-white mb-4">Você ainda não possui dietas cadastradas.</p>
+                <p class="text-neutral-800 mb-4">Você ainda não possui dietas cadastradas.</p>
             </div>
         @endforelse
         <div class="p-6 text-center">

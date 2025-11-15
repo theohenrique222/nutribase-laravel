@@ -22,18 +22,14 @@
                             <div class="mb-3">
                                 <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Aluno:</label>
                                 <select name="client_id"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
-                                
-                                <option value="">Selecione o aluno</option>
-                                
-                                @forelse ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @empty
-                                <option value="">Você não possui alunos cadastrados</option>
-                                @endforelse
-                            </select>
+                                class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
+                                    <option value="" selected disabled>Selecione o aluno</option>
+                                    @foreach($clients as $client)
+                                    <option value="{{ $client->id  }}">{{ $client->name  }}</option>
+                                    @endforeach
+                                </select>
                             <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Objetivo:</label>
-                            <input type="text" name="name" placeholder="Ex: Hipertrofia" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                            <input type="text" name="name" placeholder="Ex: Hipertrofia" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
                             </div>
                             <div class="flex justify-between items-center mb-3">
                                 <h2 class="font-semibold text-lg">Café da manhã</h2>
@@ -43,14 +39,14 @@
                             <div class="products space-y-3">
                                 <div class="product grid grid-cols-3 gap-2">
                                     <select name="products[0][product_id]" id=""
-                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
-                                        <option value="">Produto</option>
+                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
+                                        <option value="" selected disabled>Produto</option>
                                         @foreach ($products as $product)
                                             <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                     <input type="text" name="products[0][quantity]" placeholder="Quantidade"
-                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
                                     <input type="text" name="products[0][observation]" placeholder="Observação"
                                         class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
                                 </div>

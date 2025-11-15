@@ -13,10 +13,11 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
-        $diet = Diet::all();
+        $clients = Client::with('diet')->get();
+        $diets = Diet::all();
 
-        return view('pages.clients.index', compact('clients'));
+
+        return view('pages.clients.index', compact('clients', 'diets'));
     }
 
     /**

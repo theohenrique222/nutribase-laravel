@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Diet extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'client_id'
     ];
 
     public function client() {
         return $this->belongsTo(Client::class)->withPivot('quantity', 'observation');
     }
-    
+
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'observation');

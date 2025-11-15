@@ -18,7 +18,7 @@ class Client extends Model
         'goal',
     ];
 
-    public function diets() {
-        return $this->hasMany(Diet::class);
+    public function diet() {
+        return $this->hasOne(Diet::class, 'client_id');
     }
 }

@@ -4,9 +4,8 @@
 
     <section class="pt-16 min-h-screen bg-neutral-800">
         <div class="text-center mt-10 mb-8">
-            <h1 class="text-3xl font-bold text-lime-500">🧍‍♂️ Cadastro de Dados Pessoais</h1>
-            <p class="text-white">montar uma dieta envolve coletar informações pessoais, objetivos e preferências
-                alimentares, pra depois gerar refeições equilibradas.</p>
+            <h1 class="text-3xl font-bold text-lime-500">🧍‍♂️ Cadastre seus Alunos</h1>
+            <p class="text-white">Cadastre seus aluno, juntamente com seus dados pessoais, para efetuar calculos para criação de dietas e tereinos.</p>
         </div>
 
         <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-10">

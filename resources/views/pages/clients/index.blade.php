@@ -58,19 +58,19 @@
                 <div class="flex justify-center">
                     @if ($client->diet)
                         <a href="{{ route('diet.edit', $client->diet->id) }}"
-                            class="bg-lime-500 hover:bg-lime-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                           class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                             Ver Dieta
                         </a>
                     @else
                         <a href="{{ route('diet.create', ['client_id' => $client->id]) }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                           class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                             Criar Dieta
                         </a>
                     @endif
                 </div>
                 <div class="flex justify-center gap-2">
                     <a href="{{ route('clients.edit', $client->id) }}"
-                        class="bg-lime-500 hover:bg-lime-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                        class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                         Editar
                     </a>
 
@@ -79,7 +79,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="bg-red-500 hover:bg-red-600 cursor-pointer text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                            class="bg-red-500 hover:opacity-80 cursor-pointer text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                             Excluir
                         </button>
                     </form>
@@ -96,6 +96,7 @@
             + Cadastrar Aluno
             </a>
         </div>
+
     </div>
 </section>
 
