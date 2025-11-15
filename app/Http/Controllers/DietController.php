@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Diet;
-use App\Models\PersonalData;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,6 @@ class DietController extends Controller
     {
         $diets = Diet::all();
 
-
         return view('pages.diet.index', compact('diets'));
     }
 
@@ -26,8 +24,8 @@ class DietController extends Controller
      */
     public function create()
     {
-        $clients    =   Client::all();
-        $products   =   Product::all();
+        $clients = Client::all();
+        $products = Product::all();
 
         return view('pages.diet.create', compact('clients', 'products'));
     }
@@ -39,10 +37,8 @@ class DietController extends Controller
     {
         $diet = Diet::create([
             'client_id' => $request->client_id,
-            'name'      =>  $request->name,
+            'name' => $request->name,
         ]);
-        
-        
 
         foreach ($request->products as $item) {
             $diet->products()->attach($item['product_id'], [
@@ -57,9 +53,11 @@ class DietController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Diet $diet)
+    public function show($id)
     {
-        return view('pages.diet.show');
+        $products = Product::findOrFail($id);
+
+        return view('pages.diet.show', compact('products'));
     }
 
     /**
@@ -67,9 +65,10 @@ class DietController extends Controller
      */
     public function edit($id)
     {
-        $diet = Diet::findOrFail($id);
+        $diet = Diet::with('products')->findOrFail($id);
+        $products = Product::all();
 
-        return view('pages.diet.edit', compact('diet'));
+        return view('pages.diet.edit', compact('diet', 'products'));
     }
 
     /**
@@ -87,7 +86,18 @@ class DietController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('diet.index');
+        $syncData = [];
+
+        foreach ($request->products as $item) {
+            $syncData[$item['product_id']] = [
+                'quantity' => $item['quantity'] ?? null,
+                'observation' => $item['observation'] ?? null,
+            ];
+        }
+
+        $diet->products()->sync($syncData);
+
+        return redirect()->route('diet.index')->with('success', 'Dieta atualizada com sucesso!');
     }
 
     /**

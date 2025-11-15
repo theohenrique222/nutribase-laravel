@@ -10,17 +10,16 @@
 
     <div class="bg-gray-100 min-h-80 backdrop-blur-sm shadow-md rounded-xl overflow-hidden max-w-6xl m-auto">
 
-        {{-- Cabeçalho da tabela --}}
-        <div class="grid grid-cols-4 bg-lime-500 text-neutral-50 font-semibold uppercase text-center p-4 border-b">
+        <div class="grid grid-cols-5 bg-lime-500 text-neutral-50 font-semibold uppercase text-center p-4 border-b">
             <p>Nome</p>
             <p>Idade</p>
             <p>Objetivo</p>
+            <p>Dietas</p>
             <p>Ações</p>
         </div>
 
-        {{-- Listagem --}}
         @forelse ($clients as $client)
-            <div class="grid grid-cols-4 items-center border-b border-neutral-300 p-4 bg-white hover:bg-lime-50 transition">
+            <div class="grid grid-cols-5 items-center border-b border-neutral-300 p-4 bg-white hover:bg-lime-50 transition">
 
                 {{-- Nome + data --}}
                 <div class="text-center sm:text-left">
@@ -41,23 +40,34 @@
 
                 <div class="text-center">
                     <p class="text-base text-neutral-700">
-                        @switch($client->activity)
+                        @switch($client->goal)
                             @case(1)
-                                Sedentário
+                                Emagrecimento
                                 @break
                             @case(2)
-                                Moderado
+                                Hipertrofia
                                 @break
                             @case(3)
-                                Ativo
+                                Condicionamento
                                 @break
                             @default
                                 Não informado
                         @endswitch
                     </p>
                 </div>
-
-                {{-- Ações --}}
+                <div class="flex justify-center">
+                    @if ($client->diet)
+                        <a href="{{ route('diet.edit', $client->diet->id) }}"
+                            class="bg-lime-500 hover:bg-lime-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                            Ver Dieta
+                        </a>
+                    @else
+                        <a href="{{ route('diet.create', ['client_id' => $client->id]) }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                            Criar Dieta
+                        </a>
+                    @endif
+                </div>
                 <div class="flex justify-center gap-2">
                     <a href="{{ route('clients.edit', $client->id) }}"
                         class="bg-lime-500 hover:bg-lime-600 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">

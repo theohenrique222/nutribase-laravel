@@ -1,19 +1,68 @@
 @extends('layouts.main')
-@section('title', 'Atualiazr Dieta')
+@section('title', 'Criar Dieta')
 @section('content')
 
-<section class="pt-16">
-
-    <form action="{{ route('diet.update', $diet->id) }}" method="post">
-        @csrf
-        @method('PUT')
-        <div>
-            <label for="">Nome</label>
-            <input type="text" id="name" name="name" placeholder="digite seu nome" value="{{ $diet->name }}">
+    <section class="pt-16 min-h-screen bg-neutral-800">
+        <div class="text-center mt-10 mb-8">
+            <h1 class="text-3xl font-bold text-lime-500">🍎 Editar Dieta</h1>
+            <p class="text-gray-100">Edite suas refeiçoes</p>
         </div>
-        <button type="submit">Alterar</button>
-    </form>
-</section>
+        <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg">
+
+            <form action="{{ route('diet.update', $diet->id) }}" method="POST" id="mealsForm">
+                @csrf
+                @method('PUT')
+                <div id="mealsContainer" class="space-y-6">
+                    <div class="meal border rounded-lg p-4 bg-gray-50">
+                        <div class="mb-3">
+                            <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Objetivo:</label>
+                            <input type="text" name="name" placeholder="Ex: Hipertrofia"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition"
+                                value="{{ $diet->name }}">
+                        </div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h2 class="font-semibold text-lg">Café da manhã</h2>
+                            <button type="button" class="text-red-500 hover:underline remove-meal hidden">Remover</button>
+                        </div>
+                        <div class="products space-y-3">
+                            @foreach ($diet->products as $product)
+                                <div class="product grid grid-cols-3 gap-2">
+                                    <select name="products[{{ $loop->index }}][product_id]"
+                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                                        @foreach ($products as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == $product->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="products[{{ $loop->index }}][quantity]" placeholder="Quantidade"
+                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition"
+                                        value="{{ $product->pivot->quantity }}">
+                                    <input type="text" name="products[{{ $loop->index }}][observation]" placeholder="Observação"
+                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition"
+                                        value="{{ $product->pivot->observation ?: 'Sem observações' }}">
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" class="add-product text-sm text-neutral-800 mt-2 hover:underline">
+                            + Adicionar produto
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6 space-x-3">
+                    <button type="button" id="addMeal"
+                        class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-lime-700">
+                        + Adicionar nova refeição
+                    </button>
+
+                    <button type="submit" class="bg-lime-500 text-white px-4 py-2 rounded-lg hover:bg-lime-700">
+                        Salvar refeições
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
 
 @endsection

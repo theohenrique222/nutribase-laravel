@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Diet;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -13,6 +14,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
+        $diet = Diet::all();
 
         return view('pages.clients.index', compact('clients'));
     }

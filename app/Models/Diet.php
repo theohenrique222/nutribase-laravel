@@ -11,7 +11,7 @@ class Diet extends Model
         'name'
     ];
 
-    public function clients() {
+    public function client() {
         return $this->belongsTo(Client::class)->withPivot('quantity', 'observation');
     }
     
