@@ -7,9 +7,6 @@
             <div>
                 @if (auth()->check())
                     <ul class="flex text-white space-x-6">
-                        <li><a href="{{ route('diet.index') }}"
-                                class="hover:text-gray-300 transition-all hover:border-b-2 py-5 cursor-pointer text-sm">Dieta</a>
-                        </li>
                         <li><a href="{{ route('products.index') }}"
                                 class="hover:text-gray-300 transition-all hover:border-b-2 py-5 cursor-pointer text-sm">Produtos</a>
                         </li>
