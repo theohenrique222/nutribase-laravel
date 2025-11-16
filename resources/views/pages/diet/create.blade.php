@@ -10,13 +10,12 @@
         <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg">
 
 
-                <form action="{{ route('diet.store') }}" method="POST" id="mealsForm">
+                <form action="{{ route('diet.store') }}" method="POST" id="dietForm">
                     @csrf
-                    <div id="mealsContainer" class="space-y-6">
+                    <div id="dietContainer" class="space-y-6">
                         <div class="meal border rounded-lg p-4 bg-gray-50">
                             <div class="mb-3">
                                 <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Aluno:</label>
-{{--                                <input type="text" name="client_id" id="" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" value="{{ $client->name }}">--}}
 
                                 <select name="client_id" id="" class="w-full px-4 py-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
                                     <option value="{{ $client->id }}">{{ $client->name  }}</option>
@@ -30,7 +29,7 @@
                                 <button type="button" class="text-red-500 hover:underline remove-meal hidden">Remover</button>
                             </div>
 
-                            <div class="products space-y-3">
+                            <div class="products space-y-3" id="products">
                                 <div class="product grid grid-cols-3 gap-2">
                                     <select name="products[0][product_id]" id=""
                                         class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
@@ -43,12 +42,18 @@
                                         class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
                                     <input type="text" name="products[0][observation]" placeholder="Observação"
                                         class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                                    <div>
+                                        <button type="button" id="delete-product" class="text-sm text-neutral-800 hover:underline cursor-pointer">
+                                            x Remover
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <button type="button" class="add-product text-sm text-neutral-800 mt-2 hover:underline">
+                            <button type="button" id="add-product" class="delete-product text-sm text-neutral-800 mt-2 hover:underline cursor-pointer">
                                 + Adicionar produto
                             </button>
+
                         </div>
                     </div>
 
@@ -67,5 +72,42 @@
         </div>
     </section>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const addProductBtn = document.getElementById("add-product");
+            const productsContainer = document.getElementById("products");
+            let productIndex = 1;
 
+            const newProduct = (i) => `
+                <div class="product grid grid-cols-3 gap-2">
+                    <select name="products[${i}][product_id]" id=""
+                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
+                        <option value="" selected disabled>Produto</option>
+                        @foreach ($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        @endforeach
+                        </select>
+                    <input type="text" name="products[${i}][quantity]" placeholder="Quantidade"
+                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
+                    <input type="text" name="products[${i}][observation]" placeholder="Observação"
+                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
+                    <div>
+                        <button type="button" id="delete-product" class="delete-product text-sm text-neutral-800 hover:underline cursor-pointer">
+                            x Remover
+                        </button>
+                    </div>
+                </div>
+                `;
+            addProductBtn.addEventListener('click', () => {
+                productsContainer.insertAdjacentHTML('beforeend', newProduct(productIndex));
+                productIndex++;
+            });
+
+            productsContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-product')) {
+                    event.target.closest('.product').remove();
+                }
+            });
+        } )
+    </script>
 @endsection
