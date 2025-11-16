@@ -2,14 +2,28 @@
 @section('title', 'Criar Dieta')
 @section('content')
 
+    <div id="product-template" class="hidden">
+        <div class="product grid grid-cols-3 gap-2 mb-2">
+            <select class="product-select border rounded-lg px-2 py-1" required>
+                <option value="" disabled selected>Produto</option>
+                @foreach ($products as $product)
+                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                @endforeach
+            </select>
+            <input type="text" class="product-qty border rounded-lg px-2 py-1" placeholder="Quantidade" required>
+            <input type="text" class="product-obs border rounded-lg px-2 py-1" placeholder="Observação">
+            <div>
+                <button type="button" class="remove-btn ml-2 cursor-pointer hover:underline">Remover</button>
+            </div>
+        </div>
+    </div>
+
     <section class="pt-16 min-h-screen bg-neutral-800">
         <div class="text-center mt-10 mb-8">
             <h1 class="text-3xl font-bold text-lime-500">🍎 Montar Refeições</h1>
             <p class="text-gray-100">Acompanhe e gerencie suas dietas cadastradas</p>
         </div>
         <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg">
-
-
                 <form action="{{ route('diet.store') }}" method="POST" id="dietForm">
                     @csrf
                     <div id="dietContainer" class="space-y-6">
@@ -28,32 +42,10 @@
                                 <h2 class="font-semibold text-lg">Café da manhã</h2>
                                 <button type="button" class="text-red-500 hover:underline remove-meal hidden">Remover</button>
                             </div>
-
-                            <div class="products space-y-3" id="products">
-                                <div class="product grid grid-cols-3 gap-2">
-                                    <select name="products[0][product_id]" id=""
-                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
-                                        <option value="" selected disabled>Produto</option>
-                                        @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="text" name="products[0][quantity]" placeholder="Quantidade"
-                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
-                                    <input type="text" name="products[0][observation]" placeholder="Observação"
-                                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
-                                    <div>
-                                        <button type="button" id="delete-product" class="text-sm text-neutral-800 hover:underline cursor-pointer">
-                                            x Remover
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div id="products" class="space-y-3"></div>
                             <button type="button" id="add-product" class="delete-product text-sm text-neutral-800 mt-2 hover:underline cursor-pointer">
                                 + Adicionar produto
                             </button>
-
                         </div>
                     </div>
 
@@ -74,40 +66,28 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const addProductBtn = document.getElementById("add-product");
-            const productsContainer = document.getElementById("products");
-            let productIndex = 1;
 
-            const newProduct = (i) => `
-                <div class="product grid grid-cols-3 gap-2">
-                    <select name="products[${i}][product_id]" id=""
-                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
-                        <option value="" selected disabled>Produto</option>
-                        @foreach ($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                        @endforeach
-                        </select>
-                    <input type="text" name="products[${i}][quantity]" placeholder="Quantidade"
-                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition" required>
-                    <input type="text" name="products[${i}][observation]" placeholder="Observação"
-                        class="border rounded-lg px-2 py-1 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none transition">
-                    <div>
-                        <button type="button" id="delete-product" class="delete-product text-sm text-neutral-800 hover:underline cursor-pointer">
-                            x Remover
-                        </button>
-                    </div>
-                </div>
-                `;
-            addProductBtn.addEventListener('click', () => {
-                productsContainer.insertAdjacentHTML('beforeend', newProduct(productIndex));
-                productIndex++;
-            });
+            const container = document.getElementById("products");
+            const templateProduct = document.getElementById("product-template");
+            const addBtn = document.getElementById("add-product");
+            const template = templateProduct.firstElementChild;
+            let index = 0;
 
-            productsContainer.addEventListener('click', (event) => {
-                if (event.target.classList.contains('delete-product')) {
-                    event.target.closest('.product').remove();
-                }
-            });
-        } )
+            function addProductBlock() {
+                const clone = template.cloneNode(true);
+                clone.querySelector(".product-select").name = `products[${index}][product_id]`;
+                clone.querySelector(".product-qty").name    = `products[${index}][quantity]`;
+                clone.querySelector(".product-obs").name    = `products[${index}][observation]`;
+                clone.querySelector(".remove-btn").addEventListener("click", () => {
+                    clone.remove();
+                });
+                container.appendChild(clone);
+                index++;
+            }
+
+            addProductBlock();
+
+            addBtn.addEventListener("click", addProductBlock);
+        });
     </script>
 @endsection
