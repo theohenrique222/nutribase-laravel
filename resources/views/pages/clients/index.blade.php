@@ -63,7 +63,7 @@
                                 Ver Dieta
                             </a>
                             <a href="{{ route('diet.edit', $client->diet->id) }}"
-                               class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                               class="bg-yellow-400 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                                 Editar Dieta
                             </a>
                         </div>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="flex justify-center space-x-1">
                     <a href="{{ route('clients.edit', $client->id) }}"
-                        class="bg-lime-500 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
+                        class="bg-yellow-400 hover:opacity-80 text-white text-sm font-medium px-3 py-1.5 rounded-md transition">
                         Editar
                     </a>
 

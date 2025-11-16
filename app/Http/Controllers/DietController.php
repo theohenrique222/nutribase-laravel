@@ -50,7 +50,7 @@ class DietController extends Controller
             ]);
         }
 
-        return redirect()->route('diet.index');
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -58,10 +58,7 @@ class DietController extends Controller
      */
     public function show($id)
     {
-//        $products = Product::findOrFail($id);
-//        $client = Client::findOrFail($id);
-//        $diet = Diet::findOrFail($id);
-            $diet = Diet::with(['client', 'products'])->findOrFail($id);
+        $diet = Diet::with(['client', 'products'])->findOrFail($id);
 
         return view('pages.diet.show', compact('diet'));
     }
@@ -103,7 +100,7 @@ class DietController extends Controller
 
         $diet->products()->sync($syncData);
 
-        return redirect()->route('diet.index')->with('success', 'Dieta atualizada com sucesso!');
+        return redirect()->route('clients.index')->with('success', 'Dieta atualizada com sucesso!');
     }
 
     /**
@@ -114,6 +111,6 @@ class DietController extends Controller
         $diet = Diet::findOrFail($id);
         $diet->delete();
 
-        return redirect()->route('diet.index');
+        return redirect()->route('clients.index');
     }
 }

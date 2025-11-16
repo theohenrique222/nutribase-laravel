@@ -11,20 +11,15 @@
                 Aluno: {{ $diet->client->name }}
             </p>
         </div>
-
         <div class="bg-gray-100 shadow-md rounded-xl max-w-4xl mx-auto p-6">
 
-            {{-- Dados do Aluno --}}
             <div class="mb-6 border-b pb-4">
                 <h2 class="text-xl font-semibold text-neutral-700 mb-3">Informações do Aluno</h2>
-
                 <div class="grid grid-cols-2 gap-4">
                     <p><strong>Nome:</strong> {{ $diet->client->name }}</p>
                     <p><strong>Idade:</strong> {{ $diet->client->age }}</p>
-
                     <p><strong>Peso:</strong> {{ $diet->client->weight }} kg</p>
                     <p><strong>Altura:</strong> {{ $diet->client->height }} cm</p>
-
                     <p><strong>Cintura:</strong> {{ $diet->client->waist }} cm</p>
                     <p><strong>Objetivo:</strong>
                         @switch($diet->client->goal)
@@ -37,23 +32,22 @@
                 </div>
             </div>
 
-            {{-- Lista de Alimentos da Dieta --}}
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-neutral-700 mb-3">Alimentos da Dieta</h2>
 
-                <div class="border rounded-xl overflow-hidden">
-                    <div class="grid grid-cols-4 bg-lime-500 text-white font-semibold p-3">
-                        <p>Nome</p>
+                <div class="border rounded-xl overflow-hidden text-center">
+                    <div class="grid grid-cols-3 bg-lime-500 text-white font-semibold p-3">
+                        <p>Produto</p>
                         <p>Quantidade</p>
-                        <p>Unidade</p>
+
                         <p>Observação</p>
                     </div>
 
                     @forelse ($diet->products as $product)
-                        <div class="grid grid-cols-4 p-3 border-b bg-white">
+                        <div class="grid grid-cols-3 p-3 border-b bg-white">
                             <p>{{ $product->name }}</p>
-                            <p>{{ $product->pivot->quantity }}</p>
-                            <p>{{ $product->portion_unit }}</p>
+                            <p>{{ $product->pivot->quantity }} {{ $product->portion_unit }}</p>
+
                             <p>{{ $product->pivot->observation ?? '-' }}</p>
                         </div>
                     @empty
@@ -64,11 +58,10 @@
                 </div>
             </div>
 
-            {{-- Botões --}}
             <div class="flex justify-between mt-6">
-                <a href="{{ route('clients.show', $diet->client->id) }}"
+                <a href="{{ route('clients.index') }}"
                    class="bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded-md transition">
-                    Voltar
+                    < Voltar
                 </a>
 
                 <a href="{{ route('diet.edit', $diet->id) }}"
