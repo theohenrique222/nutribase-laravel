@@ -62,6 +62,11 @@
                         @endswitch
                     </p>
                 </div>
+                <div class="bg-gray-50 p-4 rounded-xl shadow-sm">
+                    <p class="text-sm text-gray-500">Metabolismo Basal</p>
+                    <p class="text-lg font-semibold text-gray-800">{{ $clients->waist }} cm</p>
+                </div>
+
             </div>
         </div>
     </section>
