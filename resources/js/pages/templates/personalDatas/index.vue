@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
+const visible = ref(false);
 
 defineProps<{
         title?: string
         personalData: any[]
 }>();
-
-// const theads = [ 'Altura', 'Peso', 'Pescoço', 'Peitoral', 'Cintura', 'Braço Esquero' ];
 
 const destroy = (id: number) => {
     router.delete(route('personal-datas.destroy', id))
@@ -78,7 +78,7 @@ const datas = [ 'columns.created_at' ]
                                     </template>
                                     <template #content>
                                         <p class="m-0 text-center">
-                                            Analise seus dados corporais referentes ao mês citado acima
+                                            Entre para visualizar ou editar seus dados
                                         </p>
                                     </template>
                                     <template #footer>
@@ -88,9 +88,44 @@ const datas = [ 'columns.created_at' ]
                                                 @click="destroy(data.id)"
                                                 label="Deletar" severity="danger" variant="outlined" class="w-full" />
 
-                                            <Button label="Exibir" severity="success" class="w-full" />
+                                            <Button 
+                                                @click="visible = true"
+                                                label="Exibir" severity="success" class="w-full" />
 
                                         </div>
+                                        <Dialog v-model:visible="visible" maximizable modal header="Dados Corporais" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+                                            <span class="text-surface-500 dark:text-surface-400 block mb-8">
+                                                <div v-for="data in personalData" :key="data.id" class="p-4 border rounded-lg">
+                                                    <div class="text-center w-full pb-5">
+                                                        <h3 class="font-semibold mb-2 text-xl">
+                                                            <span v-if="data.created_at === data.updated_at">
+                                                                Avaliação Criada em {{ data.created_at_formatted }}
+                                                            </span>
+                                                            <span v-if="data.created_at != data.updated_at">
+                                                                Avaliação Atualizada em {{ data.created_at_formatted }}
+                                                            </span>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="grid grid-cols-2 gap-2 text-lg w-full text-center">
+                                                        <p>Altura: {{ data.height }} cm</p>
+                                                        <p>Peso: {{ data.weight }} kg</p>
+                                                        <p>Peitoral: {{ data.chest }} cm</p>
+                                                        <p>Cintura: {{ data.waist }} cm</p>
+                                                        <p>Braço Esq: {{ data.arm_l }} cm</p>
+                                                        <p>Braço Dir: {{ data.arm_r }} cm</p>
+                                                        <p>Coxa Esq: {{ data.thigh_l }} cm</p>
+                                                        <p>Coxa Dir: {{ data.thigh_r }} cm</p>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                
+                                            </div>
+                                            <div class="flex justify-end gap-2">
+                                                <Button type="button" label="Fechar" severity="secondary" @click="visible = false"></Button>
+                                                <Button type="button" label="Editar" severity="warn" @click="visible = false"></Button>
+                                            </div>
+                                        </Dialog>
                                     </template>
                                 </Card>
                             </div>
