@@ -24,4 +24,11 @@ class PersonalData extends Model
         'calf_l',
         'calf_r',
     ];
+
+    protected $appends = ['created_at_formatted'];
+    
+    public function getCreatedAtFormattedAttribute() 
+    { 
+        return $this->created_at?->format('d/m/Y'); 
+    }
 }

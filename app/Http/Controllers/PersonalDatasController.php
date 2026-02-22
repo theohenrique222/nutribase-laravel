@@ -14,6 +14,7 @@ class PersonalDatasController extends Controller
     public function index()
     {
         $personalData           =   PersonalData::all();
+        
         return Inertia::render(
             'templates/personalDatas/index',
             [
@@ -94,6 +95,9 @@ class PersonalDatasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $personalData = PersonalData::findOrFail($id);
+        $personalData->delete();
+        
+        return redirect()->back()->with('success', 'Registro deletado com sucesso!');
     }
 }
