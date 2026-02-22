@@ -14,7 +14,6 @@ class PersonalDatasController extends Controller
     public function index()
     {
         $personalData           =   PersonalData::all();
-
         return Inertia::render(
             'templates/personalDatas/index',
             [
@@ -62,7 +61,7 @@ class PersonalDatasController extends Controller
 
         PersonalData::create($validated);
 
-        return redirect()->route('personal-datas.index')->with('success', 'Medida salva com sucesso!');
+        return redirect()->route('personal-datas.index')->with('success', 'Medida criada com sucesso!');
     }
 
 
