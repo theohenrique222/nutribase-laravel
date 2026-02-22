@@ -14,6 +14,10 @@ const destroy = (id: number) => {
     router.delete(route('personal-datas.destroy', id))
 }
 
+const edit = (id: number) => {
+    router.get(route('personal-datas.edit', id))
+}
+
 const colunms = [
         { label: 'Altura', field: 'height', suffix: ' cm' },
         { label: 'Peso', field: 'weight', suffix: ' kg' },
@@ -123,7 +127,7 @@ const datas = [ 'columns.created_at' ]
                                             </div>
                                             <div class="flex justify-end gap-2">
                                                 <Button type="button" label="Fechar" severity="secondary" @click="visible = false"></Button>
-                                                <Button type="button" label="Editar" severity="warn" @click="visible = false"></Button>
+                                                <Button type="button" label="Editar" severity="warn" @click="edit(data.id)"></Button>
                                             </div>
                                         </Dialog>
                                     </template>

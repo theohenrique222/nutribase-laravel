@@ -14,7 +14,7 @@ class PersonalDatasController extends Controller
     public function index()
     {
         $personalData           =   PersonalData::all();
-        
+
         return Inertia::render(
             'templates/personalDatas/index',
             [
@@ -79,7 +79,7 @@ class PersonalDatasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return 'Tela de edição';
     }
 
     /**
