@@ -46,7 +46,7 @@ class CustomDietController extends Controller
             'meals.*.products.*.observation' => 'nullable|string',
         ]);
     
-        dd($request->meals);
+
         CustomDiet::create([
             'meals' => $request->meals,
         ]);

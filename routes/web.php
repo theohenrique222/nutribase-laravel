@@ -23,9 +23,5 @@ Route::resource('custom-diet', CustomDietController::class)->middleware('auth');
 
 Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 'generate'])->name('diets.generate');
 
-// Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
-
-
-
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
