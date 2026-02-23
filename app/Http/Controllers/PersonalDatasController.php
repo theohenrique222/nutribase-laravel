@@ -79,7 +79,7 @@ class PersonalDatasController extends Controller
      */
     public function edit(string $id)
     {
-        return 'Tela de edição';
+        return inertia('templates/personalDatas/edit');
     }
 
     /**

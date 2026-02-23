@@ -36,37 +36,33 @@ const datas = [ 'columns.created_at' ]
     <Head :title="title" />
 
     <AppLayout>
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl">
+        <div 
+            class="flex h-full flex-1 flex-col gap-4 rounded-xl"
+            >
             <div
-                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <div class="p-6 max-w-7xl mx-auto">
-                    <h1 class="text-2xl font-bold mb-6 dark:text-white">{{ title }}</h1>
-
-                    <div class="overflow-x-auto bg-white dark:bg-neutral-900 shadow-lg">
-                        <!-- <table class="min-w-full table-auto text-sm text-left">
-                            <thead
-                                class="dark:bg-neutral-800 bg-neutral-500 text-white border  dark:border-b-neutral-500 border-b-black">
-                                <tr class="text-center">
-                                    <th v-for="col in columns" :key="col.field" class="p-3">
-                                        {{ col.label }}
-                                    </th>
-                                </tr>
-                                
-                            </thead>
-                            <tbody>
-                                <tr v-for="data in personalData" :key="data.id"
-                                    class="border-b hover:bg-blue-50 dark:hover:bg-neutral-800 text-center">
-                                    <td v-for="col in columns" :key="col.field"
-                                        class="p-3">{{ data[col.field] }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table> -->
-                        <div class="flex justify-center w-full space-x-5">
-
+                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min"
+                >
+                <div 
+                    class="p-6 max-w-7xl mx-auto"
+                    >
+                    <h1 
+                        class="text-2xl font-bold mb-6 dark:text-white"
+                        >
+                        {{ title }}
+                    </h1>
+                    <div 
+                        class="overflow-x-auto bg-white dark:bg-neutral-900 shadow-lg"
+                        >
+                        <div 
+                            class="flex justify-center w-full space-x-5"
+                            >
                             <div 
-                                v-for="data in personalData" :key="data.id">
-                                <Card style="width: 25rem; overflow: hidden">
+                                v-for="data in personalData" 
+                                :key="data.id"
+                                >
+                                <Card 
+                                    style="width: 25rem; overflow: hidden;"
+                                    >
                                     <template #header>
                                         <img alt="user header" src="/img/avatar.webp" />
                                     </template>
