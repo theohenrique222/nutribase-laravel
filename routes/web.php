@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\CustomDietController;
 use App\Http\Controllers\DietPlanController;
@@ -20,7 +21,7 @@ Route::resource('personal-datas', PersonalDatasController::class)->middleware(['
 Route::resource('calculation', CalculationController::class)->middleware(['auth']);
 Route::resource('diet-plan', DietPlanController::class)->middleware(['auth']);
 Route::resource('custom-diet', CustomDietController::class)->middleware('auth');
-
+Route::resource('profile', ProfileController::class)->middleware(['auth']);
 Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 'generate'])->name('diets.generate');
 
 // Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
