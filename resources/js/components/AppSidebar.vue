@@ -10,7 +10,7 @@ import { BookOpen, Folder,  Home, Activity, Clipboard, LayoutDashboardIcon } fro
 const mainNavItems: NavItem[] = [
     {
         title: 'Inicio',
-        href: '/',
+        href: '/dashboard',
         icon: Home,
     },
     // {

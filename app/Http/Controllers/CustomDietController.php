@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomDiet;
-use App\Models\DietPlan;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -38,22 +36,28 @@ class CustomDietController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'meals' => 'required|array',
-            'meals.*.products' => 'required|array',
-            'meals.*.products.*.quantity' => 'required|string',
-            'meals.*.products.*.product' => 'required|string',
-            'meals.*.products.*.observation' => 'nullable|string',
+        $data = $request->validate([
+            'meals'                             => 'required|array',
+            'meals.*.products'                  => 'required|array',
+            'meals.*.products.*.quantity'       => 'required|string',
+            'meals.*.products.*.product'        => 'required|string',
+            'meals.*.products.*.observation'    => 'nullable|string',
         ]);
     
-        dd($request->meals);
-        CustomDiet::create([
-            'meals' => $request->meals,
-        ]);
+        
+        foreach ($data['meals'] as $meal) {
+            foreach ($meal['products'] as $product) {
+                CustomDiet::create([
+                    'quantity'      => $product['quantity'],
+                    'product'       => $product['product'],
+                    'observation'   => $product['observation'] ?? null,
+                ]);
+            }
+        }
         
         
-
-        return Inertia::render('templates/customDiet/Index');
+        // return Inertia::render('templates/customDiet/Index');
+        return redirect()->back()->with('success', 'Dieta criada com sucesso!');
     }
 
     /**

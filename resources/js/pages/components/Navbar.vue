@@ -83,7 +83,7 @@ export default {
                 },
                 {
                     id: 4,
-                    name: "Contate-me",
+                    name: "Fale Conosco",
                     href: '/macronutrients'
                 },
             ],

@@ -3,6 +3,8 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
+// import route from 'ziggy-js'
+
 
 defineProps<{
   title: string;
@@ -32,9 +34,12 @@ const removeProduct = (mealIndex: number, productIndex: number) => {
   meals.value[mealIndex].products.splice(productIndex, 1)
 }
 
+
 const submitForm = () => {
-  router.post('/custom-diet', { meals: meals.value })
+  console.log('enviando dieta', meals.value)
+  router.post(route('custom-diet.store'), { meals: meals.value })
 }
+
 </script>
 
 <template>
@@ -61,7 +66,8 @@ const submitForm = () => {
             <div>
               <label class="block text-sm text-gray-300 mb-1">Quantidade</label>
               <input
-                type="text"
+                type="number"
+                name="quantity"
                 v-model="product.quantity"
                 class="w-full bg-neutral-900 border border-neutral-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
                 placeholder="Ex: 3 fatias / 300 gramas"
@@ -71,6 +77,7 @@ const submitForm = () => {
               <label class="block text-sm text-gray-300 mb-1">Produto</label>
               <input
                 type="text"
+                name="meals"
                 v-model="product.product"
                 class="w-full bg-neutral-900 border border-neutral-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
                 placeholder="Ex: Pão francês"

@@ -25,7 +25,7 @@ defineProps<{
       </div>
 
       <div
-        class="bg-lime-500 w-fit text-center py-3 px-8 m-auto mt-10 rounded-md hover:opacity-80 transition"
+        class="bg-lime-500 w-fit text-center py-3 px-8 m-auto mt-10 rounded-md hover:opacity-80 transition cursor-pointer"
       >
         <a href="custom-diet/create" class="text-white text-xl font-bold">Monte Agora!</a>
       </div>

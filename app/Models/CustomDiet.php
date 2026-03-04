@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class CustomDiet extends Model
 {
     protected $fillable = [
-        'meals'
+        'quantity',
+        'product',
+        'observation'
     ];
     protected $casts = [
         'meals' => 'array',
