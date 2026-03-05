@@ -9,18 +9,18 @@ import { BookOpen, Folder,  Home, Activity, Clipboard, LayoutDashboardIcon } fro
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Inicio',
+        title: 'Painel de controle',
+        href: 'dashboard',
+        icon: LayoutDashboardIcon,
+    },
+    {
+        title: 'Site',
         href: '/dashboard',
         icon: Home,
     },
-    // {
-    //     title: 'Painel de controle',
-    //     href: 'dashboard',
-    //     icon: LayoutDashboardIcon,
-    // },
     {
         title: 'Dados Pessoais',
-        href: 'personal-datas',
+        href: 'profile',
         icon: Clipboard
     },
     {
