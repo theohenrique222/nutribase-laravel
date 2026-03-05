@@ -9,6 +9,18 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: 'Nova medida', href: '/profile' 
 
 const formFields = [
     {
+        label: 'Titulo *',
+        name: 'title',
+        type: 'string',
+        required: true,
+    },
+    {
+        label: 'Descrição',
+        name: 'description',
+        type: 'string',
+        required: false,
+    },
+    {
         label: 'Altura (cm) *',
         name: 'height',
         type: 'number',
@@ -62,47 +74,49 @@ const formFields = [
         name: 'thigh_l',
         type: 'number',
         step: '0.01',
-        required: true,
+        required: false,
     },
     {
         label: 'Coxa Direita (cm)',
         name: 'thigh_r',
         type: 'number',
         step: '0.01',
-        required: true,
+        required: false,
     },
     {
         label: 'Panturrilha Esquerda (cm)',
         name: 'calf_l',
         type: 'number',
         step: '0.01',
-        required: true,
+        required: false,
     },
     {
         label: 'Panturrilha Direita (cm)',
         name: 'calf_r',
         type: 'number',
         step: '0.01',
-        required: true,
+        required: false,
     },
 ];
 
 const form = useForm({
-    height: '',
-    weight: '',
-    arm_l: '',
-    arm_r: '',
-    chest: '',
-    waist: '',
-    scruff: '',
-    thigh_l: '',
-    thigh_r: '',
-    calf_l: '',
-    calf_r: '',
+    title: null,
+    description: null,
+    height: null,
+    weight: null,
+    arm_l: null,
+    arm_r: null,
+    chest: null,
+    waist: null,
+    scruff: null,
+    thigh_l: null,
+    thigh_r: null,
+    calf_l: null,
+    calf_r: null,
 });
 
 function submit() {
-    form.post(route('personal-datas.store'));
+    form.post(route('profile.store'));
 }
 </script>
 

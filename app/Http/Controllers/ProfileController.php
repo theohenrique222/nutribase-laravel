@@ -14,12 +14,12 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profile = Profile::all();
+        $profiles = Profile::all();
 
         return Inertia::render('students/profiles/index',
             [
                 'title' =>  'Dados Pessoais',
-                'personalData' =>  $profile,
+                'profiles' =>  $profiles,
              ]
         );
     }
@@ -34,26 +34,27 @@ class ProfileController extends Controller
             'title' => 'Nova Medida'
         ]);
     }
-    
+
     public function store(Request $request)
     {
-        $data = $request->validate([
+
+        $validated = $request->validate([
             'title'         =>  'required|string',
-            'description'   =>  'string',
+            'description'   =>  'nullable|string',
             'height'        =>  'required|numeric',
             'weight'        =>  'required|numeric',
-            'arm_l'         =>  'numeric',
-            'arm_r'         =>  'numeric',
-            'chest'         =>  'numeric',
+            'arm_l'         =>  'nullable|numeric',
+            'arm_r'         =>  'nullable|numeric',
+            'chest'         =>  'nullable|numeric',
             'waist'         =>  'required|numeric',
             'scruff'        =>  'required|numeric',
-            'thigh_l'       =>  'numeric',
-            'thigh_r'       =>  'numeric',
-            'calf_l'        =>  'numeric',
-            'calf_r'        =>  'numeric',
+            'thigh_l'       =>  'nullable|numeric',
+            'thigh_r'       =>  'nullable|numeric',
+            'calf_l'        =>  'nullable|numeric',
+            'calf_r'        =>  'nullable|numeric',
         ]);
 
-        Profile::create($data);
+        Profile::create($validated);
 
         return Redirect::route('profile.index')->with('success', 'Medida cadastrado com sucesso!');
     }

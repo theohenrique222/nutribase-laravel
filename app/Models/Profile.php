@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $fillable = [
+        'title',
+        'description',
         'height',
         'weight',
         'arm_l',
@@ -19,4 +21,9 @@ class Profile extends Model
         'calf_l',
         'calf_r',
     ];
+
+    public function user()
+    {
+        $this->belongsTo(User::class);
+    }
 }
