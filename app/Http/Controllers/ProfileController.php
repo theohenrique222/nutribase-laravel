@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ProfileController extends Controller
@@ -28,15 +29,33 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('students/profiles/create',
+        [
+            'title' => 'Nova Medida'
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title'         =>  'required|string',
+            'description'   =>  'string',
+            'height'        =>  'required|numeric',
+            'weight'        =>  'required|numeric',
+            'arm_l'         =>  'numeric',
+            'arm_r'         =>  'numeric',
+            'chest'         =>  'numeric',
+            'waist'         =>  'required|numeric',
+            'scruff'        =>  'required|numeric',
+            'thigh_l'       =>  'numeric',
+            'thigh_r'       =>  'numeric',
+            'calf_l'        =>  'numeric',
+            'calf_r'        =>  'numeric',
+        ]);
+
+        Profile::create($data);
+
+        return Redirect::route('profile.index')->with('success', 'Medida cadastrado com sucesso!');
     }
 
     /**

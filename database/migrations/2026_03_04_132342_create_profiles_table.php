@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('gender');
-            $table->date('birth_date');
+            $table->string('title');
+            $table->string('description')->nullable();
             $table->float('height');
             $table->float('weight');
-            $table->float('arm_l');
-            $table->float('arm_r');
-            $table->float('chest');
+            $table->float('arm_l')->nullable();
+            $table->float('arm_r')->nullable();
+            $table->float('chest')->nullable();
             $table->float('waist');
             $table->float('scruff');
-            $table->float('thigh_l');
-            $table->float('thigh_r');
-            $table->float('calf_l');
-            $table->float('calf_r');
+            $table->float('thigh_l')->nullable();
+            $table->float('thigh_r')->nullable();
+            $table->float('calf_l')->nullable();
+            $table->float('calf_r')->nullable();
             $table->timestamps();
         });
     }
