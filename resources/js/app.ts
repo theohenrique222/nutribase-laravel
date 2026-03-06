@@ -13,7 +13,7 @@ import 'primeicons/primeicons.css'
 import Dialog from 'primevue/dialog';
 import Calculations from './pages/templates/Calculations.vue';
 import Card from 'primevue/card';
-
+import Dialog from 'primevue/dialog';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -46,6 +46,7 @@ createInertiaApp({
             .component('Dialog', Dialog)
             .component('Calculations', Calculations)
             .component('Card', Card)
+            .component('Dialog', Dialog)
             .mount(el);
     },
     progress: {

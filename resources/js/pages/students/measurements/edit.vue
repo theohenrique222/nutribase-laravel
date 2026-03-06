@@ -166,7 +166,7 @@ function submit() {
                             </div>
 
                             <div class="col-span-1 mt-4 md:col-span-2">
-                                <Button label="Salvar medidas" severity="success" class="w-full" type="submit" />
+                                <Button label="Atualizar medidas" severity="success" class="w-full" type="submit" />
                             </div>
                         </form>
                     </div>
