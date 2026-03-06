@@ -28,6 +28,10 @@ class MeasurementsController extends Controller
      */
     public function create()
     {
+        if (Measurements::where('user_id', auth()->id())->exists()) {
+            abort(403, 'Não é possível adicionar outra medição');
+        }
+
         return Inertia::render('students/measurements/create');
     }
 
