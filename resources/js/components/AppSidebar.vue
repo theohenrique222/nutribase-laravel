@@ -14,11 +14,6 @@ const mainNavItems: NavItem[] = [
         icon: LayoutDashboardIcon,
     },
     {
-        title: 'Site',
-        href: '/dashboard',
-        icon: Home,
-    },
-    {
         title: 'Medições',
         href: 'measurements',
         icon: Clipboard
@@ -37,6 +32,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dieta personalizada',
         href: 'custom-diet',
         icon: Clipboard
+    },
+    {
+        title: 'Site',
+        href: '/dashboard',
+        icon: Home,
     },
 ];
 
