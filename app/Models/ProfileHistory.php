@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Profile extends Model
+class ProfileHistory extends Model
 {
     protected $fillable = [
+        'profile_id',
         'user_id',
         'title',
         'description',
@@ -24,13 +24,8 @@ class Profile extends Model
         'calf_r',
     ];
 
-    public function user()
+    public function profile()
     {
-        $this->belongsTo(User::class);
-    }
-
-    public function history(): HasMany
-    {
-        return $this->hasMany(ProfileHistory::class);
+        return $this->belongsTo(Profile::class);
     }
 }

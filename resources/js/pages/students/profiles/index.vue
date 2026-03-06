@@ -10,9 +10,11 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+
+
 defineProps<{
     title: string;
-    profiles: Array<{
+    profile: Array<{
         id: number;
         title: string;
         description?: string;
@@ -52,7 +54,7 @@ defineProps<{
                     </h1>
 
                     <div
-                        v-for="profile in profiles"
+                        v-for="profile in profile"
                         :key="profile.id"
                         class="w-full justify-center flex"
                     >
@@ -98,13 +100,25 @@ defineProps<{
                                 #footer
                             >
                                 <div
-                                    class="mt-1 flex gap-4"
+                                    class="mt-1 flex gap-4 justify-center w-full"
                                 >
-                                    <Button
-                                        label="Ver Detalhes"
-                                        class="w-full"
-                                        severity="success"
-                                    />
+                                        <Link
+                                            :href="route('profile.edit')"
+                                        >
+                                            <Button
+                                                label="Atualizar"
+                                                severity="success"
+                                                class="w-full"
+                                                variant="outlined"
+                                            />
+                                        </Link>
+
+                                        <Button
+                                            label="Ver Detalhes"
+                                            class=""
+                                            severity="success"
+
+                                        />
                                 </div>
                             </template>
                         </Card>
@@ -113,7 +127,7 @@ defineProps<{
                     <div
                         class="col-span-1 mt-4 md:col-span-2 flex justify-center"
                     >
-                        <div v-if="profiles === null">
+                        <div v-if="profile !== null">
                             <Link
                                 :href="route('profile.create')"
                             >
@@ -130,7 +144,7 @@ defineProps<{
                                 :href="route('profile.update')"
                             >
                                 <Button
-                                    label="Atualizar medidas"
+                                    label="Cadastrar medidas"
                                     class="w-full"
                                     severity="success"
                                 />

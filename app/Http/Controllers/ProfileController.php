@@ -6,6 +6,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use function Pest\Laravel\get;
 
 class ProfileController extends Controller
 {
@@ -14,14 +15,12 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::all();
+        $profile = Profile::where('user_id', auth()->id())->get();
 
-        return Inertia::render('students/profiles/index',
-            [
-                'title' =>  'Dados Pessoais',
-                'profiles' =>  $profiles,
-             ]
-        );
+        return Inertia::render('students/profiles/index', [
+            'title' => 'Dados Pessoais',
+            'profile' => $profile,
+        ]);
     }
 
     /**
@@ -54,6 +53,8 @@ class ProfileController extends Controller
             'calf_r'        =>  'nullable|numeric',
         ]);
 
+        $validated['user_id'] = auth()->user()->id;
+
         Profile::create($validated);
 
         return Redirect::route('profile.index')->with('success', 'Medida cadastrado com sucesso!');
@@ -72,7 +73,12 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        $profile = Profile::where(auth()->user()->id)->get;
+
+        return Inertia::render('students/profiles/edit', [
+//            'title' = 'Atualizar medidas',
+            'profile' => $profile,
+        ]);
     }
 
     /**
