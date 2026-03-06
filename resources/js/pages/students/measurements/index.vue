@@ -12,6 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 defineProps<{
     title: string;
+    hasMeasurement: null;
     measurements: Array<{
         id: number;
         name: string;
@@ -77,9 +78,12 @@ defineProps<{
                     </div>
 
                     <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
-                        <div>
+                        <div v-if="!hasMeasurement">
+                            <h3 class="p-10">
+                                Você ainda não possui medidas cadastradas.
+                            </h3>
                             <Link :href="route('measurements.create')">
-                                <Button label="Cadastrar Nova medida" class="w-full" severity="success" />
+                                <Button label="Cadastrar medida" class="w-full" severity="success" />
                             </Link>
                         </div>
                     </div>

@@ -16,10 +16,12 @@ class MeasurementsController extends Controller
     public function index()
     {
         $measurements = Measurements::where('user_id', auth()->id())->get();
+        $hasMeasurement = Measurements::where('user_id', auth()->id())->exists();
 
         return Inertia::render('students/measurements/index', [
             'title' => 'Medições',
             'measurements' => $measurements,
+            'hasMeasurement' => $hasMeasurement,
         ]);
     }
 
@@ -58,9 +60,13 @@ class MeasurementsController extends Controller
 
         $validated['user_id'] = auth()->id();
 
+        $validated['measurement_id'] = auth()->id();
+
         Measurements::create($validated);
 
-        return route('measurements.index');
+        MeasurementsHistory::create($validated);
+
+        return redirect(route('measurements.index'));
     }
 
     /**
