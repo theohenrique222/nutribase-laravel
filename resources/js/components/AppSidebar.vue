@@ -19,8 +19,8 @@ const mainNavItems: NavItem[] = [
         icon: Home,
     },
     {
-        title: 'Dados Pessoais',
-        href: 'profile',
+        title: 'Medições',
+        href: 'measurements',
         icon: Clipboard
     },
     {

@@ -57,4 +57,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+    public  function measurements()
+    {
+        return $this->hasOne(Measurements::class);
+    }
+    public  function history()
+    {
+        return $this->hasMany(MeasurementsHistory::class);
+    }
 }

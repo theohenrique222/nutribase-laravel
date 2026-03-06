@@ -5,12 +5,15 @@ import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps<{ title?: string }>();
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Nova medida', href: '/profile' }];
+const breadcrumbs: BreadcrumbItem[] = [{
+    title: 'Nova medida',
+    href: '/measurements'
+}];
 
 const formFields = [
     {
         label: 'Titulo *',
-        name: 'title',
+        name: 'name',
         type: 'string',
         required: true,
     },
@@ -100,7 +103,7 @@ const formFields = [
 ];
 
 const form = useForm({
-    title: null,
+    name: null,
     description: null,
     height: null,
     weight: null,
@@ -116,7 +119,7 @@ const form = useForm({
 });
 
 function submit() {
-    form.post(route('profile.store'));
+    form.post(route('measurements.store'));
 }
 </script>
 

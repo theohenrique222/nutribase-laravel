@@ -3,17 +3,35 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 
-defineProps<{ title?: string }>();
+type Measurement = {
+    name?: string;
+    description?: string;
+    height?: number;
+    weight?: number;
+    arm_l?: number;
+    arm_r?: number;
+    chest?: number;
+    waist?: number;
+    scruff?: number;
+    thigh_l?: number;
+    thigh_r?: number;
+    calf_l?: number;
+    calf_r?: number;
+};
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Nova medida', href: '/profile' }];
+const props = defineProps<{
+    title?: string;
+    measurement: Measurement;
+}>();
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Nova medida', href: '/measurements' }];
 
 const formFields = [
     {
         label: 'Titulo *',
-        name: 'title',
+        name: 'name',
         type: 'string',
         required: true,
-
     },
     {
         label: 'Descrição',
@@ -101,23 +119,23 @@ const formFields = [
 ];
 
 const form = useForm({
-    title: null,
-    description: null,
-    height: null,
-    weight: null,
-    arm_l: null,
-    arm_r: null,
-    chest: null,
-    waist: null,
-    scruff: null,
-    thigh_l: null,
-    thigh_r: null,
-    calf_l: null,
-    calf_r: null,
+    name: props.measurement?.name ?? '',
+    description: props.measurement?.description ?? '',
+    height: props.measurement?.height ?? '',
+    weight: props.measurement?.weight ?? '',
+    arm_l: props.measurement?.arm_l ?? '',
+    arm_r: props.measurement?.arm_r ?? '',
+    chest: props.measurement?.chest ?? '',
+    waist: props.measurement?.waist ?? '',
+    scruff: props.measurement?.scruff ?? '',
+    thigh_l: props.measurement?.thigh_l ?? '',
+    thigh_r: props.measurement?.thigh_r ?? '',
+    calf_l: props.measurement?.calf_l ?? '',
+    calf_r: props.measurement?.calf_r ?? '',
 });
 
 function submit() {
-    form.post(route('profile.store'));
+    form.put(route('measurements.update', props.measurement.id));
 }
 </script>
 
@@ -143,7 +161,6 @@ function submit() {
                                     :step="field.step"
                                     v-model="form[field.name]"
                                     :required="field.required"
-                                    :value="field.value"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 />
                             </div>
