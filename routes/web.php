@@ -6,6 +6,7 @@ use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\CustomDietController;
 use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\PersonalDatasController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,6 +18,7 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::resource('profile', ProfileController::class)->middleware(['auth']);
 Route::resource('personal-datas', PersonalDatasController::class)->middleware(['auth']);
 Route::resource('calculation', CalculationController::class)->middleware(['auth']);
 Route::resource('diet-plan', DietPlanController::class)->middleware(['auth']);

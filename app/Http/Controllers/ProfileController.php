@@ -18,7 +18,7 @@ class ProfileController extends Controller
         $profile = Profile::where('user_id', auth()->id())->get();
 
         return Inertia::render('students/profiles/index', [
-            'title' => 'Dados Pessoais',
+            'title' => 'Completar dados pessoais',
             'profile' => $profile,
         ]);
     }
