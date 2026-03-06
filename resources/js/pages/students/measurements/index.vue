@@ -2,6 +2,9 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const visible = ref(false);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -56,9 +59,7 @@ defineProps<{
                             </template>
                             <template #subtitle>
                                 <p class="mb-2 text-center">Criado em {{ new Date(measurement.created_at).toLocaleDateString('pt-BR') }}</p>
-                                <p class="text-center">
-                                   Atualiazdo em {{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}
-                                </p>
+                                <p class="text-center">Atualiazdo em {{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}</p>
                             </template>
                             <template #content>
                                 <p class="m-0 text-center">
@@ -70,18 +71,68 @@ defineProps<{
                                     <Link :href="route('measurements.edit', measurement.id)">
                                         <Button label="Atualizar" severity="success" class="w-full" variant="outlined" />
                                     </Link>
-
-                                    <Button label="Ver Detalhes" class="" severity="success" />
+                                    <Button label="Ver Detalhes" class="" severity="success" @click="visible = true" />
                                 </div>
                             </template>
                         </Card>
+                        <Dialog v-model:visible="visible" modal header="Detalhes das medidas" :style="{ width: '25rem' }">
+                            <div class="text-center">
+                                <span class="text-surface-500 dark:text-surface-400 mb-8 block">
+                                    <p>
+                                        Medidas referente ao mês de
+                                        <span class="font-bold">{{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}</span>
+                                    </p>
+                                </span>
+                            </div>
+
+                            <span> </span>
+                            <div class="mb-4 flex items-center gap-4"></div>
+                            <div class="mb-8 flex items-center gap-4">
+                                <div class="text-center">
+                                    <p>
+                                        Braço esquerdo: <span class="font-bold">{{ measurement.arm_l }}</span>
+                                    </p>
+                                    <p>
+                                        Coxa esquerda: <span class="font-bold">{{ measurement.thigh_l }}</span>
+                                    </p>
+                                    <p>
+                                        Pantorrilha esquera: <span class="font-bold">{{ measurement.calf_l }}</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <img src="/img/body.webp" />
+                                </div>
+                                <div class="text-center">
+                                    <p>
+                                        Braço direito: <span class="font-bold">{{ measurement.arm_r }}</span>
+                                    </p>
+                                    <p>
+                                        Coxa direita: <span class="font-bold">{{ measurement.thigh_r }}</span>
+                                    </p>
+                                    <p>
+                                        Pantorrilha direita: <span class="font-bold">{{ measurement.calf_r }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-surface-500 dark:text-surface-400 mb-8 block">
+                                    <p>
+                                        Altura: <span class="font-bold">{{ measurement.height }}</span>
+                                    </p>
+                                    <p>
+                                        Peso: <span class="font-bold">{{ measurement.weight }}</span>
+                                    </p>
+                                </span>
+                            </div>
+                            <div class="flex justify-end gap-2">
+                                <Button type="button" label="Fechar" severity="danger" @click="visible = false"></Button>
+                            </div>
+                        </Dialog>
                     </div>
 
                     <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
                         <div v-if="!hasMeasurement">
-                            <h3 class="p-10">
-                                Você ainda não possui medidas cadastradas.
-                            </h3>
+                            <h3 class="p-10">Você ainda não possui medidas cadastradas.</h3>
                             <Link :href="route('measurements.create')">
                                 <Button label="Cadastrar medida" class="w-full" severity="success" />
                             </Link>

@@ -15,22 +15,22 @@ class MeasurementsController extends Controller
      */
     public function index()
     {
-        $measurements = Measurements::where('user_id', auth()->id())->get();
-        $hasMeasurement = Measurements::where('user_id', auth()->id())->exists();
+        $measurements   = Measurements::where('user_id', auth()->id())->get();
+        $hasMeasurements   = Measurements::where('user_id', auth()->id())->exists();
 
         return Inertia::render('students/measurements/index', [
-            'title' => 'Medições',
-            'measurements' => $measurements,
-            'hasMeasurement' => $hasMeasurement,
+            'title'             => 'Medições',
+            'measurements'      => $measurements,
+            'hasMeasurement'    => $hasMeasurements,
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        if (Measurements::where('user_id', auth()->id())->exists()) {
+        if (Measurements::where('user_id', auth()->id())->exists())
+        {
             abort(403, 'Não é possível adicionar outra medição');
         }
 
