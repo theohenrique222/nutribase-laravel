@@ -55,7 +55,7 @@ const formFields = [
     },
     {
         label: 'Genero *',
-        name: 'description',
+        name: 'gender',
         type: 'select',
         required: true,
         options: [
@@ -78,7 +78,7 @@ const form = useForm({
 });
 
 function submit() {
-    form.put(route('profile.create', props.measurement.id));
+    form.post(route('profile.store', props.measurement.id));
 }
 </script>
 

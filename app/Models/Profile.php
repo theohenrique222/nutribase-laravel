@@ -9,19 +9,10 @@ class Profile extends Model
 {
     protected $fillable = [
         'user_id',
-        'title',
-        'description',
-        'height',
-        'weight',
-        'arm_l',
-        'arm_r',
-        'chest',
-        'waist',
-        'scruff',
-        'thigh_l',
-        'thigh_r',
-        'calf_l',
-        'calf_r',
+        'type',
+        'nickname',
+        'date_birth',
+        'gender'
     ];
 
     public function user()

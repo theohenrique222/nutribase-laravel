@@ -28,36 +28,31 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return Inertia::render('students/profiles/create',
-        [
-            'title' => 'Nova Medida'
-        ]);
+        $profile = Profile::where('user_id', auth()->id())->get();
+
+        if ($profile->isEmpty()) {
+            return Inertia::render('students/profiles/create',
+            [
+                'title' => 'Completar dados pessoais',
+                'profile' => $profile,
+            ]);
+        }
     }
 
     public function store(Request $request)
     {
-
         $validated = $request->validate([
-            'title'         =>  'required|string',
-            'description'   =>  'nullable|string',
-            'height'        =>  'required|numeric',
-            'weight'        =>  'required|numeric',
-            'arm_l'         =>  'nullable|numeric',
-            'arm_r'         =>  'nullable|numeric',
-            'chest'         =>  'nullable|numeric',
-            'waist'         =>  'required|numeric',
-            'scruff'        =>  'required|numeric',
-            'thigh_l'       =>  'nullable|numeric',
-            'thigh_r'       =>  'nullable|numeric',
-            'calf_l'        =>  'nullable|numeric',
-            'calf_r'        =>  'nullable|numeric',
+            'type'          =>  'required|string',
+            'nickname'      =>  'nullable|string',
+            'date_birth'    =>  'required|date',
+            'gender'        =>  'required|string',
         ]);
 
         $validated['user_id'] = auth()->user()->id;
 
         Profile::create($validated);
 
-        return Redirect::route('profile.index')->with('success', 'Medida cadastrado com sucesso!');
+        return Redirect::route('dashboard');
     }
 
     /**

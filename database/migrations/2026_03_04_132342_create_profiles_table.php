@@ -14,19 +14,10 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->string('description')->nullable();
-            $table->float('height');
-            $table->float('weight');
-            $table->float('arm_l')->nullable();
-            $table->float('arm_r')->nullable();
-            $table->float('chest')->nullable();
-            $table->float('waist');
-            $table->float('scruff');
-            $table->float('thigh_l')->nullable();
-            $table->float('thigh_r')->nullable();
-            $table->float('calf_l')->nullable();
-            $table->float('calf_r')->nullable();
+            $table->enum('type', ['personal', 'student', 'self-user']);
+            $table->string('nickname')->nullable();
+            $table->date('date_birth');
+            $table->enum('gender', ['male', 'female']);
             $table->timestamps();
         });
     }

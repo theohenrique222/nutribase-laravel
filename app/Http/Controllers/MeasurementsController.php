@@ -31,7 +31,7 @@ class MeasurementsController extends Controller
     {
         if (!Profile::where('user_id', auth()->id())->first()) {
             return redirect()
-                ->route('profile.index');
+                ->route('profile.create');
         }
 
         if (Measurements::where('user_id', auth()->id())->exists())
@@ -39,7 +39,9 @@ class MeasurementsController extends Controller
             abort(403, 'Não é possível adicionar outra medição');
         }
 
-        return Inertia::render('students/measurements/create');
+        return Inertia::render('students/measurements/create', [
+            'title' =>  'Cadastrar Medições'
+        ]);
     }
 
     /**
