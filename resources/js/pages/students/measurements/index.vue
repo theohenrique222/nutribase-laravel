@@ -40,6 +40,9 @@ defineProps<{
     <Head :title="title" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <p class="m-0">Para cadastrar medida complete seu perfil</p>
+        </Dialog>
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl">
             <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 rounded-xl border md:min-h-min">
                 <div class="mx-auto max-w-7xl p-6">

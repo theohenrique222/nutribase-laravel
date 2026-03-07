@@ -29,6 +29,11 @@ class MeasurementsController extends Controller
      */
     public function create()
     {
+        if (!Profile::where('user_id', auth()->id())->first()) {
+            return redirect()
+                ->route('profile.index');
+        }
+
         if (Measurements::where('user_id', auth()->id())->exists())
         {
             abort(403, 'Não é possível adicionar outra medição');

@@ -31,4 +31,8 @@ class Measurements extends Model
     {
         return $this->belongsToMany(MeasurementsHistory::class);
     }
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
 }

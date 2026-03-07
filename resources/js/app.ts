@@ -10,10 +10,11 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import Button from "primevue/button"
 import 'primeicons/primeicons.css'
-import Dialog from 'primevue/dialog';
 import Calculations from './pages/templates/Calculations.vue';
 import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -42,11 +43,13 @@ createInertiaApp({
             })
             .use(plugin)
             .use(ZiggyVue)
+            .use(ToastService)
             .component('Button', Button)
-            .component('Dialog', Dialog)
             .component('Calculations', Calculations)
             .component('Card', Card)
             .component('Dialog', Dialog)
+            .component('Toast', Toast)
+            .component('ToastService', ToastService)
             .mount(el);
     },
     progress: {

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import ProfileRequiredDialog from '@/components/ProfileRequiredDialog.vue';
+
+const page = usePage();
 
 type Measurement = {
     name?: string;
@@ -25,18 +28,18 @@ const formFields = [
         required: true,
         options: [
             {
-                label: "Personal Trainer",
-                value: "personal"
+                label: 'Personal Trainer',
+                value: 'personal',
             },
             {
-                label: "Aluno",
-                value: "student"
+                label: 'Aluno',
+                value: 'student',
             },
             {
-                label: "Usuário Independente",
-                value: "self-user"
-            }
-        ]
+                label: 'Usuário Independente',
+                value: 'self-user',
+            },
+        ],
     },
     {
         label: 'Apelido',
@@ -57,16 +60,15 @@ const formFields = [
         required: true,
         options: [
             {
-                label: "Masculino",
-                value: 'male'
+                label: 'Masculino',
+                value: 'male',
             },
             {
-                label: "Feminino",
-                value: "female"
-            }
-        ]
+                label: 'Feminino',
+                value: 'female',
+            },
+        ],
     },
-
 ];
 
 const form = useForm({
@@ -84,6 +86,7 @@ function submit() {
     <Head :title="title" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <ProfileRequiredDialog :hasProfile="hasProfile" />
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl">
             <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 rounded-xl border md:min-h-min">
                 <PlaceholderPattern />
@@ -91,7 +94,7 @@ function submit() {
                     <h1 class="mb-6 text-2xl font-bold dark:text-white">{{ title }}</h1>
 
                     <div class="flex h-full w-full items-center justify-center">
-                        <form @submit.prevent="submit" class="w-full space-y-5 max-w-4xl rounded-2xl p-8 shadow-xl">
+                        <form @submit.prevent="submit" class="w-full max-w-4xl space-y-5 rounded-2xl p-8 shadow-xl">
                             <div v-for="(field, index) in formFields" :key="index">
                                 <label :for="field.name" class="mb-1 block text-sm font-semibold dark:text-gray-50">
                                     {{ field.label }}
@@ -116,11 +119,7 @@ function submit() {
                                     :required="field.required"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 >
-                                    <option
-                                        v-for="(option, i) in field.options"
-                                        :key="i"
-                                        :value="option.value"
-                                    >
+                                    <option v-for="(option, i) in field.options" :key="i" :value="option.value">
                                         {{ option.label }}
                                     </option>
                                 </select>
