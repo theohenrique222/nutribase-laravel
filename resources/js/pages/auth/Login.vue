@@ -1,3 +1,4 @@
+c
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -84,9 +85,8 @@ const submit = () => {
                 </Button>
             </div>
 
-            <div class="text-center text-sm text-muted-foreground">
-                Não tem uma conta?
-                <TextLink :href="route('register')" :tabindex="5">Inscrever-se</TextLink>
+            <div class="text-muted-foreground text-center text-sm">
+                Não tem uma conta? <a href=""><strong>Fale conosco</strong></a>
             </div>
         </form>
     </AuthBase>
