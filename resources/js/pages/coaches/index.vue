@@ -36,12 +36,10 @@ function destroy(event: Event, id: number) {
     <ConfirmPopup />
     <AppLayout>
         <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
-            <div v-if="!coaches">
+            <div v-if="!coaches || coaches.length === 0">
                 <h3 class="p-10">Você ainda não possui coaches cadastrados.</h3>
-                <Link :href="route('coach.create')">
-                    <Button label="Cadastrar Coach" class="w-full" severity="success" />
-                </Link>
             </div>
+
             <div v-else>
                 <div v-if="coaches" class="flex h-full w-full items-center justify-center">
                     <DataTable :value="coaches" tableStyle="min-width: 50rem">
@@ -55,6 +53,11 @@ function destroy(event: Event, id: number) {
                             </template>
                         </Column>
                     </DataTable>
+                </div>
+                <div>
+                    <Link :href="route('coach.create')">
+                        <Button label="Cadastrar Coach" class="w-full" severity="success" />
+                    </Link>
                 </div>
             </div>
         </div>

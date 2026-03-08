@@ -44,11 +44,12 @@ class CoachController extends Controller
             'password' => 'required|string',
         ]);
 
+        $user = User::create($validated);
+
         Coach::create([
-           'user_id' => auth()->user()->id,
+           'user_id' => $user->id,
         ]);
 
-        User::create($validated);
 
 
         return Redirect::route('coach.index');
