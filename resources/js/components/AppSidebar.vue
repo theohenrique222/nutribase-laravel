@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder,  Home, Activity, Clipboard, LayoutDashboardIcon } from 'lucide-vue-next';
+import { BookOpen, Folder, Home, Activity, Clipboard, LayoutDashboardIcon } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,8 +15,13 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Medições',
-        href: 'measurements',
-        icon: Clipboard
+        href: route('measurements.index'),
+        icon: Clipboard,
+    },
+    {
+        title: 'Alunos',
+        href: route('students.index'),
+        icon: Clipboard,
     },
     {
         title: 'Analise Corporal',
@@ -26,12 +31,12 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Dieta IA',
         href: 'diet-plan',
-        icon: Clipboard
+        icon: Clipboard,
     },
     {
         title: 'Dieta personalizada',
         href: 'custom-diet',
-        icon: Clipboard
+        icon: Clipboard,
     },
     {
         title: 'Site',
@@ -61,7 +66,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
-                        <NavUser/>
+                            <NavUser />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -71,7 +76,6 @@ const footerNavItems: NavItem[] = [
         <SidebarContent>
             <NavMain :items="mainNavItems" />
         </SidebarContent>
-
     </Sidebar>
     <slot />
 </template>

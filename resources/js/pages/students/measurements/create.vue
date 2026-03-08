@@ -19,12 +19,20 @@ const formFields = [
         label: 'Titulo *',
         name: 'name',
         type: 'string',
+        placeholder: 'Exemplo: Primeira semana de dieta',
         required: true,
+    },
+    {
+        label: 'Foto:',
+        name: 'photo',
+        type: 'file',
+        required: false,
     },
     {
         label: 'Descrição',
         name: 'description',
         type: 'string',
+        placeholder: 'Exemplo: Em adaptação aos treinos',
         required: false,
     },
     {
@@ -32,6 +40,7 @@ const formFields = [
         name: 'height',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 170',
         required: true,
     },
     {
@@ -39,6 +48,7 @@ const formFields = [
         name: 'weight',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo 80',
         required: true,
     },
     {
@@ -46,6 +56,7 @@ const formFields = [
         name: 'arm_l',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 40',
         required: false,
     },
     {
@@ -53,6 +64,7 @@ const formFields = [
         name: 'arm_r',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 40',
         required: false,
     },
     {
@@ -60,6 +72,7 @@ const formFields = [
         name: 'chest',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 120',
         required: false,
     },
     {
@@ -67,6 +80,7 @@ const formFields = [
         name: 'waist',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 90',
         required: true,
     },
     {
@@ -74,6 +88,7 @@ const formFields = [
         name: 'scruff',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 80',
         required: true,
     },
     {
@@ -81,6 +96,7 @@ const formFields = [
         name: 'thigh_l',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 80',
         required: false,
     },
     {
@@ -88,6 +104,7 @@ const formFields = [
         name: 'thigh_r',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 80',
         required: false,
     },
     {
@@ -95,6 +112,7 @@ const formFields = [
         name: 'calf_l',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 80',
         required: false,
     },
     {
@@ -102,6 +120,7 @@ const formFields = [
         name: 'calf_r',
         type: 'number',
         step: '0.01',
+        placeholder: 'Exemplo: 80',
         required: false,
     },
 ];
@@ -136,7 +155,7 @@ function submit() {
                     <h1 class="mb-6 text-2xl font-bold dark:text-white">{{ title }}</h1>
 
                     <div class="flex h-full w-full items-center justify-center">
-                        <form @submit.prevent="submit" class="grid w-full max-w-4xl grid-cols-1 gap-6 rounded-2xl p-8 shadow-xl md:grid-cols-2">
+                        <form @submit.prevent="submit" class="w-full max-w-4xl gap-6 space-y-5 rounded-2xl p-8 shadow-xl">
                             <div v-for="(field, index) in formFields" :key="index">
                                 <label :for="field.name" class="mb-1 block text-sm font-semibold dark:text-gray-50">
                                     {{ field.label }}
@@ -145,8 +164,9 @@ function submit() {
                                     :type="field.type"
                                     :name="field.name"
                                     :step="field.step"
-                                    v-model="form[field.name as keyof typeof form ]"
+                                    v-model="form[field.name as keyof typeof form]"
                                     :required="field.required"
+                                    :placeholder="field.placeholder"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 />
                             </div>

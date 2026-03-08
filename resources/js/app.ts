@@ -15,6 +15,13 @@ import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
+
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -44,12 +51,20 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(ToastService)
+            .use(PrimeVue)
+            .use(ConfirmationService)
             .component('Button', Button)
             .component('Calculations', Calculations)
             .component('Card', Card)
             .component('Dialog', Dialog)
             .component('Toast', Toast)
             .component('ToastService', ToastService)
+            .component('DataTable', DataTable)
+            .component('Column', Column)
+            .component('ColumnGroup', ColumnGroup)
+            .component('Row', Row)
+            .component('ConfirmDialog', ConfirmDialog)
+            .component('ConfirmationService', ConfirmationService)
             .mount(el);
     },
     progress: {

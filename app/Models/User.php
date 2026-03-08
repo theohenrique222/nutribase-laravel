@@ -65,4 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(MeasurementsHistory::class);
     }
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }
