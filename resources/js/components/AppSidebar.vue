@@ -19,6 +19,11 @@ const mainNavItems: NavItem[] = [
         icon: Clipboard,
     },
     {
+        title: 'Coach',
+        href: route('coach.index'),
+        icon: Clipboard,
+    },
+    {
         title: 'Alunos',
         href: route('students.index'),
         icon: Clipboard,
