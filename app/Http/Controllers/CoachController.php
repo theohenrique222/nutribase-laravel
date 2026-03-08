@@ -16,8 +16,10 @@ class CoachController extends Controller
      */
     public function index()
     {
+        $coaches = Coach::with('user')->get();
         return Inertia::render('coaches/index', [
             'title' => 'Coaches',
+            'coaches' => $coaches,
         ]);
     }
 
@@ -81,6 +83,8 @@ class CoachController extends Controller
      */
     public function destroy(Coach $coach)
     {
-        //
+        $coach->delete();
+
+        return Redirect::route('coach.index')->with('success', 'Coach deletado com sucesso!.');
     }
 }
