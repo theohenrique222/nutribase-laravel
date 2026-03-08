@@ -54,13 +54,13 @@ function destroy(event: Event, id: number) {
                         </Column>
                     </DataTable>
                 </div>
+            </div>
+        </div>
                 <div>
                     <Link :href="route('coach.create')">
                         <Button label="Cadastrar Coach" class="w-full" severity="success" />
                     </Link>
                 </div>
-            </div>
-        </div>
     </AppLayout>
 </template>
 

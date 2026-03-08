@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coach;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,15 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('user')->get();
+        // Primeiro pega o registro do coach correspondente ao usuário logado
+        $coach = Coach::where('user_id', auth()->id())->first();
+
+        if (!$coach) {
+            return abort(403, 'Você não pode adicionar aluno');
+        }
+        $students = Student::with('user')
+            ->where('coach_id', $coach->id)
+            ->get();
 
         return Inertia::render('students/index', [
             'title' => 'Alunos',
@@ -45,14 +54,18 @@ class StudentController extends Controller
             'password'  =>  'required|string|min:8|confirmed',
         ]);
 
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
+        $coach = Coach::where('user_id', auth()->user()->id)->first();
+
         Student::create([
             'user_id' => $user->id,
+            'coach_id' => $coach->id,
         ]);
 
         return Redirect::route('students.index');
