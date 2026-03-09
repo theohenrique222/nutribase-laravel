@@ -17,19 +17,22 @@ class StudentController extends Controller
      */
     public function index()
     {
-        // Primeiro pega o registro do coach correspondente ao usuário logado
-        $coach = Coach::where('user_id', auth()->id())->first();
+        $coach      =   Coach::where('user_id', auth()->id())->first();
+        $students   =   Student::with('user')->get();
 
         if (!$coach) {
-            return abort(403, 'Você não pode adicionar aluno');
+            return Inertia::render('students/index', [
+                'title'     =>  'Alunos',
+                'students'  =>  $students
+            ]);
         }
-        $students = Student::with('user')
+        $students   =   Student::with('user')
             ->where('coach_id', $coach->id)
             ->get();
 
         return Inertia::render('students/index', [
-            'title' => 'Alunos',
-            'students' => $students
+            'title'     =>  'Alunos',
+            'students'  =>  $students
         ]);
     }
 
@@ -56,9 +59,9 @@ class StudentController extends Controller
 
 
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'name'      =>  $validated['name'],
+            'email'     =>  $validated['email'],
+            'password'  =>  Hash::make($validated['password']),
         ]);
 
         $coach = Coach::where('user_id', auth()->user()->id)->first();
@@ -101,7 +104,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-
         return Redirect::route('students.index')->with('success', 'Aluno removido com sucesso!');
     }
 }
