@@ -47,7 +47,7 @@ function destroy(event: Event, id: number) {
                     <div v-else>
                         <div v-if="students" class="flex h-full w-full items-center justify-center">
                             <DataTable :value="students" tableStyle="min-width: 50rem">
-                            
+
                                 <Column field="id" header="Matricula" sortable style="width: 10%"></Column>
                                 <Column field="user.name" header="Nome do aluno" sortable style="width: 50%"></Column>
                                 <Column header="Ações" style="width: 25%">
@@ -61,12 +61,10 @@ function destroy(event: Event, id: number) {
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
-                    <div>
-                        <Link :href="route('students.create')">
-                            <Button label="Cadastrar Aluno" class="w-full" severity="success" />
-                        </Link>
-                    </div>
+                <div class="m-auto w-1/2">
+                    <Link :href="route('students.create')">
+                        <Button label="Cadastrar Aluno" class="w-full" severity="success" />
+                    </Link>
                 </div>
             </div>
         </div>
