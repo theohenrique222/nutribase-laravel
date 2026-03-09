@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import NavFooter from '@/components/NavFooter.vue';
+
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder, Home, Activity, Clipboard, LayoutDashboardIcon } from 'lucide-vue-next';
@@ -33,14 +33,14 @@ const mainNavItems: NavItem[] = [
         href: 'calculation',
         icon: Activity,
     },
+    // {
+    //     title: 'Dieta IA',
+    //     href: 'diet-plan',
+    //     icon: Clipboard,
+    // },
     {
-        title: 'Dieta IA',
-        href: 'diet-plan',
-        icon: Clipboard,
-    },
-    {
-        title: 'Dieta personalizada',
-        href: 'custom-diet',
+        title: 'Dieta',
+        href: route('diet.index'),
         icon: Clipboard,
     },
     {

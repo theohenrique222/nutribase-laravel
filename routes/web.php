@@ -8,6 +8,7 @@ use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\PersonalDatasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DietController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -28,6 +29,7 @@ Route::resource('measurements', MeasurementsController::class)->middleware(['aut
 Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 'generate']);
 Route::resource('students', StudentController::class)->middleware(['auth']);
 Route::resource('coach', CoachController::class)->middleware(['auth']);
+Route::resource('diet', DietController::class)->middleware(['auth']);
 
 // Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
 
