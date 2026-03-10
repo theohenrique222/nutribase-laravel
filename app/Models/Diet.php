@@ -6,12 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Diet extends Model
 {
+    protected $casts = [
+        'meals' => 'array',
+    ];
     protected $fillable = [
         'student_id',
         'coach_id',
         'objective',
         'calories',
         'meals',
+        'food',
+        'quantity',
+        'observation',
     ];
 
     public function student()
@@ -24,6 +30,6 @@ class Diet extends Model
     }
     public function foods()
     {
-        return $this->belongsToMany(Food::class)->withPivot('meal_number', 'quantity');
+        return $this->belongsToMany(Food::class)->withPivot('meal_number', 'quantity', 'observation');
     }
 }

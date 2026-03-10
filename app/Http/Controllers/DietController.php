@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coach;
 use App\Models\Diet;
 use App\Models\Food;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DietController extends Controller
@@ -24,11 +27,15 @@ class DietController extends Controller
      */
     public function create()
     {
-        $foods = Food::all();
+        $foods      =   Food::all();
+        $coach      =   Coach::where('user_id', auth()->id())->first();
+        $students   =   Student::with('user')->where('coach_id', $coach->id)->get();
 
         return Inertia::render('diet/Create', [
-            'title' => 'Criar Dieta',
-            'foods' => $foods,
+            'title'     => 'Criar Dieta',
+            'foods'     => $foods,
+            'coach'     => $coach,
+            'students'  => $students
         ]);
     }
 
@@ -37,9 +44,45 @@ class DietController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-    }
+        $coachId = Coach::where('user_id', auth()->id())->value('id');
 
+        $validated = $request->validate([
+            'student_id' => 'nullable|exists:students,id',
+            'objective' => 'nullable|string|max:255',
+            'calories' => 'nullable|integer',
+            'meals' => 'required|array',
+            'meals.*.products' => 'required|array',
+            'meals.*.products.*.quantity' => 'nullable|numeric',
+            'meals.*.products.*.food' => 'required|integer',
+            'meals.*.products.*.observation' => 'nullable|string',
+        ]);
+
+        foreach ($validated['meals'] as $meal) {
+            foreach ($meal['products'] as $product) {
+
+                $diet = Diet::create([
+                    'coach_id' => $coachId,
+                    'student_id' => $validated['student_id'],
+                    'objective' => $validated['objective'],
+                    'calories' => $validated['calories'],
+                    'meals' => $validated['meals'],
+                ]);
+            }
+        }
+        foreach ($validated['meals'] as $mealIndex => $meal) {
+            foreach ($meal['products'] as $product) {
+                DB::table('diet_food')->insert([
+                    'diet_id' => $diet->id,
+                    'food_id' => $product['food'],
+                    'meal_number' => $mealIndex,
+                    'quantity' => $product['quantity'],
+                    'observation' => $product['observation'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+    }
     /**
      * Display the specified resource.
      */

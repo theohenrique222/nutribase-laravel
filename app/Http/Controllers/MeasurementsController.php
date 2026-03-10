@@ -67,11 +67,14 @@ class MeasurementsController extends Controller
 
         $validated['user_id'] = auth()->id();
 
-        $validated['measurement_id'] = auth()->id();
+        $measurementExists = Measurements::where('user_id', auth()->id())->exists();
 
-        Measurements::create($validated);
+        $measurement = Measurements::create($validated);
 
-        MeasurementsHistory::create($validated);
+        if (!$measurementExists) {
+            $validated['measurement_id'] = $measurement->id;
+            MeasurementsHistory::create($validated);
+        }
 
         return redirect(route('measurements.index'));
     }

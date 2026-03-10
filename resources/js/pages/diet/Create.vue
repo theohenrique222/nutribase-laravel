@@ -7,27 +7,29 @@ import { router } from '@inertiajs/vue3';
 defineProps<{
     title: string;
     foods: any[];
+    students: any[];
 }>();
 
 const header = ref({
     objective: '',
+    student: '',
     calories: '',
-})
+});
 
 const meals = ref([
     {
-        products: [{ quantity: '', product: '', observation: '' }],
+        products: [{ quantity: '', food: '', observation: '' }],
     },
 ]);
 
 const addMeal = () => {
     meals.value.push({
-        products: [{ quantity: '', product: '', observation: '' }],
+        products: [{ quantity: '', food: '', observation: '' }],
     });
 };
 
 const addProduct = (mealIndex: number) => {
-    meals.value[mealIndex].products.push({ quantity: '', product: '', observation: '' });
+    meals.value[mealIndex].products.push({ quantity: '', food: '', observation: '' });
 };
 
 const removeProduct = (mealIndex: number, productIndex: number) => {
@@ -35,7 +37,12 @@ const removeProduct = (mealIndex: number, productIndex: number) => {
 };
 
 const submitForm = () => {
-    router.post(route('diet.store'), { head: header.value, meals: meals.value });
+    router.post(route('diet.store'), {
+        student_id: header.value.student,
+        objective: header.value.objective,
+        calories: header.value.calories,
+        meals: meals.value,
+    });
 };
 </script>
 
@@ -45,7 +52,15 @@ const submitForm = () => {
         <div class="mx-auto max-w-7xl p-6">
             <h1 class="mb-6 text-2xl font-bold">{{ title }}</h1>
             <form class="space-y-4" @submit.prevent="submitForm">
-                <div class="p-6 flex flex-col gap-2">
+                <div class="flex flex-col gap-2 p-6">
+                    <label class="mb-1 block text-sm">Aluno:</label>
+                    <select v-model="header.student" class="w-full rounded-lg border p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none">
+                        <option value="">Selecione um aluno</option>
+                        <option v-for="student in students" :key="student.id" :value="student.id">
+                            {{ student.user.name }}
+                        </option>
+                    </select>
+
                     <label class="mb-1 block text-sm">Objetivo da dieta</label>
                     <input
                         type="text"
@@ -80,13 +95,14 @@ const submitForm = () => {
                         <div>
                             <label class="mb-1 block text-sm">Produto</label>
                             <select
-                                v-for="food in foods"
-                                :key="food.id"
-                                v-model="product.product"
+                                v-model="product.food"
                                 name="product"
                                 class="w-full rounded-lg border p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none"
                             >
-                                <option :value="food.name">{{ food.name }}</option>
+                                <option value="">Selecione o produto</option>
+                                <option v-for="food in foods" :key="food.id" :value="food.id">
+                                    {{ food.name }}
+                                </option>
                             </select>
                         </div>
                         <div>
@@ -101,6 +117,7 @@ const submitForm = () => {
                         <div class="flex flex-col items-center justify-center pt-2">
                             <button
                                 v-if="productIndex === meal.products.length - 1"
+                                :key="mealIndex + '-' + productIndex"
                                 type="button"
                                 @click="addProduct(mealIndex)"
                                 class="h-9 w-9 cursor-pointer rounded-full bg-lime-500 text-2xl font-bold text-white transition hover:opacity-80"

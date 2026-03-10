@@ -22,4 +22,8 @@ class Student extends Model
     {
         return $this->belongsTo(Coach::class);
     }
+    public function diet()
+    {
+        return $this->hasOne(Diet::class);
+    }
 }
