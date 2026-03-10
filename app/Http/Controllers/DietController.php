@@ -28,7 +28,7 @@ class DietController extends Controller
 
         return Inertia::render('diet/Create', [
             'title' => 'Criar Dieta',
-            'foods' => $foods
+            'foods' => $foods,
         ]);
     }
 

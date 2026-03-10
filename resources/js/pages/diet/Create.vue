@@ -3,12 +3,16 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-// import route from 'ziggy-js'
 
 defineProps<{
     title: string;
-    foods?: any[];
+    foods: any[];
 }>();
+
+const header = ref({
+    objective: '',
+    calories: '',
+})
 
 const meals = ref([
     {
@@ -31,7 +35,7 @@ const removeProduct = (mealIndex: number, productIndex: number) => {
 };
 
 const submitForm = () => {
-    router.post(route('diet.store'), { meals: meals.value });
+    router.post(route('diet.store'), { head: header.value, meals: meals.value });
 };
 </script>
 
@@ -39,9 +43,26 @@ const submitForm = () => {
     <Head :title="title" />
     <AppLayout>
         <div class="mx-auto max-w-7xl p-6">
-            <h1 class="mb-6 text-2xl font-bold dark:text-white">{{ title }}</h1>
-
+            <h1 class="mb-6 text-2xl font-bold">{{ title }}</h1>
             <form class="space-y-4" @submit.prevent="submitForm">
+                <div class="p-6 flex flex-col gap-2">
+                    <label class="mb-1 block text-sm">Objetivo da dieta</label>
+                    <input
+                        type="text"
+                        v-model="header.objective"
+                        name="objective"
+                        class="w-full rounded-lg border p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none"
+                        placeholder="Ex: Dieta de emagrecimento"
+                    />
+                    <label class="mb-1 block text-sm">Calorias Totais</label>
+                    <input
+                        type="number"
+                        v-model="header.calories"
+                        name="calories"
+                        class="w-full rounded-lg border p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none"
+                        placeholder="Ex: 2.400 Kcal"
+                    />
+                </div>
                 <div v-for="(meal, mealIndex) in meals" :key="mealIndex" class="rounded-2xl p-6 shadow-md">
                     <h3 class="mb-4 text-xl font-bold">Refeição {{ mealIndex + 1 }}</h3>
 
@@ -58,13 +79,15 @@ const submitForm = () => {
                         </div>
                         <div>
                             <label class="mb-1 block text-sm">Produto</label>
-                            <input
-                                type="text"
-                                name="meals"
+                            <select
+                                v-for="food in foods"
+                                :key="food.id"
                                 v-model="product.product"
-                                class="w-full rounded-lg p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none"
-                                placeholder="Ex: Pão francês"
-                            />
+                                name="product"
+                                class="w-full rounded-lg border p-2 focus:ring-2 focus:ring-lime-500 focus:outline-none"
+                            >
+                                <option :value="food.name">{{ food.name }}</option>
+                            </select>
                         </div>
                         <div>
                             <label class="mb-1 block text-sm">Observação</label>
@@ -96,8 +119,7 @@ const submitForm = () => {
                     </div>
                 </div>
 
-                <div class="w-1/2 m-auto">
-
+                <div class="m-auto w-1/2">
                     <button
                         type="button"
                         @click="addMeal"
