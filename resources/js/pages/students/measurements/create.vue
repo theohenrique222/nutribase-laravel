@@ -5,6 +5,8 @@ import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps<{
     title?: string;
+    students: any[];
+    isCoach: boolean;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -126,6 +128,7 @@ const formFields = [
 ];
 
 const form = useForm({
+    student: null,
     name: null,
     description: null,
     height: null,
@@ -156,6 +159,22 @@ function submit() {
 
                     <div class="flex h-full w-full items-center justify-center">
                         <form @submit.prevent="submit" class="w-full max-w-4xl gap-6 space-y-5 rounded-2xl p-8 shadow-xl">
+                            <div
+                                v-if="isCoach"
+                            >
+                                <label class="mb-1 block text-sm font-semibold dark:text-gray-50"> Aluno * </label>
+                                <select class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    <option>Selecione o aluno</option>
+                                    <option
+                                        v-for="student in students"
+                                        :key="student.id"
+                                        :value="student.id"
+                                        class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    >
+                                        {{ student.user.name }}
+                                    </option>
+                                </select>
+                            </div>
                             <div v-for="(field, index) in formFields" :key="index">
                                 <label :for="field.name" class="mb-1 block text-sm font-semibold dark:text-gray-50">
                                     {{ field.label }}

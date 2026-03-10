@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use function Pest\Laravel\get;
+use function PHPUnit\Framework\isEmpty;
 
 class ProfileController extends Controller
 {
@@ -15,12 +17,17 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profile = Profile::where('user_id', auth()->id())->get();
+        $student = Student::where('user_id', auth()->id())->exists();
+        $profile = Profile::where('user_id', auth()->id())->first();
 
-        return Inertia::render('students/profiles/index', [
-            'title' => 'Completar dados pessoais',
-            'profile' => $profile,
-        ]);
+        if ($student && !$profile) {
+            return Inertia::render('students/profiles/index', [
+                'title' => 'Completar dados pessoais',
+                'profile' => $profile,
+            ]);
+        }
+
+        abort(403, 'Seus dados já estão no sistema');
     }
 
     /**

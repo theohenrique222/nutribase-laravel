@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coach;
 use App\Models\Measurements;
 use App\Models\MeasurementsHistory;
 use App\Models\Profile;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -29,7 +31,11 @@ class MeasurementsController extends Controller
      */
     public function create()
     {
-        if (!Profile::where('user_id', auth()->id())->first()) {
+        $profile        =   Profile::where('user_id', auth()->id())->first();
+        $students       =   Student::where('user_id', auth()->id())->first();
+        $coach          =   Coach::  where('user_id', auth()->id())->first();
+
+        if (!$profile && $students) {
             return redirect()
                 ->route('profile.create');
         }
@@ -39,9 +45,23 @@ class MeasurementsController extends Controller
             abort(403, 'Não é possível adicionar outra medição');
         }
 
-        return Inertia::render('students/measurements/create', [
-            'title' =>  'Cadastrar Medições'
-        ]);
+        if ($coach) {
+            $studentsName   =   Student::with('user')->where('coach_id', $coach->id)->get();
+            return Inertia::render('students/measurements/create',
+                [
+                    'title'     =>  'Cadastrar Medições',
+                    'students'  =>  $studentsName,
+                    'isCoach'   =>  $coach ? true : false,
+                ]
+            );
+        }
+        if ($students) {
+            return Inertia::render('students/measurements/create',
+                [
+                    'title' =>  'Cadastrar Medições',
+                ]
+            );
+        }
     }
 
     /**
