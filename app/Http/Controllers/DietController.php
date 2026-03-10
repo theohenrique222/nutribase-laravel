@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diet;
+use App\Models\Food;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,8 +24,11 @@ class DietController extends Controller
      */
     public function create()
     {
+        $foods = Food::all();
+
         return Inertia::render('diet/Create', [
-            'title' => 'Criar Dieta'
+            'title' => 'Criar Dieta',
+            'foods' => $foods
         ]);
     }
 

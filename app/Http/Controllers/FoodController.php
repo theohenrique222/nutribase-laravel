@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class FoodController extends Controller
@@ -33,7 +34,17 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'calories' => 'required|numeric|min:1',
+            'protein' => 'required|numeric|min:1',
+            'carbs' => 'required|numeric|min:1',
+            'fat' => 'required|numeric|min:1',
+        ]);
+
+        Food::create($validated);
+
+        return Redirect::route('foods.index')->with('success', 'Alimento cadastrado com sucesso.');
     }
 
     /**

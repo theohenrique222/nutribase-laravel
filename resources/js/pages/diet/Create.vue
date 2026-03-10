@@ -7,6 +7,7 @@ import { router } from '@inertiajs/vue3';
 
 defineProps<{
     title: string;
+    foods?: any[];
 }>();
 
 const meals = ref([

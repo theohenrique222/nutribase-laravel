@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -59,7 +58,7 @@ const submit = () => {
                             <Input id="fat" type="number" step="0.01" v-model="form.fat" placeholder="Ex: 5" />
                         </div>
 
-                        <Button type="submit" class="w-full"> Salvar alimento </Button>
+                        <Button type="submit" severity="success" class="w-full" label="Salvar alimento"/>
                     </form>
                 </div>
             </div>
