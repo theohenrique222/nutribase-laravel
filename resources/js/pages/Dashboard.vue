@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3';
+
+defineProps<{
+    title: string;
+    students: any[];
+    diets: any[];
+    measurements: any[];
+}>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,24 +19,115 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <Head title="Painel de Controle"/>
+    <Head title="Painel de Controle" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div> -->
-                <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div> -->
-                <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div> -->
+        <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
+            <div class="text-surface-700 dark:text-surface-100 flex flex-col items-center gap-4 text-center">
+                <div class="text-primary text-lg leading-tight font-bold"><i class="pi pi-discord text-lg! leading-none!" />&nbsp;NUTRIBASE</div>
+                <div class="text-surface-900 dark:text-surface-0 text-4xl leading-tight font-bold">Bem vindo de volta</div>
+                <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">O aplicativo ideal para gestão de dietas e calculo</div>
+                <Button label="Falar o com suporte" icon="pi pi-discord" rounded class="mt-4" />
             </div>
-            <!-- <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <PlaceholderPattern />
-            </div> -->
+        </div>
+
+        <div class="bg-surface-50 dark:bg-surface-950 px-6 py-8 md:px-12 lg:px-20">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-surface-0 dark:bg-surface-900 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between gap-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal"> Alunos </span>
+                            <div
+                                v-for="student in students"
+                                :key="student"
+                                class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
+                            >
+                                {{ student ?? '0' }}
+                            </div>
+                        </div>
+                        <Link :href="route('students.index')">
+                            <div class="bg-success flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500">
+                                <i class="pi pi-users text-surface-0 dark:text-surface-900 text-xl! leading-none! text-white" />
+                            </div>
+                        </Link>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-surface-500 dark:text-surface-300 leading-tight"> Total de alunos </span>
+                    </div>
+                </div>
+
+                <div class="bg-surface-0 dark:bg-surface-900 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between gap-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal">Dietas</span>
+
+                            <div v-if="diets && diets.length">
+                                <p
+                                    class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
+                                    v-for="diet in diets"
+                                    :key="diet.id"
+                                >
+                                    {{ diet }}
+                                </p>
+                            </div>
+                            <p v-else class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">0</p>
+                        </div>
+
+                        <Link :href="route('diet.index')">
+                            <div class="bg-success flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500">
+                                <i class="pi pi-clipboard text-surface-0 dark:text-surface-900 text-xl! leading-none! text-white" />
+                            </div>
+                        </Link>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-surface-500 dark:text-surface-300 leading-tight"> Dietas montadas </span>
+                    </div>
+                </div>
+
+                <div class="bg-surface-0 dark:bg-surface-900 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between gap-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal">Medições</span>
+
+                            <div v-if="measurements && measurements.length">
+                                <p
+                                    class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
+                                    v-for="measurement in measurements"
+                                    :key="measurement.id"
+                                >
+                                    {{ measurement }}
+                                </p>
+                            </div>
+                            <p v-else class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">0</p>
+                        </div>
+                        <Link :href="route('diet.index')">
+                            <div class="bg-success flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500">
+                                <i class="pi pi-chart-line text-surface-0 dark:text-surface-900 text-xl! leading-none! text-white" />
+                            </div>
+                        </Link>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-surface-500 dark:text-surface-300 leading-tight"> Medições realizadas </span>
+                    </div>
+                </div>
+
+                <div class="bg-surface-0 dark:bg-surface-900 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between gap-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal">Feedback</span>
+                            <div class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">152</div>
+                        </div>
+                        <Link :href="route('diet.index')">
+                            <div class="bg-success flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500">
+                                <i class="pi pi-envelope text-surface-0 dark:text-surface-900 text-xl! leading-none! text-white" />
+                            </div>
+                        </Link>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-surface-500 dark:text-surface-300 leading-tight"> Feedbacks dos alunos </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </AppLayout>
 </template>

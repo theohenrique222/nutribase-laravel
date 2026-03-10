@@ -12,7 +12,7 @@ const isCoach = page.props.isCoach as boolean;
 const mainNavItems: NavItem[] = [
     {
         title: 'Painel de controle',
-        href: 'dashboard',
+        href: route('dashboard'),
         icon: Home,
     },
     {

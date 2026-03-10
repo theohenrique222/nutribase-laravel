@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoachController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\MeasurementsController;
 use App\Http\Controllers\CalculationController;
@@ -17,10 +18,8 @@ Route::get('/', function () {
     return Inertia::render('App');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('dashboard', DashboardController::class)->middleware(['auth'])->name('dashboard');
 Route::resource('profile', ProfileController::class)->middleware(['auth']);
 Route::resource('personal-datas', PersonalDatasController::class)->middleware(['auth']);
 Route::resource('calculation', CalculationController::class)->middleware(['auth']);
