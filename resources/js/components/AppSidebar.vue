@@ -13,7 +13,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Painel de controle',
         href: 'dashboard',
-        icon: LayoutDashboardIcon,
+        icon: Home,
     },
     {
         title: 'Medições',
@@ -36,6 +36,7 @@ const mainNavItems: NavItem[] = [
         title: 'Alimentos',
         href: route('foods.index'),
         icon: Clipboard,
+        show: isCoach
     },
     // {
     //     title: 'Analise Corporal',
@@ -51,11 +52,6 @@ const mainNavItems: NavItem[] = [
         title: 'Dieta',
         href: route('diet.index'),
         icon: Clipboard,
-    },
-    {
-        title: 'Site',
-        href: '/dashboard',
-        icon: Home,
     },
 ];
 
