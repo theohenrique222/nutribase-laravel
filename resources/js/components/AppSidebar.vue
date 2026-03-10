@@ -3,8 +3,11 @@ import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, Home, Activity, Clipboard, LayoutDashboardIcon } from 'lucide-vue-next';
+
+const page = usePage();
+const isCoach = page.props.isCoach as boolean;
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,17 +18,19 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Medições',
         href: route('measurements.index'),
-        icon: Clipboard,
+        icon: Activity,
     },
     {
         title: 'Coach',
         href: route('coach.index'),
         icon: Clipboard,
+        show: isCoach,
     },
     {
         title: 'Alunos',
         href: route('students.index'),
         icon: Clipboard,
+        show: isCoach,
     },
     {
         title: 'Alimentos',
