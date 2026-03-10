@@ -44,6 +44,8 @@ class ProfileController extends Controller
                 'profile' => $profile,
             ]);
         }
+
+        return redirect()->back();
     }
 
     public function store(Request $request)
