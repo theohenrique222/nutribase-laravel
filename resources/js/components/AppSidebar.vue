@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
@@ -29,10 +28,15 @@ const mainNavItems: NavItem[] = [
         icon: Clipboard,
     },
     {
-        title: 'Analise Corporal',
-        href: 'calculation',
-        icon: Activity,
+        title: 'Alimentos',
+        href: route('foods.index'),
+        icon: Clipboard,
     },
+    // {
+    //     title: 'Analise Corporal',
+    //     href: 'calculation',
+    //     icon: Activity,
+    // },
     // {
     //     title: 'Dieta IA',
     //     href: 'diet-plan',

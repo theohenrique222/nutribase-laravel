@@ -3,9 +3,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps<{
-    title: string;
-    diet: string | null;
-}>();
+    title?: string;
+}>()
+
 </script>
 
 <template>
@@ -18,8 +18,8 @@ defineProps<{
                         {{ title }}
                     </h1>
                     <div class="m-auto w-1/5">
-                        <Link :href="route('diet.create')">
-                            <Button label="Montar Dieta" class="w-full" severity="success" />
+                        <Link :href="route('foods.create')">
+                            <Button label="Cadastrar Alimento" class="w-full" severity="success" />
                         </Link>
                     </div>
                 </div>
@@ -27,3 +27,5 @@ defineProps<{
         </div>
     </AppLayout>
 </template>
+
+<style scoped></style>

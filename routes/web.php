@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoachController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\MeasurementsController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\CustomDietController;
@@ -30,6 +31,7 @@ Route::post('/diets/generate', [App\Http\Controllers\DietPlanController::class, 
 Route::resource('students', StudentController::class)->middleware(['auth']);
 Route::resource('coach', CoachController::class)->middleware(['auth']);
 Route::resource('diet', DietController::class)->middleware(['auth']);
+Route::resource('foods', FoodController::class)->middleware(['auth']);
 
 // Route::post('/api/generate-diet', [AiController::class, 'generateDiet']);
 

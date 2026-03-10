@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Diet;
+use App\Models\Food;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class DietController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('diet/Index', [
-            'title' => 'Dietas'
+        return Inertia::render('Foods/Index', [
+            'title' => 'Alimentos'
         ]);
     }
 
@@ -23,8 +23,8 @@ class DietController extends Controller
      */
     public function create()
     {
-        return Inertia::render('diet/Create', [
-            'title' => 'Criar Dieta'
+        return Inertia::render('Foods/Create', [
+            'title' => 'Cadastrar Alimentos'
         ]);
     }
 
@@ -39,7 +39,7 @@ class DietController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Diet $diet)
+    public function show(Food $food)
     {
         //
     }
@@ -47,7 +47,7 @@ class DietController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Diet $diet)
+    public function edit(Food $food)
     {
         //
     }
@@ -55,7 +55,7 @@ class DietController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Diet $diet)
+    public function update(Request $request, Food $food)
     {
         //
     }
@@ -63,7 +63,7 @@ class DietController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Diet $diet)
+    public function destroy(Food $food)
     {
         //
     }

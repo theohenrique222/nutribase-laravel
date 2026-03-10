@@ -13,4 +13,17 @@ class Diet extends Model
         'calories',
         'meals',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public function coach()
+    {
+        return $this->hasOne(Coach::class);
+    }
+    public function foods()
+    {
+        return $this->belongsToMany(Food::class)->withPivot('meal_number', 'quantity');
+    }
 }
