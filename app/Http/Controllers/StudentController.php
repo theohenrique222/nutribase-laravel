@@ -71,7 +71,7 @@ class StudentController extends Controller
             'coach_id' => $coach->id,
         ]);
 
-        return Redirect::route('students.index');
+        return back()->with('success', 'Aluno cadastrado com sucesso!');
     }
 
     /**
@@ -93,9 +93,17 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $student->user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        return redirect()->back();
     }
 
     /**

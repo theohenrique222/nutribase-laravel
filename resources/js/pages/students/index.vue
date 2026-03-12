@@ -1,21 +1,57 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
 import { useConfirm } from 'primevue/useconfirm';
 import ConfirmPopup from 'primevue/confirmpopup';
+import { ref } from 'vue';
+import { Input } from '@/components/ui/input';
 
 defineProps<{
     title?: string;
     students?: any[];
 }>();
 
+const visible = ref(false);
+
+const filters = ref({
+    global: {
+        value: null,
+        matchMode: 'contains',
+    },
+});
+
 function show(id: number) {
     router.visit(route('diet.show', id));
 }
 
-function edit(id: number) {
-    router.visit(route('students.edit', id));
+const editingId = ref < number | null>(null);
+
+function edit(students: any) {
+
+    editingId.value = students.id;
+
+    form.name = students.user.name;
+    form.email = students.user.email;
+    
+
+    visible.value = true
+
 }
+
+function create() {
+
+    form.reset()
+    editingId.value = null
+    visible.value = true
+
+}
+
+const form = useForm({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+});
 
 const confirm = useConfirm();
 
@@ -29,11 +65,35 @@ function destroy(event: Event, id: number) {
         },
     });
 }
+
+const submit = () => {
+    if (editingId.value) {
+        form.put(route('students.update', editingId.value), {
+            onSuccess: () => {
+                alert('Aluno atualizado com sucesso!')
+                visible.value = false
+                form.reset()
+                editingId.value = null
+            }
+        })
+    }
+
+    else {
+
+        form.post(route('students.store'), {
+            onSuccess: () => {
+                alert('Aluno Cadastrado com sucesso')
+                visible.value = false
+                form.reset()
+        }
+        })
+    }
+}
 </script>
 
 <template>
-    <ConfirmPopup />
     <Head :title="title" />
+    <ConfirmPopup />
     <AppLayout>
         <Toast position="bottom-center" group="bc" @close="onClose">
             <template #message="slotProps">
@@ -47,7 +107,6 @@ function destroy(event: Event, id: number) {
                 </div>
             </template>
         </Toast>
-        <Button @click="showTemplate" label="View" />
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl">
             <div class="border-sidebar-border/70 dark:border-sidebar-border relative flex-1 rounded-xl border">
                 <div class="mx-auto max-w-7xl p-6">
@@ -57,16 +116,27 @@ function destroy(event: Event, id: number) {
                     <div v-if="!students || students.length === 0" class="text-center">
                         <h2 class="p-10">Você ainda não possui Alunos cadastrados.</h2>
                     </div>
+
                     <div v-else>
                         <div v-if="students" class="flex h-full w-full items-center justify-center">
-                            <DataTable :value="students" tableStyle="min-width: 50rem">
+                            <DataTable v-model:filters="filters" :value="students" :rows="10" class="w-full">
+                                <template #header>
+                                    <div class="flex justify-end">
+                                        <IconField class="space-x-5">
+                                            <InputIcon>
+                                                <i class="pi pi-search" />
+                                            </InputIcon>
+                                            <InputText v-model="filters.global.value" placeholder="Buscar aluno" />
+                                        </IconField>
+                                    </div>
+                                </template>
                                 <Column field="id" header="Matricula" sortable style="width: 10%"></Column>
                                 <Column field="user.name" header="Nome do aluno" sortable style="width: 50%"></Column>
                                 <Column header="Ações" style="width: 25%">
                                     <template #body="slotProps">
                                         <div class="flex w-full justify-around">
                                             <Button icon="pi pi-clipboard" class="mr-2" @click="show(slotProps.data.id)" />
-                                            <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data.id)" />
+                                            <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data)" />
                                             <Button icon="pi pi-trash" severity="danger" @click="destroy($event, slotProps.data.id)" />
                                         </div>
                                     </template>
@@ -76,13 +146,40 @@ function destroy(event: Event, id: number) {
                     </div>
                 </div>
                 <div class="m-auto w-1/2">
-                    <Link :href="route('students.create')">
-                        <Button label="Cadastrar Aluno" class="w-full" severity="success" />
-                    </Link>
+                    <Button label="Cadastrar Aluno" class="w-full" severity="success" @click="create" />
                 </div>
+
+                <Dialog v-model:visible="visible" modal header="Cadastrar alimento" :style="{ width: '50rem' }" class="text-center">
+                    <span class="text-surface-500 dark:text-surface-400 mb-8 block">Insira as informações sobre o alimento.</span>
+                    <form @submit.prevent="submit">
+                        <div class="mb-4 flex items-center gap-4">
+                            <label for="name" class="w-28 font-semibold">Nome</label>
+                            <Input id="name" type="text" placeholder="Digite o nome do aluno" v-model="form.name" required />
+                        </div>
+
+                        <div class="mb-4 flex items-center gap-4">
+                            <label for="calories" class="w-28 font-semibold">Email</label>
+                            <Input id="calories" type="text" placeholder="Digite o e-mail" required v-model="form.email" />
+                        </div>
+
+                        <div class="mb-4 flex items-center gap-4">
+                            <label for="protein" class="w-28 font-semibold">Senha</label>
+                            <Input id="protein" type="password" placeholder="Digite a senha" required v-model="form.password" />
+                        </div>
+
+                        <div class="mb-4 flex items-center gap-4">
+                            <label for="protein" class="w-28 font-semibold">Confirmação de senha</label>
+                            <Input id="protein" type="password" placeholder="Confirme sua senha" required v-model="form.password_confirmation" />
+                        </div>
+
+                        <div class="flex justify-end gap-2">
+                            <Button type="button" label="Cancelar" severity="secondary" @click="visible = false"></Button>
+                            <Button type="submit" label="Cadastrar"></Button>
+                        </div>
+                    </form>
+                </Dialog>
             </div>
         </div>
     </AppLayout>
 </template>
 
-<style scoped></style>
