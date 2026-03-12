@@ -28,8 +28,13 @@ class Diet extends Model
     {
         return $this->hasOne(Coach::class);
     }
+//    public function foods()
+//    {
+//        return $this->belongsToMany(Food::class)->withPivot('meal_number', 'quantity', 'observation');
+//    }
     public function foods()
     {
-        return $this->belongsToMany(Food::class)->withPivot('meal_number', 'quantity', 'observation');
+        return $this->belongsToMany(Food::class, 'diet_food')
+            ->withPivot('meal_number', 'quantity', 'observation');
     }
 }

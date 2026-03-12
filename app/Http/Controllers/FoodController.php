@@ -14,8 +14,11 @@ class FoodController extends Controller
      */
     public function index()
     {
+        $foods = Food::all();
+
         return Inertia::render('Foods/Index', [
-            'title' => 'Alimentos'
+            'title' => 'Alimentos',
+            'foods' =>  $foods,
         ]);
     }
 
@@ -76,6 +79,6 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
-        //
+        $food->delete();
     }
 }

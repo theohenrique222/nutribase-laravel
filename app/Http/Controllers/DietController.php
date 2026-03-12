@@ -17,8 +17,27 @@ class DietController extends Controller
      */
     public function index()
     {
+        $students   =   Student::with('user')->get();
+
+        $coach = Coach::where('user_id', auth()->id())->first();
+
+        if (!$coach) {
+            return Inertia::render('diet/Index', [
+                'title' => 'Dietas',
+                'diets' => [], // usuário não é coach, retorna vazio
+                'students' => $students
+            ]);
+        }
+
+        $diets = Diet::with([
+            'student',
+            'foods:id,name' // só traz id e name dos alimentos
+        ])->where('coach_id', $coach->id)->get();
+
+
         return Inertia::render('diet/Index', [
-            'title' => 'Dietas'
+            'title' => 'Dietas',
+            'diets' => $diets,
         ]);
     }
 
@@ -82,13 +101,32 @@ class DietController extends Controller
                 ]);
             }
         }
+        return redirect(route('diet.index'));
     }
     /**
      * Display the specified resource.
      */
-    public function show(Diet $diet)
+    public function show($student_id)
     {
-        //
+        $coach = Coach::where('user_id', auth()->id())->first();
+        if (!$coach) abort(403);
+
+        $student = Student::with('user')->findOrFail($student_id);
+
+        $diets = Diet::with(['foods:id,name'])
+            ->where('coach_id', $coach->id)
+            ->where('student_id', $student->id)
+            ->get();
+
+        if ($diets->isEmpty()) {
+            return redirect(route('diet.create', ['student_id' => $student->id]))
+                ->with( 'Este aluno ainda não possui dieta. Crie uma agora.');
+        }
+        return Inertia::render('diet/Index', [
+            'title' => 'Dietas de ' . $student->user->name,
+            'student' => $student,
+            'diets' => $diets,
+        ]);
     }
 
     /**

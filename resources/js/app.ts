@@ -1,6 +1,6 @@
 import '../css/app.css';
 
-import { createInertiaApp, router } from '@inertiajs/vue3';
+import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
@@ -9,6 +9,7 @@ import { initializeTheme } from './composables/useAppearance';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import Button from "primevue/button"
+import InputText from 'primevue/inputtext';
 import 'primeicons/primeicons.css'
 import Calculations from './pages/templates/Calculations.vue';
 import Card from 'primevue/card';
@@ -23,14 +24,18 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
 
 
+
 // Extend ImportMeta interface for Vite...
+
+/// <reference types="vite/client" />
+
 declare module 'vite/client' {
-    interface ImportMetaEnv {
+    declare interface ImportMetaEnv {
         readonly VITE_APP_NAME: string;
         [key: string]: string | boolean | undefined;
     }
 
-    interface ImportMeta {
+    declare interface ImportMeta {
         readonly env: ImportMetaEnv;
         readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
     }
@@ -65,6 +70,7 @@ createInertiaApp({
             .component('Row', Row)
             .component('ConfirmDialog', ConfirmDialog)
             .component('ConfirmationService', ConfirmationService)
+            .component('InputText', InputText)
             .mount(el);
     },
     progress: {

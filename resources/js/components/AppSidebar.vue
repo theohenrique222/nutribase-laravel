@@ -52,6 +52,7 @@ const mainNavItems: NavItem[] = [
         title: 'Dieta',
         href: route('diet.index'),
         icon: Clipboard,
+        show: !isCoach
     },
 ];
 

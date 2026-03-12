@@ -17,6 +17,11 @@ class Food extends Model
     ];
     public function diets()
     {
-        return $this->belongsToMany(Diet::class);
+        return $this->belongsToMany(Diet::class, 'create_diet_food')
+        ->withPivot('meal_number','quantity','observation');
+    }
+    public function food()
+    {
+        return $this->hasMany(Food::class);
     }
 }
