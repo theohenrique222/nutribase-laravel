@@ -16,20 +16,30 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $coaches = Coach::all();
-        if (!$coaches) {
-            return abort(403, 'em desenvolvimento');
+
+        $coach = Coach::where('user_id', auth()->id())->first();
+
+        if (!$coach) {
+
+            return Inertia::render('diet/Index', [
+                'title' => 'Dieta'
+            ]);
+
         }
+
         $coach       =   Coach::where('user_id', auth()->id())->first();
         $students    =   Student::where('coach_id', $coach->id)->count() ?? 0;
         $diets       =  Diet::where('coach_id', $coach->id)->count() ?? 0;
         $measurements = Measurements::all()->count() ?? 0;
+
+        $user = auth()->user();
 
         return Inertia::render('Dashboard', [
             'title' => 'Painel de controle',
             'students' => $students,
             'diets' => $diets,
             'measurements' => $measurements,
+            'user' => $user,
         ]);
     }
 }

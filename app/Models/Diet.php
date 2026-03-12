@@ -37,4 +37,5 @@ class Diet extends Model
         return $this->belongsToMany(Food::class, 'diet_food')
             ->withPivot('meal_number', 'quantity', 'observation');
     }
+
 }

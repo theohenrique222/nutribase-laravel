@@ -61,7 +61,7 @@ class ProfileController extends Controller
 
         Profile::create($validated);
 
-        return Redirect::route('dashboard');
+        return redirect()->back();
     }
 
     /**

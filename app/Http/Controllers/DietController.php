@@ -17,27 +17,18 @@ class DietController extends Controller
      */
     public function index()
     {
-        $students   =   Student::with('user')->get();
+        $student = Student::where('user_id', auth()->id())->first();
+        $foods = Food::all();
+        $diets = Diet::with(['foods'])->where('student_id', $student->id)->get();
 
-        $coach = Coach::where('user_id', auth()->id())->first();
-
-        if (!$coach) {
-            return Inertia::render('diet/Index', [
-                'title' => 'Dietas',
-                'diets' => [], // usuário não é coach, retorna vazio
-                'students' => $students
-            ]);
+        if (!$student) {
+            return Inertia::render('diet/Show');
         }
 
-        $diets = Diet::with([
-            'student',
-            'foods:id,name' // só traz id e name dos alimentos
-        ])->where('coach_id', $coach->id)->get();
-
-
         return Inertia::render('diet/Index', [
-            'title' => 'Dietas',
+            'title' => 'Protocolo Alimentar',
             'diets' => $diets,
+            'foods' => $foods,
         ]);
     }
 
@@ -76,31 +67,30 @@ class DietController extends Controller
             'meals.*.products.*.observation' => 'nullable|string',
         ]);
 
-        foreach ($validated['meals'] as $meal) {
-            foreach ($meal['products'] as $product) {
+        $diet = Diet::create([
+            'coach_id' => $coachId,
+            'student_id' => $validated['student_id'],
+            'objective' => $validated['objective'],
+            'calories' => $validated['calories'],
+            'meals' => $validated['meals'],
+        ]);
 
-                $diet = Diet::create([
-                    'coach_id' => $coachId,
-                    'student_id' => $validated['student_id'],
-                    'objective' => $validated['objective'],
-                    'calories' => $validated['calories'],
-                    'meals' => $validated['meals'],
-                ]);
-            }
-        }
         foreach ($validated['meals'] as $mealIndex => $meal) {
             foreach ($meal['products'] as $product) {
+
                 DB::table('diet_food')->insert([
                     'diet_id' => $diet->id,
                     'food_id' => $product['food'],
-                    'meal_number' => $mealIndex,
+                    'meal_number' => $mealIndex + 1, // começa em 1
                     'quantity' => $product['quantity'],
-                    'observation' => $product['observation'],
+                    'observation' => $product['observation'] ?? null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+
             }
         }
+
         return redirect(route('diet.index'));
     }
     /**
@@ -109,6 +99,7 @@ class DietController extends Controller
     public function show($student_id)
     {
         $coach = Coach::where('user_id', auth()->id())->first();
+        $foods = Food::all();
         if (!$coach) abort(403);
 
         $student = Student::with('user')->findOrFail($student_id);
@@ -122,10 +113,11 @@ class DietController extends Controller
             return redirect(route('diet.create', ['student_id' => $student->id]))
                 ->with( 'Este aluno ainda não possui dieta. Crie uma agora.');
         }
-        return Inertia::render('diet/Index', [
+        return Inertia::render('diet/Show', [
             'title' => 'Dietas de ' . $student->user->name,
             'student' => $student,
             'diets' => $diets,
+            'foods' => $foods,
         ]);
     }
 

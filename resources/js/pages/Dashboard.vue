@@ -5,9 +5,10 @@ import { Head, Link } from '@inertiajs/vue3';
 
 defineProps<{
     title: string;
-    students: any[];
+    students: string;
     diets: any[];
     measurements: any[];
+    user: string;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -24,10 +25,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
             <div class="text-surface-700 dark:text-surface-100 flex flex-col items-center gap-4 text-center">
-                <div class="text-primary text-lg leading-tight font-bold"><i class="pi pi-discord text-lg! leading-none!" />&nbsp;NUTRIBASE</div>
-                <div class="text-surface-900 dark:text-surface-0 text-4xl leading-tight font-bold">Bem vindo de volta</div>
-                <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">O aplicativo ideal para gestão de dietas e calculo</div>
-                <Button label="Falar o com suporte" icon="pi pi-discord" rounded class="mt-4" />
+                <div class="text-primary text-lg leading-tight font-bold">NUTRIBASE</div>
+                <div class="text-surface-900 dark:text-surface-0 text-4xl leading-tight font-bold">👋 Bem-vindo de volta, {{ user.name }}</div>
+                <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
+                    Gerencie dietas, acompanhe alunos e acompanhe a evolução nutricional de forma simples.
+                </div>
+
             </div>
         </div>
 
@@ -37,12 +40,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div class="flex justify-between gap-4">
                         <div class="flex flex-col gap-2">
                             <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal"> Alunos </span>
-                            <div
-                                v-for="student in students"
-                                :key="student"
-                                class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
-                            >
-                                {{ student ?? '0' }}
+                            <div class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">
+                                {{ students ?? '0' }}
                             </div>
                         </div>
                         <Link :href="route('students.index')">
@@ -61,16 +60,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div class="flex flex-col gap-2">
                             <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal">Dietas</span>
 
-                            <div v-if="diets && diets.length">
+                            <div>
                                 <p
                                     class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
-                                    v-for="diet in diets"
-                                    :key="diet.id"
                                 >
-                                    {{ diet }}
+                                    {{ diets }}
                                 </p>
                             </div>
-                            <p v-else class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">0</p>
+
                         </div>
 
                         <Link :href="route('diet.index')">
@@ -89,16 +86,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div class="flex flex-col gap-2">
                             <span class="text-surface-700 dark:text-surface-300 leading-tight font-normal">Medições</span>
 
-                            <div v-if="measurements && measurements.length">
+                            <div>
                                 <p
                                     class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold"
-                                    v-for="measurement in measurements"
-                                    :key="measurement.id"
                                 >
-                                    {{ measurement }}
+                                    {{ measurements }}
                                 </p>
                             </div>
-                            <p v-else class="text-surface-900 dark:text-surface-0 text-2xl! leading-tight! font-semibold">0</p>
+
                         </div>
                         <Link :href="route('diet.index')">
                             <div class="bg-success flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500">

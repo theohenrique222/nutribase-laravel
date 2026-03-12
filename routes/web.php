@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/diet/student/{student}', [DietController::class, 'showByStudent'])->name('diet.showByStudent');
 Route::get('dashboard', DashboardController::class)->middleware(['auth'])->name('dashboard');
+Route::resource('diet', DietController::class)->middleware(['auth']);
 Route::resource('profile', ProfileController::class)->middleware(['auth']);
 Route::resource('personal-datas', PersonalDatasController::class)->middleware(['auth']);
 Route::resource('calculation', CalculationController::class)->middleware(['auth']);
