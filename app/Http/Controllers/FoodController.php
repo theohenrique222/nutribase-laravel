@@ -71,7 +71,7 @@ class FoodController extends Controller
      */
     public function update(Request $request, Food $food)
     {
-        //
+        $food->update($request->all());
     }
 
     /**

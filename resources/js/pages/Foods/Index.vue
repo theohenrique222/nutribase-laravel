@@ -25,8 +25,18 @@ function show(id: number) {
     router.visit(route('foods.show', id));
 }
 
-function edit(id: number) {
-    router.visit(route('foods.edit', id));
+const editingId = ref<number | null>(null)
+
+function edit(food: any) {
+    editingId.value = food.id
+
+    form.name = food.name
+    form.calories = food.calories
+    form.protein = food.protein
+    form.carbs = food.carbs
+    form.fat = food.fat
+
+    visible.value = true
 }
 
 function destroy(event: Event, id: number) {
@@ -53,12 +63,27 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('foods.store'), {
-        onSuccess: () => {
-            alert('Alimento cadastrado com sucesso');
-            visible.value = false;
-        },
-    });
+
+    if (editingId.value) {
+        form.put(route('foods.update', editingId.value), {
+            onSuccess: () => {
+                alert('Alimento atualizado com sucesso!')
+                visible.value = false
+                form.reset()
+                editingId.value = null
+            }
+        })
+    }
+
+    else {
+        form.post(route('foods.store'), {
+            onSuccess: () => {
+                alert('Alimento cadastrado com sucesso');
+                visible.value = false;
+            },
+        });
+    }
+
 };
 </script>
 
@@ -138,7 +163,7 @@ const submit = () => {
                             <template #body="slotProps">
                                 <div class="flex w-full justify-around">
                                     <Button icon="pi pi-eye" class="mr-2" @click="show(slotProps.data.id)" />
-                                    <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data.id)" />
+                                    <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data)" />
                                     <Button icon="pi pi-trash" severity="danger" @click="destroy($event, slotProps.data.id)" />
                                 </div>
                             </template>
