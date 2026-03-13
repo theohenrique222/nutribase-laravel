@@ -8,7 +8,6 @@ defineProps<{
     student: string;
     foods: any[];
 }>();
-
 </script>
 
 <template>
@@ -22,52 +21,56 @@ defineProps<{
                     </h1>
 
                     <div v-for="diet in diets" :key="diet.id" class="mb-4 rounded border p-4 text-lg">
-                        <p>
-                            Objetivo: <span class="font-bold">{{ diet.objective }}</span>
-                        </p>
+                        <div class="flex text-center">
+                            <div class="w-full border-1 border-r-emerald-500">
+                                <p>Objetivo:</p>
+                                <span class="font-bold">
+                                    {{ diet.objective }}
+                                </span>
+                            </div>
 
-                        <p>
-                            Atualizado em:
-                            <span class="font-bold">
-                                {{ new Date(diet.updated_at).toLocaleDateString('pt-BR') }}
-                            </span>
-                        </p>
+                            <div class="w-full border-1 border-r-emerald-500">
+                                <p>Atualizado em:</p>
+                                <span class="font-bold">
+                                    {{ new Date(diet.updated_at).toLocaleDateString('pt-BR') }}
+                                </span>
+                            </div>
 
-                        <p>
-                            Total de calorias: <span class="font-bold">{{ diet.calories }}</span>
-                        </p>
+                            <div class="w-full border-1 border-r-emerald-500">
+                                <p>Total de calorias:</p>
+                                <span class="font-bold">
+                                    {{ diet.calories }}
+                                </span>
+                            </div>
+                        </div>
 
                         <!-- refeições -->
-                        <div v-for="(meal, mIndex) in diet.meals" :key="mIndex" class="mt-2 rounded border p-2 ">
+                        <div v-for="(meal, mIndex) in diet.meals" :key="mIndex" class="mt-2 rounded border p-2">
                             <div class="mb-1 bg-emerald-500 p-1 text-center font-bold text-white">
                                 <h2 class="text-2xl">Refeição {{ mIndex + 1 }}</h2>
                             </div>
 
                             <!-- produtos -->
-                            <div v-for="(product, pIndex) in meal.products" :key="pIndex" class="flex justify-between px-5 p-1 ">
-                                <div class="w-full">
-                                    <p>
-                                        Alimento:
-                                        <span class="font-bold ">
-                                            {{ foods?.find((f) => f.id == product.food)?.name ?? '—' }}
-                                        </span>
-                                    </p>
+                            <div v-for="(product, pIndex) in meal.products" :key="pIndex" class="flex justify-between border-b-2">
+                                <div class="flex w-full gap-2 px-3 py-2 justify-start">
+                                    <p>Alimento:</p>
+                                    <span class="font-bold">
+                                        {{ foods?.find((f) => f.id == product.food)?.name ?? '—' }}
+                                    </span>
                                 </div>
 
-                                <div class="w-full text-center">
-                                    <p>
-                                        Quantidade:
-                                        <span class="font-bold"> {{ product.quantity }} g </span>
-                                    </p>
+                                <div class="flex w-full gap-2 px-3 py-2 justify-center">
+                                    <p>Quantidade:</p>
+                                    <span class="font-bold"> {{ product.quantity }} g </span>
                                 </div>
 
-                                <div class="w-full text-end">
+                                <div class="flex w-full gap-2 px-3 py-2 justify-center">
                                     <p>
                                         Observação:
-                                        <span class="font-bold">
-                                            {{ product.observation ?? 'Nenhuma' }}
-                                        </span>
                                     </p>
+                                    <span class="font-bold">
+                                        {{ product.observation ?? 'Nenhuma' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
