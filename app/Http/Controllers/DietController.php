@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Coach;
 use App\Models\Diet;
 use App\Models\Food;
+use App\Models\Profile;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use function PHPUnit\Framework\isEmpty;
 
 class DietController extends Controller
 {
@@ -20,9 +22,14 @@ class DietController extends Controller
         $student = Student::where('user_id', auth()->id())->first();
         $foods = Food::all();
         $diets = Diet::with(['foods'])->where('student_id', $student->id)->get();
+        $profile = Profile::with('user')->where('user_id', auth()->id())->first();
 
         if (!$student) {
             return Inertia::render('diet/Show');
+        }
+
+        if (!$profile) {
+            return redirect()->route('profile.create');
         }
 
         return Inertia::render('diet/Index', [
@@ -40,6 +47,11 @@ class DietController extends Controller
         $foods      =   Food::all();
         $coach      =   Coach::where('user_id', auth()->id())->first();
         $students   =   Student::with('user')->where('coach_id', $coach->id)->get();
+        $profile    =   Profile::with('user')->where('user_id', $students)->first();
+
+        if (isEmpty($profile)) {
+            abort(403, 'Aguardando o aluno preencher o perfil');
+        }
 
         return Inertia::render('diet/Create', [
             'title'     => 'Criar Dieta',

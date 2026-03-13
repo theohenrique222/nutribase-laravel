@@ -21,9 +21,7 @@ class DashboardController extends Controller
 
         if (!$coach) {
 
-            return Inertia::render('diet/Index', [
-                'title' => 'Dieta'
-            ]);
+            return redirect()->route('measurements.index');
 
         }
 

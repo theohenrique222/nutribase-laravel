@@ -26,4 +26,8 @@ class Student extends Model
     {
         return $this->hasOne(Diet::class);
     }
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

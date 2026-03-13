@@ -5,6 +5,7 @@ import { useConfirm } from 'primevue/useconfirm';
 import ConfirmPopup from 'primevue/confirmpopup';
 import { ref } from 'vue';
 import { Input } from '@/components/ui/input';
+import InputError from '@/components/InputError.vue';
 
 defineProps<{
     title?: string;
@@ -24,26 +25,21 @@ function show(id: number) {
     router.visit(route('diet.show', id));
 }
 
-const editingId = ref < number | null>(null);
+const editingId = ref<number | null>(null);
 
 function edit(students: any) {
-
     editingId.value = students.id;
 
     form.name = students.user.name;
     form.email = students.user.email;
-    
 
-    visible.value = true
-
+    visible.value = true;
 }
 
 function create() {
-
-    form.reset()
-    editingId.value = null
-    visible.value = true
-
+    form.reset();
+    editingId.value = null;
+    visible.value = true;
 }
 
 const form = useForm({
@@ -70,25 +66,22 @@ const submit = () => {
     if (editingId.value) {
         form.put(route('students.update', editingId.value), {
             onSuccess: () => {
-                alert('Aluno atualizado com sucesso!')
-                visible.value = false
-                form.reset()
-                editingId.value = null
-            }
-        })
-    }
-
-    else {
-
+                alert('Aluno atualizado com sucesso!');
+                visible.value = false;
+                form.reset();
+                editingId.value = null;
+            },
+        });
+    } else {
         form.post(route('students.store'), {
             onSuccess: () => {
-                alert('Aluno Cadastrado com sucesso')
-                visible.value = false
-                form.reset()
-        }
-        })
+                alert('Aluno Cadastrado com sucesso');
+                visible.value = false;
+                form.reset();
+            },
+        });
     }
-}
+};
 </script>
 
 <template>
@@ -149,8 +142,8 @@ const submit = () => {
                     <Button label="Cadastrar Aluno" class="w-full" severity="success" @click="create" />
                 </div>
 
-                <Dialog v-model:visible="visible" modal header="Cadastrar alimento" :style="{ width: '50rem' }" class="text-center">
-                    <span class="text-surface-500 dark:text-surface-400 mb-8 block">Insira as informações sobre o alimento.</span>
+                <Dialog v-model:visible="visible" modal header="Cadastrar aluno" :style="{ width: '50rem' }" class="text-end">
+                    <span class="text-surface-500 dark:text-surface-400 mb-5 block text-center">Insira as informações do aluno.</span>
                     <form @submit.prevent="submit">
                         <div class="mb-4 flex items-center gap-4">
                             <label for="name" class="w-28 font-semibold">Nome</label>
@@ -164,12 +157,14 @@ const submit = () => {
 
                         <div class="mb-4 flex items-center gap-4">
                             <label for="protein" class="w-28 font-semibold">Senha</label>
-                            <Input id="protein" type="password" placeholder="Digite a senha" required v-model="form.password" />
+                            <Input id="protein" type="password" autocomplete="none" placeholder="Digite a senha" required v-model="form.password" />
+                            <InputError class="mt-2" :message="form.errors.name" />
                         </div>
 
                         <div class="mb-4 flex items-center gap-4">
-                            <label for="protein" class="w-28 font-semibold">Confirmação de senha</label>
-                            <Input id="protein" type="password" placeholder="Confirme sua senha" required v-model="form.password_confirmation" />
+                            <label for="protein" class="w-28 font-semibold">Confirmação</label>
+                            <Input id="protein" type="password" autocomplete="none" placeholder="Confirme sua senha" required v-model="form.password_confirmation" />
+                            <InputError class="mt-2" :message="form.errors.name"/>
                         </div>
 
                         <div class="flex justify-end gap-2">
@@ -182,4 +177,3 @@ const submit = () => {
         </div>
     </AppLayout>
 </template>
-
