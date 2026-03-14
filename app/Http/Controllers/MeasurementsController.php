@@ -7,6 +7,7 @@ use App\Models\Measurements;
 use App\Models\MeasurementsHistory;
 use App\Models\Profile;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,13 +18,43 @@ class MeasurementsController extends Controller
      */
     public function index()
     {
-        $measurements   = Measurements::where('user_id', auth()->id())->get();
-        $hasMeasurements   = Measurements::where('user_id', auth()->id())->exists();
+        $measurements = Measurements::where('user_id', auth()->id())->get();
+        $hasMeasurements = Measurements::where('user_id', auth()->id())->exists();
+        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
+        $profile = Profile::where('user_id', auth()->id())->latest()->first();
+        $gender = $profile->gender;
+        $weight = $measurement->weight;
+        $height = $measurement->height;
+        $age = Carbon::parse($profile->date_birth)->age;
+        $calcWater = ($weight * 35) / 1000;
+
+        $calcBasal = null;
+
+        if ($measurement) {
+
+            if ($gender === 'male') {
+                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) + 5;
+            }
+
+            if ($gender === 'female') {
+                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
+            }
+
+            $calcProteins = $weight * 1.6;
+            $fat = $weight * 0.8;
+
+            $calcCarbs = ($calcBasal - ($calcProteins * 4 + $fat * 9)) / 4;
+        }
 
         return Inertia::render('students/measurements/index', [
             'title'             => 'Medições',
             'measurements'      => $measurements,
             'hasMeasurement'    => $hasMeasurements,
+            'calcBasal'         => $calcBasal,
+            'calcProteins'      => $calcProteins,
+            'calcCarbs'         => $calcCarbs,
+            'calcWater'         => $calcWater,
+            'calcFat'           => $fat,
         ]);
     }
     /**

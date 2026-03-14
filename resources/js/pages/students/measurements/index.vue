@@ -28,8 +28,21 @@ const images = [
     },
 ];
 
-defineProps<{
+const {
+    calcBasal,
+    calcWater,
+    calcCarbs,
+    calcFat,
+    calcProteins,
+    } = defineProps<
+    {
     title: string;
+    calcBasal: number;
+    calcWater: number;
+    calcCarbs: number;
+    calcFat: number;
+    calcProteins: string;
+    tests: any;
     hasMeasurement: null;
     measurements: Array<{
         id: number;
@@ -50,6 +63,30 @@ defineProps<{
         updated_at: string;
     }>;
 }>();
+
+const stats = [
+    {
+        label: 'Metabolismo Basal:',
+        value: calcBasal
+    },
+    {
+        label: 'Carboidratos diários:',
+        value: calcCarbs,
+    },
+    {
+        label: 'Proteinas diárias:',
+        value: calcProteins,
+    },
+    {
+        label: 'Ingestão de água diaria',
+        value: calcWater
+    },
+    {
+        label: 'Gordura corporal aproximada',
+        value: calcFat,
+    }
+
+]
 </script>
 
 <template>
@@ -63,15 +100,24 @@ defineProps<{
                         {{ title }}
                     </h1>
 
+                    <div>
+                        {{ tests }}
+                    </div>
                     <div v-for="measurement in measurements" :key="measurement.id" class="flex w-full justify-center">
                         <div class="p-5 shadow-lg">
-                            <div class="mb-10 flex w-full bg-emerald-500 text-white">
+                            <div class="mb-10 flex w-full p-3 bg-emerald-500 text-white rounded-lg">
                                 <div class="m-auto flex gap-10 text-lg">
                                     <p>
-                                        Altura: <span class="font-bold">{{ measurement.height }}</span>
+                                        Altura:
+                                        <span class="font-bold">
+                                            {{ measurement.height }}
+                                        </span>
                                     </p>
                                     <p>
-                                        Peso: <span class="font-bold">{{ measurement.weight }}</span>
+                                        Peso:
+                                        <span class="font-bold">
+                                            {{ measurement.weight }}
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -90,7 +136,7 @@ defineProps<{
                                 </Galleria>
                             </div>
 
-                            <div class="mb-5 flex justify-center gap-10 bg-emerald-500 text-center text-lg text-white">
+                            <div class="mb-5 flex justify-center gap-10 p-3 bg-emerald-500 text-center text-lg text-white rounded-lg">
                                 <div>
                                     <p>Criado em:</p>
                                     <span class="font-bold">
@@ -104,87 +150,83 @@ defineProps<{
                                     </span>
                                 </div>
                             </div>
-                            <div class="mb-8 flex items-center gap-4">
-                                <div class="flex w-full text-center">
-                                    <div class="w-full">
-                                        <div class="m-auto flex max-w-1/2 justify-between border-b-2">
-                                            <p>Braço esquerdo:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.arm_l }}
-                                            </span>
-                                        </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Coxa esquerda:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.thigh_l }}
-                                            </span>
-                                        </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Pantorrilha esquerda:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.calf_l }}
-                                            </span>
-                                        </div>
-                                    </div>
+                            <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
 
-                                    <div class="w-full">
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Braço esquerdo:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.arm_l }}
-                                            </span>
+                                <!-- Lado Esquerdo -->
+                                <div class="rounded-xl border bg-white p-4 shadow-sm">
+                                    <h3 class="mb-3 text-sm font-semibold text-gray-700 uppercase">
+                                        Lado esquerdo
+                                    </h3>
+
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span>Braço</span>
+                                            <span class="font-bold">{{ measurement.arm_l }}</span>
                                         </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Coxa esquerda:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.thigh_l }}
-                                            </span>
+
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span>Coxa</span>
+                                            <span class="font-bold">{{ measurement.thigh_l }}</span>
                                         </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Pantorrilha esquerda:</p>
-                                            <span class="font-bold">
-                                                {{ measurement.calf_l }}
-                                            </span>
+
+                                        <div class="flex justify-between">
+                                            <span>Panturrilha</span>
+                                            <span class="font-bold">{{ measurement.calf_l }}</span>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Lado Direito -->
+                                <div class="rounded-xl border bg-white p-4 shadow-sm">
+                                    <h3 class="mb-3 text-sm font-semibold text-gray-800 uppercase">
+                                        Lado direito
+                                    </h3>
+
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span>Braço</span>
+                                            <span class="font-bold">{{ measurement.arm_r }}</span>
+                                        </div>
+
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span>Coxa</span>
+                                            <span class="font-bold">{{ measurement.thigh_r }}</span>
+                                        </div>
+
+                                        <div class="flex justify-between">
+                                            <span>Panturrilha</span>
+                                            <span class="font-bold">{{ measurement.calf_r }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <!--cálculos-->
-                            
-                            <div class="mb-5 flex justify-center gap-10 bg-emerald-500 text-center text-lg text-white">
+
+                            <div class="mb-5 flex justify-center gap-10 p-3 bg-emerald-500 text-center text-lg text-white rounded-lg">
                                 <div>
                                     <p>Calculo com base nos dados corporais</p>
                                 </div>
                             </div>
-                            <div class="mb-8 flex items-center gap-4">
-                                <div class="flex w-full text-center">
-                                    <div class="w-full">
-                                        <div class="m-auto flex max-w-1/2 justify-between border-b-2">
-                                            <p>Metabolismo basal</p>
-                                            <span class="font-bold"> 123 </span>
-                                        </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Carboidratos diários</p>
-                                            <span class="font-bold"> 123 </span>
-                                        </div>
-                                    </div>
+                            <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                <div
+                                    v-for="state in stats"
+                                    :key="state.label"
+                                    class="rounded-2xl border bg-white p-4 shadow-sm transition hover:shadow-md"
+                                >
+                                    <p class="text-sm text-gray-500">
+                                        {{ state.label }}
+                                    </p>
 
-                                    <div class="w-full">
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Proteínas diárias</p>
-                                            <span class="font-bold"> 123 </span>
-                                        </div>
-                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
-                                            <p>Mínimo de água:</p>
-                                            <span class="font-bold"> 123 </span>
-                                        </div>
-                                    </div>
+                                    <p class="mt-2 text-2xl font-bold text-gray-700">
+                                        {{ state.value }}
+                                    </p>
                                 </div>
                             </div>
-                            <div class="mt-1 flex w-full justify-center gap-4">
+                            <div class="flex w-full justify-center gap-4">
                                 <Link :href="route('measurements.edit', measurement.id)">
-                                    <Button label="Atualizar medidas" severity="success" class="w-full"/>
+                                    <Button label="Atualizar medidas" severity="info" />
                                 </Link>
                             </div>
                         </div>
