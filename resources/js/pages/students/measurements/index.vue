@@ -13,6 +13,21 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const images = [
+    {
+        imageSrc: '/img/avatar.webp',
+        alt: 'Imagem 1',
+    },
+    {
+        imageSrc: '/img/avatar.webp',
+        alt: 'Imagem 1',
+    },
+    {
+        imageSrc: '/img/avatar.webp',
+        alt: 'Imagem 1',
+    },
+];
+
 defineProps<{
     title: string;
     hasMeasurement: null;
@@ -48,86 +63,129 @@ defineProps<{
                     </h1>
 
                     <div v-for="measurement in measurements" :key="measurement.id" class="flex w-full justify-center">
-                        <Card style="width: 25rem; overflow: hidden">
-                            <template #header>
-                                <img alt="user header" src="/img/avatar.webp" />
-                            </template>
-                            <template #title>
-                                <p class="text-center">
-                                    {{ measurement.name }}
-                                </p>
-                            </template>
-                            <template #subtitle>
-                                <p class="mb-2 text-center">Criado em {{ new Date(measurement.created_at).toLocaleDateString('pt-BR') }}</p>
-                                <p class="text-center">Atualiazdo em {{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}</p>
-                            </template>
-                            <template #content>
-                                <p class="m-0 text-center">
-                                    {{ measurement.description }}
-                                </p>
-                            </template>
-                            <template #footer>
-                                <div class="mt-1 flex w-full justify-center gap-4">
-                                    <Link :href="route('measurements.edit', measurement.id)">
-                                        <Button label="Atualizar" severity="success" class="w-full" variant="outlined" />
-                                    </Link>
-                                    <Button label="Ver Detalhes" class="" severity="success" @click="visible = true" />
-                                </div>
-                            </template>
-                        </Card>
-                        <Dialog v-model:visible="visible" modal header="Detalhes das medidas" :style="{ width: '25rem' }">
-                            <div class="text-center">
-                                <span class="text-surface-500 dark:text-surface-400 mb-8 block">
-                                    <p>
-                                        Medidas referente ao mês de
-                                        <span class="font-bold">{{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}</span>
-                                    </p>
-                                </span>
-                            </div>
-
-                            <span> </span>
-                            <div class="mb-4 flex items-center gap-4"></div>
-                            <div class="mb-8 flex items-center gap-4">
-                                <div class="text-center">
-                                    <p>
-                                        Braço esquerdo: <span class="font-bold">{{ measurement.arm_l }}</span>
-                                    </p>
-                                    <p>
-                                        Coxa esquerda: <span class="font-bold">{{ measurement.thigh_l }}</span>
-                                    </p>
-                                    <p>
-                                        Pantorrilha esquera: <span class="font-bold">{{ measurement.calf_l }}</span>
-                                    </p>
-                                </div>
-                                <div>
-                                    <img src="/img/body.webp" />
-                                </div>
-                                <div class="text-center">
-                                    <p>
-                                        Braço direito: <span class="font-bold">{{ measurement.arm_r }}</span>
-                                    </p>
-                                    <p>
-                                        Coxa direita: <span class="font-bold">{{ measurement.thigh_r }}</span>
-                                    </p>
-                                    <p>
-                                        Pantorrilha direita: <span class="font-bold">{{ measurement.calf_r }}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <span class="text-surface-500 dark:text-surface-400 mb-8 block">
+                        <div class="p-5 shadow-lg">
+                            <div class="mb-10 flex w-full bg-emerald-500 text-white">
+                                <div class="m-auto flex gap-10 text-lg">
                                     <p>
                                         Altura: <span class="font-bold">{{ measurement.height }}</span>
                                     </p>
                                     <p>
                                         Peso: <span class="font-bold">{{ measurement.weight }}</span>
                                     </p>
-                                </span>
+                                </div>
                             </div>
-                            <div class="flex justify-end gap-2">
-                                <Button type="button" label="Fechar" severity="danger" @click="visible = false"></Button>
+                            <div class="mb-10 w-full">
+                                <Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5">
+                                    <template #item="slotProps">
+                                        <div class="h-auto w-md">
+                                            <img :src="slotProps.item.imageSrc" :alt="slotProps.item.alt" />
+                                        </div>
+                                    </template>
+                                    <template #thumbnail="slotProps">
+                                        <div class="w-52">
+                                            <img :src="slotProps.item.imageSrc" :alt="slotProps.item.alt" />
+                                        </div>
+                                    </template>
+                                </Galleria>
                             </div>
-                        </Dialog>
+
+                            <div class="mb-5 flex justify-center gap-10 bg-emerald-500 text-center text-lg text-white">
+                                <div>
+                                    <p>Criado em:</p>
+                                    <span class="font-bold">
+                                        {{ new Date(measurement.created_at).toLocaleDateString('pt-BR') }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p>Ultima atualização:</p>
+                                    <span class="font-bold">
+                                        {{ new Date(measurement.updated_at).toLocaleDateString('pt-BR') }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-8 flex items-center gap-4">
+                                <div class="flex w-full text-center">
+                                    <div class="w-full">
+                                        <div class="m-auto flex max-w-1/2 justify-between border-b-2">
+                                            <p>Braço esquerdo:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.arm_l }}
+                                            </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Coxa esquerda:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.thigh_l }}
+                                            </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Pantorrilha esquerda:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.calf_l }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-full">
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Braço esquerdo:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.arm_l }}
+                                            </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Coxa esquerda:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.thigh_l }}
+                                            </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Pantorrilha esquerda:</p>
+                                            <span class="font-bold">
+                                                {{ measurement.calf_l }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--calculos-->
+                            <div class="mb-5 flex justify-center gap-10 bg-emerald-500 text-center text-lg text-white">
+                                <div>
+                                    <p>Calculo com base nos dados corporais</p>
+                                </div>
+                            </div>
+                            <div class="mb-8 flex items-center gap-4">
+                                <div class="flex w-full text-center">
+                                    <div class="w-full">
+                                        <div class="m-auto flex max-w-1/2 justify-between border-b-2">
+                                            <p>Metabolismo basal</p>
+                                            <span class="font-bold"> 123 </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Carboidratos diários</p>
+                                            <span class="font-bold"> 123 </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-full">
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Proteínas diárias</p>
+                                            <span class="font-bold"> 123 </span>
+                                        </div>
+                                        <div class="m-auto flex max-w-1/2 justify-between gap-2 border-b-2">
+                                            <p>Mínimo de água:</p>
+                                            <span class="font-bold"> 123 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-1 flex w-full justify-center gap-4">
+                                <Link :href="route('measurements.edit', measurement.id)">
+                                    <Button label="Atualizar medidas" severity="success" class="w-full"/>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
