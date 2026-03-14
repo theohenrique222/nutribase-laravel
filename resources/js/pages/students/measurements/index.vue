@@ -4,7 +4,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const visible = ref(false);
+const responsiveOptions = ref();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -47,6 +47,7 @@ defineProps<{
         calf_l?: number;
         calf_r?: number;
         created_at: string;
+        updated_at: string;
     }>;
 }>();
 </script>
@@ -149,7 +150,8 @@ defineProps<{
                                 </div>
                             </div>
 
-                            <!--calculos-->
+                            <!--cálculos-->
+                            
                             <div class="mb-5 flex justify-center gap-10 bg-emerald-500 text-center text-lg text-white">
                                 <div>
                                     <p>Calculo com base nos dados corporais</p>
