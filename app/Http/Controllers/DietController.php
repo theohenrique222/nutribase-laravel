@@ -47,14 +47,11 @@ class DietController extends Controller
         $foods      =   Food::all();
         $coach      =   Coach::where('user_id', auth()->id())->first();
         $students   =   Student::with('user')->where('coach_id', $coach->id)->get();
-        $profile = Profile::with('user')
-            ->whereIn('user_id', $students->pluck('id'))
-            ->first();
+        $profile    =   Profile::with('user')->whereIn('user_id', $students->pluck('id'))->first();
 
         if ($profile == null) {
             abort(403, 'Aguardando o aluno preencher o perfil');
         }
-
 
         return Inertia::render('diet/Create', [
             'title'     => 'Criar Dieta',

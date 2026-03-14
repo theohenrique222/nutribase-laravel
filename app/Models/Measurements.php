@@ -35,4 +35,8 @@ class Measurements extends Model
     {
         return $this->belongsTo(Profile::class);
     }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

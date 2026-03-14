@@ -30,4 +30,14 @@ class Student extends Model
     {
         return $this->hasOne(Profile::class);
     }
+    public function measurement()
+    {
+        return $this->hasOne(Measurements::class);
+    }
+    public static function forCoach($coachId)
+    {
+        return self::with('user')
+            ->where('coach_id', $coachId)
+            ->get();
+    }
 }

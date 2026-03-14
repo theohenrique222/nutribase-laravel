@@ -21,8 +21,12 @@ const filters = ref({
     },
 });
 
-function show(id: number) {
+function showDiet(id: number) {
     router.visit(route('diet.show', id));
+}
+
+function show(id: number) {
+    router.visit(route('students.show', id));
 }
 
 const editingId = ref<number | null>(null);
@@ -128,7 +132,8 @@ const submit = () => {
                                 <Column header="Ações" style="width: 25%">
                                     <template #body="slotProps">
                                         <div class="flex w-full justify-around">
-                                            <Button icon="pi pi-clipboard" class="mr-2" @click="show(slotProps.data.id)" />
+                                            <Button icon="pi pi-eye" severity="info" class="mr-2" @click="show(slotProps.data.id)" />
+                                            <Button icon="pi pi-clipboard" severity="success" class="mr-2" @click="showDiet(slotProps.data.id)" />
                                             <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data)" />
                                             <Button icon="pi pi-trash" severity="danger" @click="destroy($event, slotProps.data.id)" />
                                         </div>
@@ -163,8 +168,15 @@ const submit = () => {
 
                         <div class="mb-4 flex items-center gap-4">
                             <label for="protein" class="w-28 font-semibold">Confirmação</label>
-                            <Input id="protein" type="password" autocomplete="none" placeholder="Confirme sua senha" required v-model="form.password_confirmation" />
-                            <InputError class="mt-2" :message="form.errors.name"/>
+                            <Input
+                                id="protein"
+                                type="password"
+                                autocomplete="none"
+                                placeholder="Confirme sua senha"
+                                required
+                                v-model="form.password_confirmation"
+                            />
+                            <InputError class="mt-2" :message="form.errors.name" />
                         </div>
 
                         <div class="flex justify-end gap-2">

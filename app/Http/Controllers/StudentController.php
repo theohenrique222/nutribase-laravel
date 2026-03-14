@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coach;
+use App\Models\Measurements;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use function PHPUnit\Framework\isEmpty;
 
 class StudentController extends Controller
 {
@@ -18,7 +20,8 @@ class StudentController extends Controller
     public function index()
     {
         $coach      =   Coach::where('user_id', auth()->id())->first();
-        $students   =   Student::with('user')->get();
+        $students = Student::forCoach( $coach->id);
+
 
         if (!$coach) {
             return Inertia::render('students/index', [
@@ -26,9 +29,7 @@ class StudentController extends Controller
                 'students'  =>  $students
             ]);
         }
-        $students   =   Student::with('user')
-            ->where('coach_id', $coach->id)
-            ->get();
+
 
         return Inertia::render('students/index', [
             'title'     =>  'Alunos',
@@ -79,7 +80,21 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        $coach = Coach::where('user_id', auth()->id())->first();
+        $students = Student::forCoach($coach->id);
+        $measurements   = Measurements::where('user_id', auth()->id())->get();
+        $hasMeasurements   = Measurements::where('user_id', auth()->id())->exists();
+
+        if (isEmpty($hasMeasurements)) {
+            return abort(403,'ASd');
+        }
+
+        return Inertia::render('students/Show', [
+           'title'     =>  'Informações do Aluno',
+            'students'  =>  $students,
+            'measurements'   =>  $measurements,
+            'hasMeasurements'   =>  $hasMeasurements
+        ]);
     }
 
     /**

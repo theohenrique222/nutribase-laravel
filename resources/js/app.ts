@@ -22,8 +22,7 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
-
-
+import Galleria from 'primevue/galleria';
 
 // Extend ImportMeta interface for Vite...
 
@@ -71,6 +70,7 @@ createInertiaApp({
             .component('ConfirmDialog', ConfirmDialog)
             .component('ConfirmationService', ConfirmationService)
             .component('InputText', InputText)
+            .component('Galleria', Galleria)
             .mount(el);
     },
     progress: {
