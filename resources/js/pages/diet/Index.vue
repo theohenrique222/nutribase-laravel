@@ -8,7 +8,6 @@ defineProps<{
     student: string;
     foods: any[];
 }>();
-
 </script>
 
 <template>
@@ -21,57 +20,64 @@ defineProps<{
                         {{ title }}
                     </h1>
 
-                    <div v-for="diet in diets" :key="diet.id" class="mb-4 rounded border p-4 text-lg">
-                        <p>
-                            Objetivo: <span class="font-bold">{{ diet.objective }}</span>
-                        </p>
+                    <div v-if="diets.length > 0">
+                        <div v-for="diet in diets" :key="diet.id" class="mb-4 rounded border p-4 text-lg">
+                            <p>
+                                Objetivo: <span class="font-bold">{{ diet.objective }}</span>
+                            </p>
 
-                        <p>
-                            Atualizado em:
-                            <span class="font-bold">
-                                {{ new Date(diet.updated_at).toLocaleDateString('pt-BR') }}
-                            </span>
-                        </p>
+                            <p>
+                                Atualizado em:
+                                <span class="font-bold">
+                                    {{ new Date(diet.updated_at).toLocaleDateString('pt-BR') }}
+                                </span>
+                            </p>
 
-                        <p>
-                            Total de calorias: <span class="font-bold">{{ diet.calories }}</span>
-                        </p>
+                            <p>
+                                Total de calorias: <span class="font-bold">{{ diet.calories }}</span>
+                            </p>
 
-                        <!-- refeições -->
-                        <div v-for="(meal, mIndex) in diet.meals" :key="mIndex" class="mt-2 rounded border p-2 ">
-                            <div class="mb-1 bg-emerald-500 p-1 text-center font-bold text-white">
-                                <h2 class="text-2xl">Refeição {{ mIndex + 1 }}</h2>
-                            </div>
-
-                            <!-- produtos -->
-                            <div v-for="(product, pIndex) in meal.products" :key="pIndex" class="flex justify-between px-5 p-1 ">
-                                <div class="w-full">
-                                    <p>
-                                        Alimento:
-                                        <span class="font-bold ">
-                                            {{ foods?.find((f) => f.id == product.food)?.name ?? '—' }}
-                                        </span>
-                                    </p>
+                            <!-- refeições -->
+                            <div v-for="(meal, mIndex) in diet.meals" :key="mIndex" class="mt-2 rounded border p-2">
+                                <div class="mb-1 bg-emerald-500 p-1 text-center font-bold text-white">
+                                    <h2 class="text-2xl">Refeição {{ mIndex + 1 }}</h2>
                                 </div>
 
-                                <div class="w-full text-center">
-                                    <p>
-                                        Quantidade:
-                                        <span class="font-bold"> {{ product.quantity }} g </span>
-                                    </p>
-                                </div>
+                                <!-- produtos -->
+                                <div v-for="(product, pIndex) in meal.products" :key="pIndex" class="flex justify-between p-1 px-5">
+                                    <div class="w-full">
+                                        <p>
+                                            Alimento:
+                                            <span class="font-bold">
+                                                {{ foods?.find((f) => f.id == product.food)?.name ?? '—' }}
+                                            </span>
+                                        </p>
+                                    </div>
 
-                                <div class="w-full text-end">
-                                    <p>
-                                        Observação:
-                                        <span class="font-bold">
-                                            {{ product.observation ?? 'Nenhuma' }}
-                                        </span>
-                                    </p>
+                                    <div class="w-full text-center">
+                                        <p>
+                                            Quantidade:
+                                            <span class="font-bold"> {{ product.quantity }} g </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="w-full text-end">
+                                        <p>
+                                            Observação:
+                                            <span class="font-bold">
+                                                {{ product.observation ?? 'Nenhuma' }}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div v-else>
+                        <h3 class="p-10 text-center">Nenhum protocolo alimentar foi cadastrado</h3>
+                    </div>
+
                     <div v-if="!diets" class="m-auto w-1/5">
                         <Link :href="route('diet.create')">
                             <Button label="Montar Dieta" class="w-full" severity="success" />
