@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -17,17 +18,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $student = Student::where('user_id', auth()->id())->exists();
-        $profile = Profile::where('user_id', auth()->id())->first();
+        return Inertia::render('students/profiles/index', [
+            'title' => 'Completar dados pessoais',
+        ]);
 
-        if ($student && !$profile) {
-            return Inertia::render('students/profiles/index', [
-                'title' => 'Completar dados pessoais',
-                'profile' => $profile,
-            ]);
-        }
-
-        abort(403, 'Seus dados já estão no sistema');
     }
 
     /**
@@ -35,29 +29,28 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $profile = Profile::where('user_id', auth()->id())->get();
+//        $profile = Profile::where('user_id', auth()->id())->get();
+//
+//        if ($profile->isEmpty()) {
+//        }
+        return Inertia::render('students/profiles/create',
+        [
+            'title' => 'Completar dados pessoais',
+//            'profile' => $profile,
+        ]);
 
-        if ($profile->isEmpty()) {
-            return Inertia::render('students/profiles/create',
-            [
-                'title' => 'Completar dados pessoais',
-                'profile' => $profile,
-            ]);
-        }
-
-        return redirect()->back();
+//        return redirect()->back();
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'type'          =>  'required|string',
             'nickname'      =>  'nullable|string',
             'date_birth'    =>  'required|date',
             'gender'        =>  'required|string',
         ]);
 
-        $validated['user_id'] = auth()->user()->id;
+        $validated['student_id'] = auth()->user()->student->id;
 
         Profile::create($validated);
 

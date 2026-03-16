@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Profile extends Model
 {
     protected $fillable = [
-        'user_id',
-        'type',
+        'student_id',
         'nickname',
         'date_birth',
         'gender'
@@ -18,6 +17,10 @@ class Profile extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 
     public function history(): HasMany

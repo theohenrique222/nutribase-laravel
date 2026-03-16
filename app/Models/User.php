@@ -65,9 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MeasurementsHistory::class);
     }
-    public function students()
+    public function student()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasOne(Student::class);
     }
     public function coaches()
     {

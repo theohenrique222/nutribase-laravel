@@ -14,27 +14,8 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: 'Conclua seus dados pessoais', h
 
 const formFields = [
     {
-        label: 'Tipo de usuário *',
-        name: 'type',
-        type: 'select',
-        required: true,
-        options: [
-            {
-                label: 'Personal Trainer',
-                value: 'personal',
-            },
-            {
-                label: 'Aluno',
-                value: 'student',
-            },
-            {
-                label: 'Usuário Independente',
-                value: 'self-user',
-            },
-        ],
-    },
-    {
-        label: 'Apelido',
+        label: 'Nome popular',
+        placeholder: 'Nome que gostaria de ser chamado',
         name: 'nickname',
         type: 'text',
         required: false,
@@ -103,6 +84,7 @@ function submit() {
                                     v-if="field.type !== 'select'"
                                     :type="field.type"
                                     :name="field.name"
+                                    :placeholder="field.placeholder"
                                     v-model="form[field.name as keyof typeof form]"
                                     :required="field.required"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"

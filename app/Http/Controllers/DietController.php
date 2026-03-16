@@ -22,36 +22,34 @@ class DietController extends Controller
         $student = Student::where('user_id', auth()->id())->first();
         $foods = Food::all();
         $diets = Diet::with(['foods'])->where('student_id', $student->id)->get();
-        $profile = Profile::with('user')->where('user_id', auth()->id())->first();
+        $coach = Coach::with('user')->where('user_id', auth()->id())->first();
 
         if (!$student) {
             return Inertia::render('diet/Show');
-        }
-
-        if (!$profile) {
-            return redirect()->route('profile.create');
         }
 
         return Inertia::render('diet/Index', [
             'title' => 'Protocolo Alimentar',
             'diets' => $diets,
             'foods' => $foods,
+            'coach' => $coach,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Student $student)
     {
         $foods      =   Food::all();
         $coach      =   Coach::where('user_id', auth()->id())->first();
         $students   =   Student::with('user')->where('coach_id', $coach->id)->get();
-        $profile    =   Profile::with('user')->whereIn('user_id', $students->pluck('id'))->first();
+//        $profile    =   Profile::with('user')->whereIn('user_id', $students->pluck('id'))->first();
+        $profile = Profile::whereUserId($student->user_id)->first();
 
-        if ($profile == null) {
-            abort(403, 'Aguardando o aluno preencher o perfil');
-        }
+//        if (!$profile) {
+//            abort(403, 'Aguardando o aluno preencher o perfil');
+//        }
 
         return Inertia::render('diet/Create', [
             'title'     => 'Criar Dieta',
@@ -112,19 +110,23 @@ class DietController extends Controller
     {
         $coach = Coach::where('user_id', auth()->id())->first();
         $foods = Food::all();
+
         if (!$coach) abort(403);
 
         $student = Student::with('user')->findOrFail($student_id);
+
+        $profile = $student->user->profile;
 
         $diets = Diet::with(['foods:id,name'])
             ->where('coach_id', $coach->id)
             ->where('student_id', $student->id)
             ->get();
 
-        if ($diets->isEmpty()) {
-            return redirect(route('diet.create', ['student_id' => $student->id]))
-                ->with( 'Este aluno ainda não possui dieta. Crie uma agora.');
-        }
+//        if ($diets->isEmpty()) {
+//            return redirect()->route('diet.create', $student->id)
+//                ->with( 'Este aluno ainda não possui dieta. Crie uma agora.');
+//        }
+
         return Inertia::render('diet/Show', [
             'title' => 'Dietas de ' . $student->user->name,
             'student' => $student,

@@ -75,10 +75,13 @@ defineProps<{
                             </div>
                         </div>
                     </div>
-                    <div v-if="!diets" class="m-auto w-1/5">
-                        <Link :href="route('diet.create')">
-                            <Button label="Montar Dieta" class="w-full" severity="success" />
-                        </Link>
+                    <div v-if="diets" class="m-auto w-full text-center">
+                        <h3>Ainda não possui dietas cadastradas</h3>
+                        <div class="w-1/2 m-auto mt-5">
+                            <Link :href="route('diet.create')">
+                                <Button label="Montar Dieta" class="w-full" severity="success" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

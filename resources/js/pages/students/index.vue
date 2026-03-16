@@ -25,6 +25,10 @@ function showDiet(id: number) {
     router.visit(route('diet.show', id));
 }
 
+function showMeasurement(id: number) {
+    router.visit(route('measurements.show', id));
+}
+
 function show(id: number) {
     router.visit(route('students.show', id));
 }
@@ -133,7 +137,17 @@ const submit = () => {
                                     <template #body="slotProps">
                                         <div class="flex w-full justify-around">
                                             <Button icon="pi pi-eye" severity="info" class="mr-2" @click="show(slotProps.data.id)" />
-                                            <Button icon="pi pi-clipboard" severity="success" class="mr-2" @click="showDiet(slotProps.data.id)" />
+                                            <Button
+                                                icon="pi pi-clipboard"
+                                                severity="success"
+                                                class="mr-2" @click="showDiet(slotProps.data.id)"
+                                            />
+                                            <Button
+                                                icon="pi pi-calculator"
+                                                severity="help"
+                                                class="mr-2"
+                                                @click="showMeasurement(slotProps.data.id)"
+                                            />
                                             <Button icon="pi pi-pencil" severity="warn" class="mr-2" @click="edit(slotProps.data)" />
                                             <Button icon="pi pi-trash" severity="danger" @click="destroy($event, slotProps.data.id)" />
                                         </div>

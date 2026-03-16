@@ -1,49 +1,17 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import ProfileRequiredDialog from '@/components/ProfileRequiredDialog.vue';
-
-const page = usePage();
-
-type Measurement = {
-    name?: string;
-    description?: string;
-    height?: number;
-    weight?: number;
-};
 
 const props = defineProps<{
     title?: string;
-    measurement: Measurement;
 }>();
-
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Conclua seus dados pessoais', href: '/measurements' }];
 
 const formFields = [
     {
-        label: 'Tipo de usuário *',
-        name: 'type',
-        type: 'select',
-        required: true,
-        options: [
-            {
-                label: 'Personal Trainer',
-                value: 'personal',
-            },
-            {
-                label: 'Aluno',
-                value: 'student',
-            },
-            {
-                label: 'Usuário Independente',
-                value: 'self-user',
-            },
-        ],
-    },
-    {
         label: 'Apelido',
         name: 'nickname',
+        placeholder: 'Nome que você gosta de ser chamado',
         type: 'text',
         required: false,
     },
@@ -72,13 +40,13 @@ const formFields = [
 ];
 
 const form = useForm({
-    name: props.measurement?.name ?? '',
-    description: props.measurement?.description ?? '',
-    height: props.measurement?.height ?? '',
+    nickname: props.measurement?.name ?? '',
+    date_birth: props.measurement?.description ?? '',
+    gender: props.measurement?.height ?? '',
 });
 
 function submit() {
-    form.post(route('profile.store', props.measurement.id));
+    form.post(route('profile.store'));
 }
 </script>
 
@@ -106,12 +74,14 @@ function submit() {
                                     :type="field.type"
                                     :name="field.name"
                                     :step="field.step"
+                                    :placeholder="field.placeholder"
                                     v-model="form[field.name]"
                                     :required="field.required"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 />
 
                                 <!-- SELECT -->
+
                                 <select
                                     v-else
                                     :name="field.name"
@@ -119,6 +89,7 @@ function submit() {
                                     :required="field.required"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 >
+                                    <option value="">Selecione seu gênero</option>
                                     <option v-for="(option, i) in field.options" :key="i" :value="option.value">
                                         {{ option.label }}
                                     </option>

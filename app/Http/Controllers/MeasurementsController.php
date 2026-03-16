@@ -20,41 +20,41 @@ class MeasurementsController extends Controller
     {
         $measurements = Measurements::where('user_id', auth()->id())->get();
         $hasMeasurements = Measurements::where('user_id', auth()->id())->exists();
-        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
-        $profile = Profile::where('user_id', auth()->id())->latest()->first();
-        $gender = $profile->gender;
-        $weight = $measurement->weight;
-        $height = $measurement->height;
-        $age = Carbon::parse($profile->date_birth)->age;
-        $calcWater = ($weight * 35) / 1000;
-
-        $calcBasal = null;
-
-        if ($measurement) {
-
-            if ($gender === 'male') {
-                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) + 5;
-            }
-
-            if ($gender === 'female') {
-                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
-            }
-
-            $calcProteins = $weight * 1.6;
-            $fat = $weight * 0.8;
-
-            $calcCarbs = ($calcBasal - ($calcProteins * 4 + $fat * 9)) / 4;
-        }
+//        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
+//        $profile = Profile::where('user_id', auth()->id())->latest()->first();
+//        $gender = $profile->gender;
+//        $weight = $measurement->weight;
+//        $height = $measurement->height;
+//        $age = Carbon::parse($profile->date_birth)->age;
+//        $calcWater = ($weight * 35) / 1000;
+//
+//        $calcBasal = null;
+//
+//        if ($measurement) {
+//
+//            if ($gender === 'male') {
+//                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) + 5;
+//            }
+//
+//            if ($gender === 'female') {
+//                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
+//            }
+//
+//            $calcProteins = $weight * 1.6;
+//            $fat = $weight * 0.8;
+//
+//            $calcCarbs = ($calcBasal - ($calcProteins * 4 + $fat * 9)) / 4;
+//        }
 
         return Inertia::render('students/measurements/index', [
             'title'             => 'Medições',
             'measurements'      => $measurements,
             'hasMeasurement'    => $hasMeasurements,
-            'calcBasal'         => $calcBasal,
-            'calcProteins'      => $calcProteins,
-            'calcCarbs'         => $calcCarbs,
-            'calcWater'         => $calcWater,
-            'calcFat'           => $fat,
+//            'calcBasal'         => $calcBasal,
+//            'calcProteins'      => $calcProteins,
+//            'calcCarbs'         => $calcCarbs,
+//            'calcWater'         => $calcWater,
+//            'calcFat'           => $fat,
         ]);
     }
     /**
@@ -62,11 +62,12 @@ class MeasurementsController extends Controller
      */
     public function create()
     {
-        $profile        =   Profile::where('user_id', auth()->id())->first();
-        $students       =   Student::where('user_id', auth()->id())->first();
+//        $profile        =   Profile::where('user_id', auth()->id())->first();
+//        $students       =   Student::where('user_id', auth()->id())->first();
+        $students = Student::current();
         $coach          =   Coach::  where('user_id', auth()->id())->first();
 
-        if (!$profile && $students) {
+        if (!$students) {
             return redirect()
                 ->route('profile.create');
         }
@@ -133,9 +134,48 @@ class MeasurementsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Measurements $measurements)
+    public function show(Measurements $measurements, Student $student)
     {
-        //
+        $measurements = Measurements::where('user_id', auth()->id())->get();
+        $hasMeasurements = Measurements::where('user_id', auth()->id())->exists();
+        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
+//        $profile = Profile::where('user_id', auth()->id())->latest()->first();
+        $profile = Profile::where('user_id', $student->user_id)->latest()->first();
+
+        $gender = $profile->gender;
+        $weight = $measurement->weight;
+        $height = $measurement->height;
+        $age = Carbon::parse($profile->date_birth)->age;
+        $calcWater = ($weight * 35) / 1000;
+
+        $calcBasal = null;
+
+        if ($measurement) {
+
+            if ($gender === 'male') {
+                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) + 5;
+            }
+
+            if ($gender === 'female') {
+                $calcBasal = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
+            }
+
+            $calcProteins = $weight * 1.6;
+            $fat = $weight * 0.8;
+
+            $calcCarbs = ($calcBasal - ($calcProteins * 4 + $fat * 9)) / 4;
+        }
+
+        return Inertia::render('students/measurements/index', [
+            'title'             => 'Medições',
+            'measurements'      => $measurements,
+            'hasMeasurement'    => $hasMeasurements,
+            'calcBasal'         => $calcBasal,
+            'calcProteins'      => $calcProteins,
+            'calcCarbs'         => $calcCarbs,
+            'calcWater'         => $calcWater,
+            'calcFat'           => $fat,
+        ]);
     }
 
     /**

@@ -40,4 +40,8 @@ class Student extends Model
             ->where('coach_id', $coachId)
             ->get();
     }
+    public static function current()
+    {
+        return self::where('user_id', auth()->id())->first();
+    }
 }
