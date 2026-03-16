@@ -29,17 +29,10 @@ class ProfileController extends Controller
      */
     public function create()
     {
-//        $profile = Profile::where('user_id', auth()->id())->get();
-//
-//        if ($profile->isEmpty()) {
-//        }
         return Inertia::render('students/profiles/create',
         [
             'title' => 'Completar dados pessoais',
-//            'profile' => $profile,
         ]);
-
-//        return redirect()->back();
     }
 
     public function store(Request $request)
