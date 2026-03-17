@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Measurements extends Model
 {
     protected $fillable = [
-        'user_id',
-        'name',
+        'student_id',
         'description',
         'height',
         'weight',
@@ -21,6 +20,12 @@ class Measurements extends Model
         'thigh_r',
         'calf_l',
         'calf_r',
+        'hip',
+        'tmb',
+        'water',
+        'proteins',
+        'carbs',
+        'fat_percent'
     ];
 
     public function user()

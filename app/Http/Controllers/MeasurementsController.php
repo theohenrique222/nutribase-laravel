@@ -20,8 +20,8 @@ class MeasurementsController extends Controller
      */
     public function index()
     {
-        $measurements = Measurements::where('user_id', auth()->id())->get();
-        $hasMeasurements = Measurements::where('user_id', auth()->id())->exists();
+        $measurements = Measurements::where('student_id', auth()->id())->get();
+        $hasMeasurements = Measurements::where('Student_id', auth()->id())->exists();
 //        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
 //        $profile = Profile::where('user_id', auth()->id())->latest()->first();
 //        $gender = $profile->gender;
@@ -47,6 +47,7 @@ class MeasurementsController extends Controller
 //
 //            $calcCarbs = ($calcBasal - ($calcProteins * 4 + $fat * 9)) / 4;
 //        }
+
 
         return Inertia::render('students/measurements/index', [
             'title'             => 'Medições',
@@ -95,11 +96,9 @@ class MeasurementsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, NutritionCalculator $calculatorm, Student $student)
+    public function store(Request $request, NutritionCalculator $calculator)
     {
-        dd($request->all());
         $validated = $request->validate([
-            'name'          =>  'required|string',
             'description'   =>  'nullable|string',
             'height'        =>  'required|numeric',
             'weight'        =>  'required|numeric',
@@ -108,6 +107,7 @@ class MeasurementsController extends Controller
             'chest'         =>  'nullable|numeric',
             'waist'         =>  'required|numeric',
             'scruff'        =>  'required|numeric',
+            'hip'           =>  'required|numeric',
             'thigh_l'       =>  'nullable|numeric',
             'thigh_r'       =>  'nullable|numeric',
             'calf_l'        =>  'nullable|numeric',
@@ -115,20 +115,35 @@ class MeasurementsController extends Controller
         ]);
 
         $student = Student::findOrFail($request->student_id);
-        dd($student);
         $validated['student_id'] = $student->id;
-        dd($validated);
-
-        $profile = $student->user->profile;
         $calculations = $calculator->calculate($validated);
 
-        dd($calculations);
         $measurement = Measurements::create([
-            ...$validated,
-            ...$calculations,
+            // Dados do form
+            'student_id'  => $validated['student_id'],
+            'description' => $validated['description'] ?? null,
+            'height'      => $validated['height'],
+            'weight'      => $validated['weight'],
+            'arm_l'       => $validated['arm_l'] ?? null,
+            'arm_r'       => $validated['arm_r'] ?? null,
+            'chest'       => $validated['chest'] ?? null,
+            'waist'       => $validated['waist'],
+            'scruff'      => $validated['scruff'],
+            'hip'         => $validated['hip'],
+            'thigh_l'     => $validated['thigh_l'] ?? null,
+            'thigh_r'     => $validated['thigh_r'] ?? null,
+            'calf_l'      => $validated['calf_l'] ?? null,
+            'calf_r'      => $validated['calf_r'] ?? null,
+
+            // Dados calculados
+            'tmb'         => $calculations['tmb'],
+            'water'       => $calculations['water'],
+            'proteins'    => $calculations['proteins'],
+            'carbs'       => $calculations['carbs'],
+            'fat_percent' => $calculations['fat_percent'] ?? null, // se calcular gordura
         ]);
 
-        $measurementExists = Measurements::where('user_id', auth()->id())->exists();
+        $measurementExists = Measurements::where('student_id', auth()->id())->exists();
 
         $measurement = Measurements::create($validated);
 
@@ -143,12 +158,14 @@ class MeasurementsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Measurements $measurements, Student $student)
+    public function show(Measurements $measurements, Student $student, $student_id)
     {
-        $measurements = Measurements::where('user_id', auth()->id())->get();
-        $hasMeasurements = Measurements::where('user_id', auth()->id())->exists();
-        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
+        $measurements = Measurements::where('student_id', auth()->id())->get();
+        $hasMeasurements = Measurements::where('student_id', auth()->id())->exists();
+//        $measurement = Measurements::where('user_id', auth()->id())->latest()->first();
         $coach = Coach::  where('user_id', auth()->id())->first();
+//        $student = Student::with('user')->findOrFail($student_id);
+
 
 //        if (!$hasMeasurements) {
 //            return redirect()->route('measurements.create', [
@@ -157,12 +174,12 @@ class MeasurementsController extends Controller
 //        }
 
 
-        return Inertia::render('students/measurements/index', [
+        return Inertia::render('students/measurements/Show', [
             'title'             => 'Medições',
             'measurements'      => $measurements,
             'hasMeasurement'    => $hasMeasurements,
             'coach'             => $coach,
-            'student'          => $student,
+            'student'           => $student_id,
 
         ]);
     }

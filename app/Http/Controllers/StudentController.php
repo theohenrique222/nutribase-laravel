@@ -82,8 +82,8 @@ class StudentController extends Controller
     {
         $coach = Coach::where('user_id', auth()->id())->first();
         $students = Student::forCoach($coach->id);
-        $measurements   = Measurements::where('user_id', auth()->id())->get();
-        $hasMeasurements   = Measurements::where('user_id', auth()->id())->exists();
+        $measurements   = Measurements::where('student_id', auth()->id())->get();
+        $hasMeasurements   = Measurements::where('student_id', auth()->id())->exists();
 
         if (isEmpty($hasMeasurements)) {
             return redirect()->route('measurements.show', $student)->with('Para prosseguir, insira as medidas do aluno');

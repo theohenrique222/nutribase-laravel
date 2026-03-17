@@ -147,6 +147,14 @@ const formFields = [
         required: true,
     },
     {
+        label: 'Quadril (cm) *',
+        name: 'hip',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo 120',
+        required: true,
+    },
+    {
         label: 'Pescoço (cm) *',
         name: 'scruff',
         type: 'number',
@@ -198,14 +206,16 @@ const form = useForm({
     chest: null,
     waist: null,
     scruff: null,
+    hip: null,
     thigh_l: null,
     thigh_r: null,
     calf_l: null,
     calf_r: null,
 });
 
-function openModal(student: { id: number }) {
-    form.student_id = student.id
+function openModal() {
+    form.student_id = student
+    console.log(form.student_id)
     visible.value = true
 }
 
@@ -352,18 +362,14 @@ function submit() {
 
                     <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
                         <div v-if="coach">
-                            <div
-                                v-for="student in students" :key="student.id"
-                            >
-
                                 <h3 class="p-10">Seu aluno não possui medidas cadastradas.</h3>
                                 <Button
-                                    @click="openModal(student)"
+                                    @click="openModal()"
                                     label="Cadastrar medida"
                                     class="w-full"
                                     severity="success"
                                 />
-                            </div>
+
                         </div>
                     </div>
 
@@ -382,7 +388,6 @@ function submit() {
                                     :placeholder="field.placeholder"
                                     class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 />
-
                             </div>
 
                             <div class="col-span-1 mt-4 md:col-span-2">

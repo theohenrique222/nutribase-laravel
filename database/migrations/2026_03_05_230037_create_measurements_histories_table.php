@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('measurements_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('measurement_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete(); // quem fez a atualização
+            $table->foreignId('measurement_id')->constrained()->cascadeOnDelete(); // referência à medida original
             $table->string('description')->nullable();
             $table->float('height');
             $table->float('weight');
@@ -24,10 +23,19 @@ return new class extends Migration
             $table->float('chest')->nullable();
             $table->float('waist');
             $table->float('scruff');
+            $table->float('hip');
             $table->float('thigh_l')->nullable();
             $table->float('thigh_r')->nullable();
             $table->float('calf_l')->nullable();
             $table->float('calf_r')->nullable();
+
+// campos calculados
+            $table->float('tmb')->nullable();
+            $table->float('water')->nullable();
+            $table->float('proteins')->nullable();
+            $table->float('carbs')->nullable();
+            $table->float('fat_percent')->nullable();
+
             $table->timestamps();
         });
     }

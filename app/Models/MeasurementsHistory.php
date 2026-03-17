@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class MeasurementsHistory extends Model
 {
     protected $fillable = [
-        'user_id',
+        'student_id',
         'measurement_id',
-        'name',
         'description',
         'height',
         'weight',
@@ -22,6 +21,12 @@ class MeasurementsHistory extends Model
         'thigh_r',
         'calf_l',
         'calf_r',
+        'hip',
+        'tmb',
+        'water',
+        'proteins',
+        'carbs',
+        'fat_percent'
     ];
 
     public function measurement()
