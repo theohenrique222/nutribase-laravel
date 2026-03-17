@@ -115,7 +115,7 @@ class DietController extends Controller
 
         $student = Student::with('user')->findOrFail($student_id);
 
-        $profile = $student->user->profile;
+//        $profile = $student->user->profile;
 
         $diets = Diet::with(['foods:id,name'])
             ->where('coach_id', $coach->id)
@@ -128,7 +128,7 @@ class DietController extends Controller
 //        }
 
         return Inertia::render('diet/Show', [
-            'title' => 'Dietas de ' . $student->user->name,
+            'title' => 'Dieta de ' . $student->user->name,
             'student' => $student,
             'diets' => $diets,
             'foods' => $foods,

@@ -7,6 +7,7 @@ defineProps<{
     title?: string;
     students: any[];
     isCoach: boolean;
+    tests: any;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -156,7 +157,6 @@ function submit() {
             <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 rounded-xl border md:min-h-min">
                 <div class="mx-auto max-w-7xl p-6">
                     <h1 class="mb-6 text-2xl font-bold dark:text-white">{{ title }}</h1>
-
                     <div class="flex h-full w-full items-center justify-center">
                         <form @submit.prevent="submit" class="w-full max-w-4xl gap-6 space-y-5 rounded-2xl p-8 shadow-xl">
                             <div

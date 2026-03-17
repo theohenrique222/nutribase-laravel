@@ -86,7 +86,7 @@ class StudentController extends Controller
         $hasMeasurements   = Measurements::where('user_id', auth()->id())->exists();
 
         if (isEmpty($hasMeasurements)) {
-            return abort(403,'ASd');
+            return redirect()->route('measurements.show', $student)->with('Para prosseguir, insira as medidas do aluno');
         }
 
         return Inertia::render('students/Show', [

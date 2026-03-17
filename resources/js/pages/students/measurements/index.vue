@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+
+const visible = ref(false);
 
 const responsiveOptions = ref();
 
@@ -28,15 +30,10 @@ const images = [
     },
 ];
 
-const {
-    calcBasal,
-    calcWater,
-    calcCarbs,
-    calcFat,
-    calcProteins,
-    } = defineProps<
-    {
+const { calcBasal, calcWater, calcCarbs, calcFat, calcProteins } = defineProps<{
     title: string;
+    coach: any;
+    student: any;
     calcBasal: number;
     calcWater: number;
     calcCarbs: number;
@@ -67,7 +64,7 @@ const {
 const stats = [
     {
         label: 'Metabolismo Basal:',
-        value: calcBasal
+        value: calcBasal,
     },
     {
         label: 'Carboidratos diários:',
@@ -79,14 +76,145 @@ const stats = [
     },
     {
         label: 'Ingestão de água diaria',
-        value: calcWater
+        value: calcWater,
     },
     {
         label: 'Gordura corporal aproximada',
         value: calcFat,
-    }
+    },
+];
 
-]
+const formFields = [
+    {
+        label: 'Titulo *',
+        name: 'name',
+        type: 'string',
+        placeholder: 'Exemplo: Primeira semana de dieta',
+        required: true,
+    },
+    {
+        label: 'Foto:',
+        name: 'photo',
+        type: 'file',
+        required: false,
+    },
+    {
+        label: 'Descrição',
+        name: 'description',
+        type: 'string',
+        placeholder: 'Exemplo: Em adaptação aos treinos',
+        required: false,
+    },
+    {
+        label: 'Altura (cm) *',
+        name: 'height',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 170',
+        required: true,
+    },
+    {
+        label: 'Peso (kg) *',
+        name: 'weight',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo 80',
+        required: true,
+    },
+    {
+        label: 'Braço Esquerdo (cm)',
+        name: 'arm_l',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 40',
+        required: false,
+    },
+    {
+        label: 'Braço Direito (cm)',
+        name: 'arm_r',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 40',
+        required: false,
+    },
+    {
+        label: 'Peitoral (cm)',
+        name: 'chest',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 120',
+        required: false,
+    },
+    {
+        label: 'Cintura (cm) *',
+        name: 'waist',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 90',
+        required: true,
+    },
+    {
+        label: 'Pescoço (cm) *',
+        name: 'scruff',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 80',
+        required: true,
+    },
+    {
+        label: 'Coxa Esquerda (cm)',
+        name: 'thigh_l',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 80',
+        required: false,
+    },
+    {
+        label: 'Coxa Direita (cm)',
+        name: 'thigh_r',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 80',
+        required: false,
+    },
+    {
+        label: 'Panturrilha Esquerda (cm)',
+        name: 'calf_l',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 80',
+        required: false,
+    },
+    {
+        label: 'Panturrilha Direita (cm)',
+        name: 'calf_r',
+        type: 'number',
+        step: '0.01',
+        placeholder: 'Exemplo: 80',
+        required: false,
+    },
+];
+
+const form = useForm({
+    student: null,
+    name: null,
+    description: null,
+    height: null,
+    weight: null,
+    arm_l: null,
+    arm_r: null,
+    chest: null,
+    waist: null,
+    scruff: null,
+    thigh_l: null,
+    thigh_r: null,
+    calf_l: null,
+    calf_r: null,
+});
+
+function submit() {
+    form.post(route('measurements.store'));
+}
 </script>
 
 <template>
@@ -100,12 +228,9 @@ const stats = [
                         {{ title }}
                     </h1>
 
-                    <div>
-                        {{ tests }}
-                    </div>
                     <div v-for="measurement in measurements" :key="measurement.id" class="flex w-full justify-center">
                         <div class="p-5 shadow-lg">
-                            <div class="mb-10 flex w-full p-3 bg-emerald-500 text-white rounded-lg">
+                            <div class="mb-10 flex w-full rounded-lg bg-emerald-500 p-3 text-white">
                                 <div class="m-auto flex gap-10 text-lg">
                                     <p>
                                         Altura:
@@ -136,7 +261,7 @@ const stats = [
                                 </Galleria>
                             </div>
 
-                            <div class="mb-5 flex justify-center gap-10 p-3 bg-emerald-500 text-center text-lg text-white rounded-lg">
+                            <div class="mb-5 flex justify-center gap-10 rounded-lg bg-emerald-500 p-3 text-center text-lg text-white">
                                 <div>
                                     <p>Criado em:</p>
                                     <span class="font-bold">
@@ -151,12 +276,10 @@ const stats = [
                                 </div>
                             </div>
                             <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-
                                 <!-- Lado Esquerdo -->
+
                                 <div class="rounded-xl border bg-white p-4 shadow-sm">
-                                    <h3 class="mb-3 text-sm font-semibold text-gray-700 uppercase">
-                                        Lado esquerdo
-                                    </h3>
+                                    <h3 class="mb-3 text-sm font-semibold text-gray-700 uppercase">Lado esquerdo</h3>
 
                                     <div class="space-y-2">
                                         <div class="flex justify-between border-b pb-1">
@@ -177,10 +300,9 @@ const stats = [
                                 </div>
 
                                 <!-- Lado Direito -->
+
                                 <div class="rounded-xl border bg-white p-4 shadow-sm">
-                                    <h3 class="mb-3 text-sm font-semibold text-gray-800 uppercase">
-                                        Lado direito
-                                    </h3>
+                                    <h3 class="mb-3 text-sm font-semibold text-gray-800 uppercase">Lado direito</h3>
 
                                     <div class="space-y-2">
                                         <div class="flex justify-between border-b pb-1">
@@ -199,12 +321,11 @@ const stats = [
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <!--cálculos-->
 
-                            <div class="mb-5 flex justify-center gap-10 p-3 bg-emerald-500 text-center text-lg text-white rounded-lg">
+                            <div class="mb-5 flex justify-center gap-10 rounded-lg bg-emerald-500 p-3 text-center text-lg text-white">
                                 <div>
                                     <p>Calculo com base nos dados corporais</p>
                                 </div>
@@ -233,13 +354,35 @@ const stats = [
                     </div>
 
                     <div class="col-span-1 mt-4 flex justify-center md:col-span-2">
-                        <div v-if="!hasMeasurement">
-                            <h3 class="p-10">Você ainda não possui medidas cadastradas.</h3>
-                            <Link :href="route('measurements.create')">
-                                <Button label="Cadastrar medida" class="w-full" severity="success" />
-                            </Link>
+                        <div v-if="coach">
+                            <h3 class="p-10">Seu aluno não possui medidas cadastradas.</h3>
+                            <input type="hidden" name="student_id" :value="student.id" />
+                            <Button @click="visible = true" label="Cadastrar medida" class="w-full" severity="success" />
                         </div>
                     </div>
+
+                    <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '25rem' }">
+                        <form @submit.prevent="submit" class="w-full max-w-4xl gap-6 space-y-5 rounded-2xl p-8 shadow-xl">
+                            <div v-for="(field, index) in formFields" :key="index">
+                                <label :for="field.name" class="mb-1 block text-sm font-semibold dark:text-gray-50">
+                                    {{ field.label }}
+                                </label>
+                                <input
+                                    :type="field.type"
+                                    :name="field.name"
+                                    :step="field.step"
+                                    v-model="form[field.name as keyof typeof form]"
+                                    :required="field.required"
+                                    :placeholder="field.placeholder"
+                                    class="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                />
+                            </div>
+
+                            <div class="col-span-1 mt-4 md:col-span-2">
+                                <Button label="Salvar medidas" severity="success" class="w-full" type="submit" />
+                            </div>
+                        </form>
+                    </Dialog>
                 </div>
             </div>
         </div>
